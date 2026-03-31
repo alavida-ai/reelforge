@@ -26,3 +26,8 @@ BOOT.md
 memory/
 
 .env.local
+
+# Large media assets (keep local, don't commit)
+**/assets/transitions/*.mp4
+**/assets/images/sample-listing/
+**/assets/images/details/
