@@ -1,0 +1,10 @@
+{
+  "name": "@reelforge/monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "description": "ReelForge agentic workspace — knowledge, agents, skills, data, apps",
+  "devDependencies": {
+    "@alavida/agentpack": "^0.2.4",
+    "@alavida/agonda": "^0.1.3"
+  }
+}
