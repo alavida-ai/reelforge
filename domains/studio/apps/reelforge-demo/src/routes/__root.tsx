@@ -34,7 +34,7 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
