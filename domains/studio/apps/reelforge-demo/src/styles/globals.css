@@ -9,7 +9,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-sans: "Lato", "Helvetica", "Arial", sans-serif;
   --font-display: "Instrument Serif", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --color-brand: var(--brand);
@@ -17,6 +17,7 @@
   --color-brand-glow: var(--brand-glow);
   --color-brand-subtle: var(--brand-subtle);
   --color-brand-dim: var(--brand-dim);
+  --color-brand-blue: var(--brand-blue);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
   --color-ring: var(--ring);
@@ -35,11 +36,12 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  /* Tight border radius — matches Bright River's 3px design */
   --radius-sm: 2px;
-  --radius-md: 4px;
+  --radius-md: 3px;
   --radius-lg: var(--radius);
-  --radius-xl: 14px;
-  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
 }
 
 :root {
@@ -61,39 +63,42 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
+  --radius: 4px;
 }
 
 .dark {
-  /* Deep navy surfaces — Bright River brand: #10113D */
-  --background: oklch(0.12 0.03 280);
-  --foreground: oklch(0.92 0.01 280);
-  --card: oklch(0.15 0.03 280);
-  --card-foreground: oklch(0.92 0.01 280);
-  --popover: oklch(0.15 0.03 280);
-  --popover-foreground: oklch(0.92 0.01 280);
-  --surface: oklch(0.17 0.03 280);
-  --surface-raised: oklch(0.20 0.03 280);
+  /* Deep navy surfaces — Bright River #10113D / #121228 */
+  --background: oklch(0.11 0.035 275);
+  --foreground: oklch(0.93 0.008 280);
+  --card: oklch(0.14 0.035 275);
+  --card-foreground: oklch(0.93 0.008 280);
+  --popover: oklch(0.14 0.035 275);
+  --popover-foreground: oklch(0.93 0.008 280);
+  --surface: oklch(0.16 0.035 275);
+  --surface-raised: oklch(0.19 0.035 275);
 
-  --primary: oklch(0.92 0.01 280);
-  --primary-foreground: oklch(0.12 0.03 280);
-  --secondary: oklch(0.18 0.025 280);
+  --primary: oklch(0.93 0.008 280);
+  --primary-foreground: oklch(0.11 0.035 275);
+  --secondary: oklch(0.17 0.03 275);
   --secondary-foreground: oklch(0.88 0.01 280);
-  --muted: oklch(0.18 0.025 280);
+  --muted: oklch(0.17 0.03 275);
   --muted-foreground: oklch(0.55 0.015 280);
 
-  /* Bright River purple accent — #BEAED5 → lifted for dark mode visibility */
-  --accent: oklch(0.76 0.10 300);
-  --accent-foreground: oklch(0.12 0.03 280);
-  --brand: oklch(0.76 0.10 300);
-  --brand-bright: oklch(0.83 0.10 300);
-  --brand-glow: oklch(0.76 0.10 300 / 25%);
-  --brand-subtle: oklch(0.76 0.10 300 / 8%);
-  --brand-dim: oklch(0.55 0.08 300);
+  /* Bright River purple — #BEAED5 / #BCADD4 */
+  --accent: oklch(0.76 0.09 300);
+  --accent-foreground: oklch(0.11 0.035 275);
+  --brand: oklch(0.76 0.09 300);
+  --brand-bright: oklch(0.82 0.09 300);
+  --brand-glow: oklch(0.76 0.09 300 / 20%);
+  --brand-subtle: oklch(0.76 0.09 300 / 7%);
+  --brand-dim: oklch(0.55 0.07 300);
 
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.76 0.10 300);
+  /* Bright River blue — #2EA3F2 (secondary accent) */
+  --brand-blue: oklch(0.68 0.16 245);
+
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.76 0.09 300);
   --destructive: oklch(0.704 0.191 22.216);
 }
 
@@ -106,20 +111,19 @@
   }
   html {
     @apply font-sans antialiased;
-    font-feature-settings: "ss01", "ss02";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Film grain — subtle analog texture */
+/* Subtle noise — less film grain, more professional texture */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.018;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px;
@@ -133,7 +137,7 @@ body::before {
     background: linear-gradient(
       90deg,
       oklch(1 0 0 / 0%) 0%,
-      oklch(1 0.01 75 / 4%) 50%,
+      oklch(0.76 0.09 300 / 4%) 50%,
       oklch(1 0 0 / 0%) 100%
     );
     background-size: 200% 100%;
@@ -147,7 +151,7 @@ body::before {
     height: 60%;
     background: radial-gradient(
       ellipse at center,
-      oklch(0.76 0.10 300 / 6%) 0%,
+      oklch(0.76 0.09 300 / 5%) 0%,
       transparent 70%
     );
     pointer-events: none;
@@ -156,9 +160,9 @@ body::before {
   .glow-line {
     background: linear-gradient(
       90deg,
-      oklch(0.78 0.16 75 / 0%) 0%,
-      oklch(0.78 0.16 75 / 40%) 50%,
-      oklch(0.78 0.16 75 / 0%) 100%
+      oklch(0.76 0.09 300 / 0%) 0%,
+      oklch(0.76 0.09 300 / 30%) 50%,
+      oklch(0.76 0.09 300 / 0%) 100%
     );
   }
 }

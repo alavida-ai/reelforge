@@ -35,10 +35,13 @@ function IndexPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-6 bg-background/80 backdrop-blur-sm">
-        <span className="font-display text-xl italic tracking-tight text-foreground">
-          ReelForge
-        </span>
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-5 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div className="flex items-center gap-3">
+          <img src="/bright-river-logo.svg" alt="Bright River" className="h-6 invert opacity-90" />
+          <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
+            ReelForge
+          </span>
+        </div>
         {phase !== "input" && (
           <div className="flex items-center gap-6 text-xs uppercase tracking-[0.15em]">
             {(["brand", "analysis", "reveal"] as const).map((p, i) => (
