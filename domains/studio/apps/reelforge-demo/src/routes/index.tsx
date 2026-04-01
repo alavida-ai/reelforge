@@ -35,34 +35,55 @@ function IndexPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-5 bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="flex items-center gap-3">
-          <img src="/bright-river-logo.svg" alt="Bright River" className="h-6" />
-          <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
-            ReelForge
-          </span>
-        </div>
-        {phase !== "input" && (
-          <div className="flex items-center gap-6 text-xs uppercase tracking-[0.15em]">
-            {(["brand", "analysis", "reveal"] as const).map((p, i) => (
-              <span key={p} className="flex items-center gap-6">
-                {i > 0 && <span className="h-px w-6 bg-border" />}
-                <span className={
-                  phase === p
-                    ? "text-brand font-medium"
-                    : phase === "reveal" || (phase === "analysis" && p === "brand")
-                      ? "text-muted-foreground"
-                      : "text-muted-foreground/30"
-                }>
-                  {p === "brand" ? "Extract" : p === "analysis" ? "Analyze" : "Hook"}
-                </span>
-              </span>
-            ))}
-          </div>
-        )}
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-background/90 backdrop-blur-sm border-b border-border">
+        <img src="/bright-river-logo.svg" alt="Bright River" className="h-4" />
+
+        {/* Step ladder — always visible */}
+        <nav className="flex items-center gap-0.5">
+          {([
+            { key: "input", label: "Upload", num: 1 },
+            { key: "brand", label: "Brand", num: 2 },
+            { key: "analysis", label: "Analyze", num: 3 },
+            { key: "reveal", label: "Hook", num: 4 },
+          ] as const).map((step, i) => {
+            const phases: Phase[] = ["input", "brand", "analysis", "reveal"];
+            const currentIdx = phases.indexOf(phase);
+            const stepIdx = phases.indexOf(step.key);
+            const isActive = step.key === phase;
+            const isDone = stepIdx < currentIdx;
+
+            return (
+              <div key={step.key} className="flex items-center">
+                {i > 0 && (
+                  <div className={`w-6 h-px mx-1 transition-colors ${isDone ? "bg-brand" : "bg-border"}`} />
+                )}
+                <div className={`flex items-center gap-1.5 px-2 py-1 rounded transition-all text-[11px] ${
+                  isActive
+                    ? "bg-foreground text-background font-semibold"
+                    : isDone
+                      ? "text-brand font-medium"
+                      : "text-muted-foreground/40"
+                }`}>
+                  <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold ${
+                    isActive
+                      ? "bg-background text-foreground"
+                      : isDone
+                        ? "bg-brand-subtle text-brand"
+                        : "bg-surface text-muted-foreground/40"
+                  }`}>
+                    {isDone ? "✓" : step.num}
+                  </span>
+                  {step.label}
+                </div>
+              </div>
+            );
+          })}
+        </nav>
+
+        <div className="w-16" /> {/* Spacer for balance */}
       </header>
 
-      <main className="pt-24 px-10 pb-10">
+      <main className="pt-16 px-6 pb-8">
         <AnimatePresence mode="wait">
           {phase === "input" && (
             <motion.div

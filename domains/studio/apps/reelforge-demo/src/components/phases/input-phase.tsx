@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
-import { Upload, Link, Cloud, FolderOpen, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Upload, Link, Cloud, FolderOpen, ArrowRight, Check, Clock, Shield, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PropertyAsset } from "@/lib/types";
 
@@ -35,174 +34,181 @@ export function InputPhase({ onGenerate }: InputPhaseProps) {
   );
 
   const canGenerate = url.trim().length > 0 && assets.length > 0;
+  const hasUrl = url.trim().length > 0;
+  const hasAssets = assets.length > 0;
 
   return (
-    <div className="relative mx-auto max-w-4xl pt-16">
-      {/* Ambient glow behind hero */}
-      <div className="ambient-glow" />
+    <div className="mx-auto max-w-5xl pt-6">
+      {/* Two-column layout: left = context + value, right = form */}
+      <div className="grid grid-cols-12 gap-12 items-start">
 
-      {/* Hero — just the headline, nothing else */}
-      <div className="relative mb-20">
-        <h1 className="font-display text-8xl leading-[1] tracking-tight text-foreground italic">
-          Craft your next
-          <br />
-          <span className="text-brand">property hook</span>
-        </h1>
-      </div>
+        {/* Left — value context */}
+        <div className="col-span-5 pt-4">
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">
+            Generate a branded
+            <br />
+            property hook
+          </h1>
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+            Upload property assets and a broker website. Our AI analyzes the listing,
+            extracts the brand, and generates a scroll-stopping hook — ready for
+            TikTok, Reels, and Shorts.
+          </p>
 
-      {/* Two-column input layout */}
-      <div className="grid grid-cols-5 gap-10">
-        {/* Left column — inputs */}
-        <div className="col-span-3 space-y-8">
-          {/* Brand URL */}
-          <div className="space-y-3">
-            <label className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
-              Realtor Website
-            </label>
-            <div className="relative group">
-              <Link className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-brand" />
-              <input
-                type="text"
-                placeholder="hfrealestategroup.nl"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                className="w-full h-14 rounded-lg border border-border bg-surface pl-12 pr-4 text-base text-foreground placeholder:text-muted-foreground/50 outline-none transition-all focus:border-brand/40 focus:ring-1 focus:ring-brand/20"
-              />
+          {/* Value metrics — mirrors Bright River's operational language */}
+          <div className="mt-8 space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-subtle">
+                <Clock className="h-4 w-4 text-brand" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Under 60 seconds</p>
+                <p className="text-xs text-muted-foreground">From upload to branded hook. No manual editing.</p>
+              </div>
             </div>
-          </div>
-
-          {/* File Drop Zone */}
-          <div className="space-y-3">
-            <label className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
-              Property Assets
-            </label>
-            <div
-              className={cn(
-                "relative rounded-lg border border-dashed border-border bg-surface/50 transition-all duration-200 cursor-pointer",
-                isDragging && "border-brand bg-brand-subtle scale-[1.01]",
-                assets.length === 0 ? "min-h-[180px]" : "min-h-[100px]"
-              )}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setIsDragging(true);
-              }}
-              onDragLeave={() => setIsDragging(false)}
-              onDrop={handleDrop}
-              onClick={() => {
-                const input = document.createElement("input");
-                input.type = "file";
-                input.multiple = true;
-                input.accept = "image/*,video/*";
-                input.onchange = () => handleFiles(input.files);
-                input.click();
-              }}
-            >
-              {assets.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full py-12 gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface">
-                    <Upload className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm text-foreground/80">
-                      Drop photos & videos here
-                    </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      or click to browse
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-5 gap-1.5 p-3">
-                  {assets.map((asset, i) => (
-                    <div
-                      key={i}
-                      className="relative aspect-square overflow-hidden rounded bg-muted"
-                    >
-                      {asset.type === "image" ? (
-                        <img
-                          src={asset.preview}
-                          alt=""
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <video
-                          src={asset.preview}
-                          className="h-full w-full object-cover"
-                          muted
-                        />
-                      )}
-                    </div>
-                  ))}
-                  <div className="flex aspect-square items-center justify-center rounded border border-dashed border-border/50">
-                    <Upload className="h-3.5 w-3.5 text-muted-foreground/50" />
-                  </div>
-                </div>
-              )}
+            <div className="flex items-start gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-subtle">
+                <Shield className="h-4 w-4 text-brand" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Brand-accurate first time</p>
+                <p className="text-xs text-muted-foreground">Automated CI extraction from the broker's website. No brand guides needed.</p>
+              </div>
             </div>
-
-            {/* Cloud storage optics */}
-            <div className="flex gap-3 pt-1">
-              <button className="flex items-center gap-1.5 text-[11px] text-muted-foreground/60 cursor-not-allowed" disabled>
-                <Cloud className="h-3 w-3" />
-                Google Drive
-              </button>
-              <button className="flex items-center gap-1.5 text-[11px] text-muted-foreground/60 cursor-not-allowed" disabled>
-                <FolderOpen className="h-3 w-3" />
-                Dropbox
-              </button>
+            <div className="flex items-start gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-subtle">
+                <TrendingDown className="h-4 w-4 text-brand" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Lower cost per listing</p>
+                <p className="text-xs text-muted-foreground">Scale hook production without scaling headcount.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Right column — generate CTA */}
-        <div className="col-span-2 flex flex-col justify-end">
-          <div className="space-y-4">
-            {/* Status indicators */}
-            <div className="space-y-2.5 pb-4">
-              <div className="flex items-center gap-2.5">
-                <div className={cn(
-                  "h-1.5 w-1.5 rounded-full transition-colors",
-                  url.trim() ? "bg-brand" : "bg-muted-foreground/20"
-                )} />
-                <span className={cn(
-                  "text-xs transition-colors",
-                  url.trim() ? "text-foreground" : "text-muted-foreground/40"
-                )}>
-                  Brand URL
-                </span>
+        {/* Right — the form card */}
+        <div className="col-span-7">
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm space-y-5">
+            {/* Brand URL */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Broker Website
+                </label>
+                {hasUrl && (
+                  <span className="flex items-center gap-1 text-[11px] text-brand font-medium">
+                    <Check className="h-3 w-3" />
+                  </span>
+                )}
               </div>
-              <div className="flex items-center gap-2.5">
-                <div className={cn(
-                  "h-1.5 w-1.5 rounded-full transition-colors",
-                  assets.length > 0 ? "bg-brand" : "bg-muted-foreground/20"
-                )} />
-                <span className={cn(
-                  "text-xs transition-colors",
-                  assets.length > 0 ? "text-foreground" : "text-muted-foreground/40"
-                )}>
-                  {assets.length > 0 ? `${assets.length} asset${assets.length > 1 ? "s" : ""} loaded` : "Property assets"}
-                </span>
+              <div className="relative group">
+                <Link className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50 transition-colors group-focus-within:text-brand" />
+                <input
+                  type="text"
+                  placeholder="e.g. hfrealestategroup.nl"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  className="w-full h-11 rounded-lg border border-border bg-background pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground/40 outline-none transition-all focus:border-brand focus:shadow-[0_0_0_3px_var(--brand-glow)]"
+                />
               </div>
             </div>
 
-            {/* Divider line */}
-            <div className="h-px bg-border" />
+            {/* Property Assets */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Property Assets
+                </label>
+                {hasAssets && (
+                  <span className="flex items-center gap-1 text-[11px] text-brand font-medium">
+                    <Check className="h-3 w-3" />
+                    {assets.length} file{assets.length > 1 ? "s" : ""}
+                  </span>
+                )}
+              </div>
+              <div
+                className={cn(
+                  "relative rounded-lg border bg-background transition-all duration-200 cursor-pointer overflow-hidden",
+                  isDragging
+                    ? "border-brand bg-brand-subtle shadow-[0_0_0_3px_var(--brand-glow)]"
+                    : "border-border hover:border-muted-foreground/20",
+                  assets.length === 0 ? "min-h-[140px]" : ""
+                )}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsDragging(true);
+                }}
+                onDragLeave={() => setIsDragging(false)}
+                onDrop={handleDrop}
+                onClick={() => {
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.multiple = true;
+                  input.accept = "image/*,video/*";
+                  input.onchange = () => handleFiles(input.files);
+                  input.click();
+                }}
+              >
+                {assets.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-8 gap-2.5">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface border border-border">
+                      <Upload className="h-4 w-4 text-muted-foreground/50" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-foreground/60">
+                        Drop photos & videos
+                      </p>
+                      <p className="mt-0.5 text-xs text-muted-foreground/40">
+                        or click to browse
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-6 gap-1 p-2">
+                    {assets.map((asset, i) => (
+                      <div key={i} className="relative aspect-square overflow-hidden rounded bg-surface">
+                        {asset.type === "image" ? (
+                          <img src={asset.preview} alt="" className="h-full w-full object-cover" />
+                        ) : (
+                          <video src={asset.preview} className="h-full w-full object-cover" muted />
+                        )}
+                      </div>
+                    ))}
+                    <div className="flex aspect-square items-center justify-center rounded border border-dashed border-border">
+                      <Upload className="h-3 w-3 text-muted-foreground/30" />
+                    </div>
+                  </div>
+                )}
+              </div>
 
-            {/* Generate button */}
+              <div className="flex gap-4">
+                <button className="flex items-center gap-1.5 text-[11px] text-muted-foreground/40 cursor-not-allowed" disabled>
+                  <Cloud className="h-3 w-3" />
+                  Google Drive
+                </button>
+                <button className="flex items-center gap-1.5 text-[11px] text-muted-foreground/40 cursor-not-allowed" disabled>
+                  <FolderOpen className="h-3 w-3" />
+                  Dropbox
+                </button>
+              </div>
+            </div>
+
+            {/* Generate */}
             <button
               disabled={!canGenerate}
               onClick={() => onGenerate(url, assets)}
               className={cn(
-                "group w-full flex items-center justify-between rounded-lg px-6 py-4 text-sm font-medium transition-all duration-300",
+                "group w-full flex items-center justify-center gap-2.5 rounded-lg h-11 text-sm font-semibold transition-all duration-200",
                 canGenerate
-                  ? "bg-brand text-primary-foreground hover:bg-brand-bright cursor-pointer"
-                  : "bg-surface-raised text-muted-foreground border border-border cursor-not-allowed"
+                  ? "bg-brand text-white hover:bg-brand-bright shadow-sm cursor-pointer"
+                  : "bg-surface text-muted-foreground/30 border border-border cursor-not-allowed"
               )}
             >
-              <span>Generate Hook</span>
+              Generate Hook
               <ArrowRight className={cn(
-                "h-4 w-4 transition-transform duration-300",
-                canGenerate && "group-hover:translate-x-1"
+                "h-4 w-4 transition-transform duration-200",
+                canGenerate && "group-hover:translate-x-0.5"
               )} />
             </button>
           </div>

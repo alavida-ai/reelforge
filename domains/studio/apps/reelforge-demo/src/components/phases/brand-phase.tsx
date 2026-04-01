@@ -73,7 +73,7 @@ export function BrandPhase({ url, assets, onComplete }: BrandPhaseProps) {
   return (
     <div className="mx-auto max-w-5xl pt-8">
       <div className="mb-10">
-        <h2 className="font-display text-4xl italic text-foreground">
+        <h2 className="text-lg font-semibold text-foreground">
           Extracting brand identity
         </h2>
         <p className="mt-3 text-sm text-muted-foreground">

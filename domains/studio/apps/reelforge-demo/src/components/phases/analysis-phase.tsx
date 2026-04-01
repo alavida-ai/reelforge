@@ -125,7 +125,7 @@ export function AnalysisPhase({ brandData, assets, onComplete }: AnalysisPhasePr
 function StageShimmer({ label }: { label: string }) {
   return (
     <div className="space-y-6 text-center">
-      <h3 className="font-display text-3xl italic text-foreground/30">{label}</h3>
+      <h3 className="font-display text-2xl text-foreground/30">{label}</h3>
       <div className="mx-auto max-w-lg space-y-3">
         <ShimmerBlock className="h-40 w-full" />
         <ShimmerBlock className="h-4 w-2/3 mx-auto" />
@@ -141,7 +141,7 @@ function IdentifyStage({ assets }: { assets: PropertyAsset[] }) {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="font-display text-3xl italic text-foreground">
+        <h3 className="font-display text-2xl text-foreground">
           {PROPERTY_CLASSIFICATION.type}
         </h3>
         <p className="text-sm text-muted-foreground">
@@ -205,7 +205,7 @@ function AnglesStage() {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="font-display text-3xl italic text-foreground">
+        <h3 className="font-display text-2xl text-foreground">
           Best hook for this property
         </h3>
         <p className="text-sm text-muted-foreground">
@@ -246,7 +246,7 @@ function AssetsStage() {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="font-display text-3xl italic text-foreground">
+        <h3 className="font-display text-2xl text-foreground">
           Selected for the hook
         </h3>
         <p className="text-sm text-muted-foreground">
@@ -290,7 +290,7 @@ function StoryboardStage() {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="font-display text-3xl italic text-foreground">
+        <h3 className="font-display text-2xl text-foreground">
           Hook sequence
         </h3>
         <p className="text-sm text-muted-foreground">
@@ -342,7 +342,7 @@ function ComposeStage({ brandData }: { brandData: BrandData }) {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="font-display text-3xl italic text-foreground">
+        <h3 className="font-display text-2xl text-foreground">
           Composing your hook
         </h3>
         <p className="text-sm text-muted-foreground">
