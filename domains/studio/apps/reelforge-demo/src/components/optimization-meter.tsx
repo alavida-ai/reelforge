@@ -10,11 +10,11 @@ export function OptimizationMeter({ score, className }: OptimizationMeterProps) 
   return (
     <div className={cn("space-y-3", className)}>
       <div className="flex items-baseline justify-between">
-        <span className="text-sm font-medium text-muted-foreground">
+        <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Hook Optimization
         </span>
         <motion.span
-          className="text-3xl font-bold text-brand"
+          className="font-mono text-3xl font-semibold text-brand"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}

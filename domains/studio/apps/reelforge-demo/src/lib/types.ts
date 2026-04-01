@@ -29,6 +29,22 @@ export interface InsightCard {
   detail?: string;
 }
 
+export interface DetectedFeature {
+  label: string;
+  confidence: number;
+}
+
+export interface StoryboardFrame {
+  label: string;
+  description: string;
+}
+
+export interface PerformanceComparison {
+  label: string;
+  value: number;
+  highlight?: boolean;
+}
+
 export interface HookData {
   videoSrc: string;
   pattern: string;

@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useCallback } from "react";
+import { useState, useCallback, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { InputPhase } from "@/components/phases/input-phase";
-import { BrandPhase } from "@/components/phases/brand-phase";
-import { AnalysisPhase } from "@/components/phases/analysis-phase";
-import { HookRevealPhase } from "@/components/phases/hook-reveal-phase";
 import type { Phase, PropertyAsset, BrandData } from "@/lib/types";
+
+const BrandPhase = lazy(() => import("@/components/phases/brand-phase").then(m => ({ default: m.BrandPhase })));
+const AnalysisPhase = lazy(() => import("@/components/phases/analysis-phase").then(m => ({ default: m.AnalysisPhase })));
+const HookRevealPhase = lazy(() => import("@/components/phases/hook-reveal-phase").then(m => ({ default: m.HookRevealPhase })));
 
 export const Route = createFileRoute("/")({
   component: IndexPage,
@@ -34,22 +35,31 @@ function IndexPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center px-8 py-5">
-        <span className="text-lg font-semibold tracking-tight text-foreground">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-6 bg-background/80 backdrop-blur-sm">
+        <span className="font-display text-xl italic tracking-tight text-foreground">
           ReelForge
         </span>
         {phase !== "input" && (
-          <div className="ml-auto flex items-center gap-2 text-sm text-muted-foreground">
-            <span className={phase === "brand" ? "text-brand font-medium" : ""}>Brand</span>
-            <span className="text-muted-foreground/30">→</span>
-            <span className={phase === "analysis" ? "text-brand font-medium" : ""}>Analysis</span>
-            <span className="text-muted-foreground/30">→</span>
-            <span className={phase === "reveal" ? "text-brand font-medium" : ""}>Hook</span>
+          <div className="flex items-center gap-6 text-xs uppercase tracking-[0.15em]">
+            {(["brand", "analysis", "reveal"] as const).map((p, i) => (
+              <span key={p} className="flex items-center gap-6">
+                {i > 0 && <span className="h-px w-6 bg-border" />}
+                <span className={
+                  phase === p
+                    ? "text-brand font-medium"
+                    : phase === "reveal" || (phase === "analysis" && p === "brand")
+                      ? "text-muted-foreground"
+                      : "text-muted-foreground/30"
+                }>
+                  {p === "brand" ? "Extract" : p === "analysis" ? "Analyze" : "Hook"}
+                </span>
+              </span>
+            ))}
           </div>
         )}
       </header>
 
-      <main className="pt-20 px-8 pb-8">
+      <main className="pt-24 px-10 pb-10">
         <AnimatePresence mode="wait">
           {phase === "input" && (
             <motion.div
@@ -71,11 +81,13 @@ function IndexPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <BrandPhase
-                url={brandUrl}
-                assets={assets}
-                onComplete={handleBrandComplete}
-              />
+              <Suspense fallback={null}>
+                <BrandPhase
+                  url={brandUrl}
+                  assets={assets}
+                  onComplete={handleBrandComplete}
+                />
+              </Suspense>
             </motion.div>
           )}
 
@@ -87,11 +99,13 @@ function IndexPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <AnalysisPhase
-                brandData={brandData!}
-                assets={assets}
-                onComplete={handleAnalysisComplete}
-              />
+              <Suspense fallback={null}>
+                <AnalysisPhase
+                  brandData={brandData!}
+                  assets={assets}
+                  onComplete={handleAnalysisComplete}
+                />
+              </Suspense>
             </motion.div>
           )}
 
@@ -102,7 +116,9 @@ function IndexPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
             >
-              <HookRevealPhase brandData={brandData!} />
+              <Suspense fallback={null}>
+                <HookRevealPhase brandData={brandData!} />
+              </Suspense>
             </motion.div>
           )}
         </AnimatePresence>

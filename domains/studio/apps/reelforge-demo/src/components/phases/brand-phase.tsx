@@ -16,7 +16,7 @@ interface BrandPhaseProps {
 }
 
 export function BrandPhase({ url, assets, onComplete }: BrandPhaseProps) {
-  const extractBrand = useAction(api.brands.extractBrand);
+  const extractBrand = useAction(api.brandActions.extractBrand);
   const [brandId, setBrandId] = useState<Id<"brands"> | null>(null);
   const [useFallback, setUseFallback] = useState(false);
 
@@ -71,14 +71,15 @@ export function BrandPhase({ url, assets, onComplete }: BrandPhaseProps) {
   }, [brandData, onComplete]);
 
   return (
-    <div className="mx-auto max-w-5xl pt-12">
-      <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-foreground">
-          Extracting Brand Identity
+    <div className="mx-auto max-w-5xl pt-8">
+      <div className="mb-10">
+        <h2 className="font-display text-4xl italic text-foreground">
+          Extracting brand identity
         </h2>
-        <p className="mt-2 text-muted-foreground">
-          Scanning <span className="font-mono text-foreground">{url}</span>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Scanning <span className="font-mono text-xs text-brand bg-brand-subtle px-2 py-0.5 rounded">{url}</span>
         </p>
+        <div className="mt-4 h-px glow-line" />
       </div>
 
       <div className="grid grid-cols-2 gap-8">
