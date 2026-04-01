@@ -1,8 +1,16 @@
 import { motion } from "framer-motion";
-import { Download, ArrowRight } from "lucide-react";
+import { Download, ArrowRight, Sparkles, TrendingUp, MessageSquare } from "lucide-react";
 import { VideoPlayer } from "@/components/video-player";
 import { DEMO_HOOK } from "@/lib/demo-data";
 import type { BrandData } from "@/lib/types";
+
+const VARIATION_PROMPTS = [
+  { label: "More brand presence", icon: "brand" },
+  { label: "Harder on product", icon: "product" },
+  { label: "Add influencer energy", icon: "influencer" },
+  { label: "Slower reveal", icon: "pacing" },
+  { label: "Different hook style", icon: "style" },
+];
 
 interface HookRevealPhaseProps {
   brandData: BrandData;
@@ -17,133 +25,95 @@ export function HookRevealPhase({ brandData }: HookRevealPhaseProps) {
   };
 
   return (
-    <div className="mx-auto max-w-6xl pt-8">
-      <motion.div
-        className="mb-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="font-display text-5xl italic text-foreground">
-          Your hook is ready
-        </h2>
-        <div className="mt-4 h-px glow-line" />
-      </motion.div>
-
-      <div className="grid grid-cols-12 gap-10">
-        {/* Video Player — hero size */}
+    <div className="flex min-h-[calc(100vh-6rem)] flex-col">
+      {/* Video — front and center, dominant */}
+      <div className="flex flex-1 items-center justify-center gap-12 px-4">
+        {/* The video — hero */}
         <motion.div
-          className="col-span-5 flex flex-col gap-5"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          className="flex flex-col items-center gap-4"
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <VideoPlayer
             src={DEMO_HOOK.videoSrc}
-            className="aspect-[9/16] w-full"
+            className="aspect-[9/16] w-[340px]"
           />
-          <button
-            onClick={handleDownload}
-            className="group flex w-full items-center justify-between rounded-lg bg-brand px-5 py-3.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-brand-bright"
-          >
-            <span className="flex items-center gap-2">
-              <Download className="h-4 w-4" />
-              Export Hook
-            </span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </button>
         </motion.div>
 
-        {/* Creative Brief — reads like a director's note, not a dashboard */}
-        <div className="col-span-7 space-y-8">
-          {/* Why this hook */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="space-y-4"
-          >
-            <h3 className="text-xs font-medium uppercase tracking-[0.15em] text-brand">
-              Why this hook
-            </h3>
-            <p className="text-base leading-relaxed text-foreground/90">
+        {/* Right side — insight + feedback, minimal */}
+        <motion.div
+          className="flex w-[320px] flex-col gap-6"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          {/* Quick insight */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-3.5 w-3.5 text-brand" />
+              <span className="text-xs font-medium uppercase tracking-[0.15em] text-brand">
+                {DEMO_HOOK.pattern}
+              </span>
+            </div>
+            <p className="text-sm leading-relaxed text-foreground/80">
               {DEMO_HOOK.patternReason}
             </p>
-          </motion.div>
+          </div>
 
-          {/* Key numbers — inline, not cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-          >
-            <div className="flex gap-8 border-y border-border py-5">
-              {DEMO_HOOK.metrics.map((metric, i) => (
-                <div key={i} className="space-y-1">
-                  <p className="font-mono text-xl font-semibold text-foreground">
-                    {metric.value}
-                  </p>
-                  <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                    {metric.label}
-                  </p>
-                </div>
-              ))}
+          {/* Key metrics — compact */}
+          <div className="flex gap-5 border-y border-border py-4">
+            {DEMO_HOOK.metrics.slice(1, 4).map((metric, i) => (
+              <div key={i} className="space-y-0.5">
+                <p className="font-mono text-base font-semibold text-foreground">
+                  {metric.value}
+                </p>
+                <p className="text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+                  {metric.label}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Variation / feedback area */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="h-3.5 w-3.5 text-muted-foreground" />
+              <span className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
+                Adjust
+              </span>
             </div>
-          </motion.div>
-
-          {/* What the data says */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="space-y-3"
-          >
-            <h3 className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
-              Supporting research
-            </h3>
-            <ul className="space-y-2.5">
-              {DEMO_HOOK.researchPoints.map((point, i) => (
-                <li
+            <div className="flex flex-wrap gap-1.5">
+              {VARIATION_PROMPTS.map((prompt, i) => (
+                <button
                   key={i}
-                  className="flex items-start gap-3 text-sm leading-relaxed text-foreground/70"
+                  className="rounded-full border border-border bg-surface px-3 py-1.5 text-[11px] text-foreground/70 transition-all hover:border-brand/40 hover:text-foreground hover:bg-brand-subtle cursor-pointer"
                 >
-                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Brand integration */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.5 }}
-            className="space-y-3"
-          >
-            <h3 className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
-              Brand integration
-            </h3>
-            <div className="flex items-center gap-3">
-              {brandData.colors.slice(0, 4).map((color, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <div
-                    className="h-4 w-4 rounded-sm border border-border"
-                    style={{ backgroundColor: color.hex }}
-                  />
-                  <span className="text-xs text-muted-foreground">{color.name}</span>
-                </div>
+                  {prompt.label}
+                </button>
               ))}
             </div>
-            <ul className="space-y-1.5 pt-1">
-              {DEMO_HOOK.brandElements.map((element, i) => (
-                <li key={i} className="text-sm text-foreground/70">
-                  {element}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
+            <textarea
+              placeholder="Or describe what you'd change..."
+              className="w-full resize-none rounded-lg border border-border bg-surface px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground/40 outline-none focus:border-brand/40 focus:ring-1 focus:ring-brand/20 h-16"
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-2">
+            <button
+              onClick={handleDownload}
+              className="group flex flex-1 items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-brand-bright"
+            >
+              <Download className="h-3.5 w-3.5" />
+              Export
+            </button>
+            <button className="flex items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-raised">
+              <TrendingUp className="h-3.5 w-3.5" />
+              New Variation
+            </button>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
