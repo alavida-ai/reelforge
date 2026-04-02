@@ -6,14 +6,13 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "@/styles/globals.css?url";
-import { ConvexProvider, convex } from "@/lib/convex";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ReelForge" },
+      { title: "ReelForge — Bright River" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -34,15 +33,12 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
       </head>
-      <body className="font-sans antialiased">
-        <ConvexProvider client={convex}>
-          <Outlet />
-        </ConvexProvider>
-
+      <body className="font-sans antialiased bg-background text-foreground min-h-screen">
+        <Outlet />
         <Scripts />
       </body>
     </html>

@@ -9,38 +9,109 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BrokerSlugRouteImport } from './routes/broker/$slug'
+import { Route as BrokerSlugIndexRouteImport } from './routes/broker/$slug/index'
+import { Route as BrokerSlugRevealRouteImport } from './routes/broker/$slug/reveal'
+import { Route as BrokerSlugProduceRouteImport } from './routes/broker/$slug/produce'
 
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrokerSlugRoute = BrokerSlugRouteImport.update({
+  id: '/broker/$slug',
+  path: '/broker/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrokerSlugIndexRoute = BrokerSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BrokerSlugRoute,
+} as any)
+const BrokerSlugRevealRoute = BrokerSlugRevealRouteImport.update({
+  id: '/reveal',
+  path: '/reveal',
+  getParentRoute: () => BrokerSlugRoute,
+} as any)
+const BrokerSlugProduceRoute = BrokerSlugProduceRouteImport.update({
+  id: '/produce',
+  path: '/produce',
+  getParentRoute: () => BrokerSlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/broker/$slug': typeof BrokerSlugRouteWithChildren
+  '/broker/$slug/produce': typeof BrokerSlugProduceRoute
+  '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
+  '/broker/$slug/': typeof BrokerSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/broker/$slug/produce': typeof BrokerSlugProduceRoute
+  '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
+  '/broker/$slug': typeof BrokerSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/broker/$slug': typeof BrokerSlugRouteWithChildren
+  '/broker/$slug/produce': typeof BrokerSlugProduceRoute
+  '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
+  '/broker/$slug/': typeof BrokerSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/broker/$slug'
+    | '/broker/$slug/produce'
+    | '/broker/$slug/reveal'
+    | '/broker/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/broker/$slug/produce'
+    | '/broker/$slug/reveal'
+    | '/broker/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/broker/$slug'
+    | '/broker/$slug/produce'
+    | '/broker/$slug/reveal'
+    | '/broker/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  BrokerSlugRoute: typeof BrokerSlugRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +119,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/broker/$slug': {
+      id: '/broker/$slug'
+      path: '/broker/$slug'
+      fullPath: '/broker/$slug'
+      preLoaderRoute: typeof BrokerSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/broker/$slug/': {
+      id: '/broker/$slug/'
+      path: '/'
+      fullPath: '/broker/$slug/'
+      preLoaderRoute: typeof BrokerSlugIndexRouteImport
+      parentRoute: typeof BrokerSlugRoute
+    }
+    '/broker/$slug/reveal': {
+      id: '/broker/$slug/reveal'
+      path: '/reveal'
+      fullPath: '/broker/$slug/reveal'
+      preLoaderRoute: typeof BrokerSlugRevealRouteImport
+      parentRoute: typeof BrokerSlugRoute
+    }
+    '/broker/$slug/produce': {
+      id: '/broker/$slug/produce'
+      path: '/produce'
+      fullPath: '/broker/$slug/produce'
+      preLoaderRoute: typeof BrokerSlugProduceRouteImport
+      parentRoute: typeof BrokerSlugRoute
+    }
   }
 }
 
+interface BrokerSlugRouteChildren {
+  BrokerSlugProduceRoute: typeof BrokerSlugProduceRoute
+  BrokerSlugRevealRoute: typeof BrokerSlugRevealRoute
+  BrokerSlugIndexRoute: typeof BrokerSlugIndexRoute
+}
+
+const BrokerSlugRouteChildren: BrokerSlugRouteChildren = {
+  BrokerSlugProduceRoute: BrokerSlugProduceRoute,
+  BrokerSlugRevealRoute: BrokerSlugRevealRoute,
+  BrokerSlugIndexRoute: BrokerSlugIndexRoute,
+}
+
+const BrokerSlugRouteWithChildren = BrokerSlugRoute._addFileChildren(
+  BrokerSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
+  BrokerSlugRoute: BrokerSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
