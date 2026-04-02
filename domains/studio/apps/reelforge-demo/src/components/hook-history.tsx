@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { cn } from "@/lib";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronDown, ChevronRight, CheckCircle2, Quote } from "lucide-react";
@@ -29,6 +28,21 @@ const HOOK_TYPES = [
   "Price Tag Reveal",
   "Door Reveal",
 ];
+
+/** Map hook type to a thumbnail image path */
+function getThumbnailForType(hookType: string): string {
+  if (hookType.includes("Door")) return "/property/exterior.jpg";
+  if (hookType.includes("Price")) return "/property/kitchen.jpg";
+  if (hookType.includes("Before") || hookType.includes("After"))
+    return "/property/living.jpg";
+  return "/property/exterior.jpg";
+}
+
+/** Map hook type to a video source path */
+function getVideoForType(hookType: string): string {
+  if (hookType.includes("Door")) return "/hooks/walk-through-door.mp4";
+  return "/hooks/homi-gift-reveal.mp4";
+}
 
 function generateDate(daysAgo: number): string {
   const d = new Date(2026, 3, 2); // 2026-04-02
@@ -81,9 +95,43 @@ function formatRejectionSource(date: string): string {
   return `Rejection via email — broker@homey.nl \u00b7 ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
-function RejectedHookDetail({ rejection }: { rejection: RejectionEntry }) {
+function HookThumbnail({ hookType }: { hookType: string }) {
+  const thumbnail = getThumbnailForType(hookType);
+  return (
+    <div className="w-[80px] h-[45px] rounded-md overflow-hidden bg-muted shrink-0 relative">
+      <img
+        src={thumbnail}
+        alt={hookType}
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+        <span className="text-white text-xs">&#9654;</span>
+      </div>
+    </div>
+  );
+}
+
+function HookVideoPreview({ hookType }: { hookType: string }) {
+  const videoSrc = getVideoForType(hookType);
+  return (
+    <div className="mb-3">
+      <video
+        className="w-[300px] aspect-video rounded-md bg-muted"
+        controls
+        preload="metadata"
+      >
+        <source src={videoSrc} type="video/mp4" />
+      </video>
+    </div>
+  );
+}
+
+function RejectedHookDetail({ rejection, hookType }: { rejection: RejectionEntry; hookType: string }) {
   return (
     <div className="space-y-3">
+      {/* Video preview */}
+      <HookVideoPreview hookType={hookType} />
+
       {/* Broker Feedback */}
       <div>
         <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
@@ -179,6 +227,9 @@ export function HookHistory({ broker }: HookHistoryProps) {
                     <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                   )}
 
+                  {/* Thumbnail */}
+                  <HookThumbnail hookType={entry.hookType} />
+
                   {/* Hook number */}
                   <span className="text-xs font-mono text-muted-foreground w-8 shrink-0">
                     #{entry.hookNumber}
@@ -213,10 +264,13 @@ export function HookHistory({ broker }: HookHistoryProps) {
                 {isExpanded && (
                   <div className="pl-9 pr-2 pb-3">
                     {entry.rejection ? (
-                      <RejectedHookDetail rejection={entry.rejection} />
+                      <RejectedHookDetail rejection={entry.rejection} hookType={entry.hookType} />
                     ) : (
-                      <div className="text-sm text-muted-foreground py-1">
-                        Delivered successfully &middot; No issues reported
+                      <div className="space-y-3">
+                        <HookVideoPreview hookType={entry.hookType} />
+                        <div className="text-sm text-muted-foreground py-1">
+                          Delivered successfully &middot; No issues reported
+                        </div>
                       </div>
                     )}
                   </div>
