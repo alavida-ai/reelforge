@@ -6,6 +6,8 @@ import type { HookSelectionResult } from "@/data/types";
 
 interface HookCardProps {
   result: HookSelectionResult;
+  selected?: boolean;
+  onSelect?: () => void;
 }
 
 const complexityColor: Record<string, string> = {
@@ -14,7 +16,7 @@ const complexityColor: Record<string, string> = {
   High: "text-[var(--color-red)] bg-[color:oklch(0.7_0.2_25/0.12)]",
 };
 
-export function HookCard({ result }: HookCardProps) {
+export function HookCard({ result, selected, onSelect }: HookCardProps) {
   const hookType = getHookType(result.hookTypeId);
   if (!hookType) return null;
 
@@ -25,10 +27,13 @@ export function HookCard({ result }: HookCardProps) {
   return (
     <Card
       className={cn(
-        "relative",
-        isRecommended && "border-[var(--color-green)]",
+        "relative transition-colors",
+        isRecommended && !selected && "border-[var(--color-green)]",
         isBlocked && "opacity-50",
+        selected && "border-foreground ring-1 ring-foreground",
+        onSelect && !isBlocked && "cursor-pointer hover:border-muted-foreground",
       )}
+      onClick={!isBlocked && onSelect ? onSelect : undefined}
     >
       {/* Recommended badge */}
       {isRecommended && (
