@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useAction, useQuery } from "convex/react";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowRight } from "lucide-react";
 import { BrandCard } from "@/components/brand-card";
 import { ShimmerBlock } from "@/components/shimmer";
 import { FALLBACK_BRAND, PHASE_TIMINGS } from "@/lib/demo-data";
@@ -60,15 +60,9 @@ export function BrandPhase({ url, assets, onComplete }: BrandPhaseProps) {
         ? FALLBACK_BRAND
         : null;
 
-  // Auto-advance when brand is ready
-  useEffect(() => {
-    if (brandData && brandData.status === "ready") {
-      const timer = setTimeout(() => {
-        onComplete(brandData);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [brandData, onComplete]);
+  const handleContinue = () => {
+    if (brandData) onComplete(brandData);
+  };
 
   return (
     <div className="mx-auto max-w-5xl pt-8">
@@ -139,6 +133,24 @@ export function BrandPhase({ url, assets, onComplete }: BrandPhaseProps) {
           </div>
         </div>
       </div>
+
+      {/* Continue button — only shows when brand is ready */}
+      {brandData && (
+        <motion.div
+          className="flex justify-center pt-8"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
+        >
+          <button
+            onClick={handleContinue}
+            className="group flex items-center gap-2 rounded-lg bg-foreground text-background px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90 cursor-pointer"
+          >
+            Continue
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </button>
+        </motion.div>
+      )}
     </div>
   );
 }

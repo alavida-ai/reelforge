@@ -91,7 +91,7 @@ export const DEMO_INSIGHTS: InsightCard[] = [
 ];
 
 export const DEMO_HOOK: HookData = {
-  videoSrc: "/hooks/homi-gift-reveal.mp4",
+  videoSrc: "/hooks/walk-through-door.mp4",
   pattern: "Gift Reveal",
   patternReason: "This property's modern renovation and large garden are perfect for the Gift Reveal pattern. The broker's brand wraps the home like a gift — creating a curiosity gap that forces the viewer to watch the unwrap. The Homi green works as the ribbon accent, making the brand feel integral to the reveal rather than slapped on afterward.",
   metrics: [

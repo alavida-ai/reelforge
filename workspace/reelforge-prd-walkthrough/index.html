@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReelForge PRD Walkthrough</title>
+<style>
+  :root {
+    --bg: #0d0e14;
+    --surface: #151720;
+    --surface-raised: #1c1e2a;
+    --border: #2a2d3a;
+    --fg: #e8e8ec;
+    --muted: #8b8d9a;
+    --brand: #b8a0d0;
+    --brand-subtle: rgba(184,160,208,0.1);
+    --green: #7aba7a;
+    --green-subtle: rgba(76,175,80,0.12);
+    --orange: #ff9800;
+    --red: #ff6b6b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; line-height: 1.5; }
+
+  /* Navigation */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-title { font-weight: 700; font-size: 14px; }
+  .nav-title span { color: var(--muted); font-weight: 400; }
+  .nav-tabs { display: flex; gap: 4px; }
+  .nav-tab { padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 500; cursor: pointer; transition: all 0.2s; color: var(--muted); border: 1px solid transparent; }
+  .nav-tab:hover { color: var(--fg); background: var(--surface); }
+  .nav-tab.active { background: var(--brand-subtle); color: var(--brand); border-color: rgba(184,160,208,0.2); font-weight: 600; }
+
+  /* Screen container */
+  .screen { display: none; padding: 60px 24px 40px; max-width: 1200px; margin: 0 auto; }
+  .screen.active { display: block; }
+
+  /* Common */
+  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .pill-green { background: var(--green-subtle); color: var(--green); }
+  .pill-orange { background: rgba(255,152,0,0.12); color: var(--orange); }
+  .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
+  .btn { display: inline-block; background: var(--brand-subtle); color: var(--brand); padding: 8px 20px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; }
+  h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .subtitle { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+  .divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+  /* Screen header */
+  .screen-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .screen-header .screen-num { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--brand); margin-bottom: 4px; }
+
+  /* Why section */
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .why-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .why-card .label { font-weight: 600; font-size: 12px; color: var(--brand); margin-bottom: 4px; }
+  .why-card p { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+  /* Demo script */
+  .demo-script { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-top: 16px; font-size: 12px; line-height: 1.7; }
+  .demo-script em { color: var(--muted); }
+  .demo-script p { margin-top: 8px; }
+
+  /* Annotations — clearly NOT part of the mockup */
+  .annotation { background: transparent; border-left: 3px solid var(--brand); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 12px; line-height: 1.7; position: relative; }
+  .annotation::before { content: "SPEC NOTE"; position: absolute; top: -8px; left: 12px; background: var(--bg); padding: 0 6px; font-size: 8px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); }
+  .annotation-label { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--brand); margin-bottom: 6px; }
+  .annotation-text { color: var(--muted); }
+  .annotation-text strong { color: var(--fg); }
+
+  /* Risk callout */
+  .risk { background: rgba(255,107,107,0.04); border-left: 3px solid var(--red); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 12px; line-height: 1.7; position: relative; }
+  .risk::before { content: "RISK"; position: absolute; top: -8px; left: 12px; background: var(--bg); padding: 0 6px; font-size: 8px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--red); }
+  .risk-label { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--red); margin-bottom: 6px; }
+  .risk-text { color: var(--muted); }
+  .risk-text strong { color: var(--fg); }
+
+  /* Mockup container — clearly marked */
+  .mockup-container { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 16px 0; }
+  .mockup-label { background: var(--surface-raised); padding: 6px 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .mockup-label span { font-size: 9px; color: var(--brand); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-title">ReelForge <span>PRD Walkthrough</span></div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showScreen('dashboard')">1. Dashboard</div>
+    <div class="nav-tab" onclick="showScreen('broker')">2. Broker Preset</div>
+    <div class="nav-tab" onclick="showScreen('production')">3. Production Flow</div>
+    <div class="nav-tab" onclick="showScreen('reveal')">4. Hook Reveal</div>
+  </div>
+</nav>
+
+<!-- ============================================ -->
+<!-- SCREEN 1: DASHBOARD                          -->
+<!-- ============================================ -->
+<div id="dashboard" class="screen active">
+  <div class="screen-header">
+    <div class="screen-num">Screen 1 of 4</div>
+    <h2>Production Dashboard</h2>
+    <div class="subtitle">The operations hub. What the BR operator sees when they open ReelForge.</div>
+  </div>
+
+  <!-- ANNOTATION: User Story -->
+  <div class="annotation">
+    <div class="annotation-label">User Story</div>
+    <div class="annotation-text">As a Bright River operator, I want to see all my broker clients in one view with production stats and performance data, so I can quickly select a broker and start producing hooks without re-entering any information.</div>
+  </div>
+
+  <!-- ANNOTATION: Why this screen exists -->
+  <div class="annotation" style="border-left-color: var(--green);">
+    <div class="annotation-label" style="color: var(--green);">Why this exists</div>
+    <div class="annotation-text">BR's current workflow is per-listing — every job starts from scratch. This dashboard reframes hook generation as an <strong>ongoing production operation</strong> with persistent broker profiles. When their contact sees this, he should think: "I can picture my team using this for 5,000 brokers." It mirrors how STREAM works — persistent client profiles, order management, production at scale.</div>
+  </div>
+
+  <!-- ANNOTATION: Header KPIs rationale -->
+  <div class="annotation" style="border-left-color: var(--orange);">
+    <div class="annotation-label" style="color: var(--orange);">KPI Design Decision</div>
+    <div class="annotation-text">
+      The header shows 4 metrics. Each is deliberately chosen to mirror BR's existing SLA language:<br><br>
+      <strong>47 Hooks This Week</strong> — signals volume. BR processes 40K+ images/day. Seeing a volume counter makes this feel like a production system, not a toy.<br><br>
+      <strong>34s Avg Turnaround</strong> — their language. BR promises 24H turnaround for photos. We do 34 seconds. That contrast is visceral.<br><br>
+      <strong>0.8% Return Rate</strong> — this IS their metric. Their RE benchmark is 0.8% rework rate. Showing the same number for hooks says: "we operate at your standard." They track this in SLAs with every client. Seeing it here means we speak their language.<br><br>
+      <strong>€2.30 Avg Cost</strong> — the margin killer. BR currently charges €3,500 per custom hook. That number sitting in the header does the selling without anyone saying a word. The BR contact will do the math: €2.30 × 5,000 brokers = margin machine.
+    </div>
+  </div>
+
+  <!-- THE MOCKUP -->
+  <div class="mockup-container">
+  <div class="mockup-label">Mockup — Production Dashboard <span>What the operator sees</span></div>
+  <div class="card" style="border: none; border-radius: 0;">
+    <!-- Header KPIs -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 16px;">
+      <div style="font-weight: 700; font-size: 15px;">Bright River <span style="color: var(--muted); font-weight: 400;">/ ReelForge</span></div>
+      <div style="display: flex; gap: 20px;">
+        <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">47</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);">Hooks This Week</div></div>
+        <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">34s</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);">Avg Turnaround</div></div>
+        <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700; color: var(--green);">0.8%</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);">Return Rate</div></div>
+        <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">€2.30</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);">Avg Cost / Hook</div></div>
+      </div>
+    </div>
+
+    <!-- Broker table -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <div><span style="font-weight: 600;">Broker Clients</span> <span style="color: var(--muted); font-size: 11px;">· 2 active · 47 hooks delivered</span></div>
+      <div style="background: var(--surface-raised); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: 11px; color: var(--muted);">+ Add Broker</div>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+      <thead>
+        <tr style="border-bottom: 1px solid var(--border);">
+          <th style="text-align: left; padding: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500;">Broker</th>
+          <th style="text-align: left; padding: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500;">Brand</th>
+          <th style="text-align: center; padding: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500;">Hooks</th>
+          <th style="text-align: center; padding: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500;">Return Rate</th>
+          <th style="text-align: center; padding: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500;">Avg Views</th>
+          <th style="text-align: right; padding: 8px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 10px 8px;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 28px; height: 28px; border-radius: 6px; background: #4CAF50; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white;">H</div><div><div style="font-weight: 600;">Homey</div><div style="font-size: 10px; color: var(--muted);">Modern · Mid-market</div></div></div></td>
+          <td style="padding: 10px 8px;"><div style="display: flex; gap: 3px;"><div style="width: 14px; height: 14px; border-radius: 3px; background: #4CAF50;"></div><div style="width: 14px; height: 14px; border-radius: 3px; background: #2E7D32;"></div><div style="width: 14px; height: 14px; border-radius: 3px; background: #1B1B1B;"></div></div></td>
+          <td style="text-align: center; padding: 10px 8px;" class="mono"><strong>32</strong></td>
+          <td style="text-align: center; padding: 10px 8px;" class="mono"><div><strong style="color: var(--green);">0.6%</strong></div><div style="font-size: 9px; color: var(--green);">↓ 0.3pp</div></td>
+          <td style="text-align: center; padding: 10px 8px;" class="mono"><div><strong>8.4K</strong></div><div style="font-size: 9px; color: var(--green);">↑ 23%</div></td>
+          <td style="text-align: right; padding: 10px 8px;"><span class="btn" onclick="showScreen('broker')">Generate Hook →</span></td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 10px 8px;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 28px; height: 28px; border-radius: 6px; background: #C62828; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white;">V</div><div><div style="font-weight: 600;">Van der Berg Makelaars</div><div style="font-size: 10px; color: var(--muted);">Traditional · Premium</div></div></div></td>
+          <td style="padding: 10px 8px;"><div style="display: flex; gap: 3px;"><div style="width: 14px; height: 14px; border-radius: 3px; background: #C62828;"></div><div style="width: 14px; height: 14px; border-radius: 3px; background: #8E0000;"></div><div style="width: 14px; height: 14px; border-radius: 3px; background: #212121;"></div></div></td>
+          <td style="text-align: center; padding: 10px 8px;" class="mono"><strong>15</strong></td>
+          <td style="text-align: center; padding: 10px 8px;" class="mono"><div><strong style="color: var(--green);">1.2%</strong></div><div style="font-size: 9px; color: var(--green);">↓ 0.5pp</div></td>
+          <td style="text-align: center; padding: 10px 8px;" class="mono"><div><strong>12.1K</strong></div><div style="font-size: 9px; color: var(--green);">↑ 18%</div></td>
+          <td style="text-align: right; padding: 10px 8px;"><span class="btn">Generate Hook →</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div><!-- end mockup-container -->
+
+  <!-- RISK: Dashboard overdelivery -->
+  <div class="risk">
+    <div class="risk-label">Risk: Over-engineering the entry point</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "We just asked for hooks. Why are they showing me a dashboard with KPIs and broker management?"<br><br>
+      <strong>Mitigation:</strong> Thomas should frame this in the first 5 seconds: <em>"This is what your production team would open every day."</em> It's not a dashboard FOR them to analyze — it's a starting point to pick a broker and go. The KPIs are ambient context, not the point. If it feels too heavy, Thomas should click into Homey within 10 seconds and not linger.<br><br>
+      <strong>Alternative if it doesn't land:</strong> We can strip the header KPIs and just show the broker table. The dashboard becomes a simple list view. Less impressive, but less risk of "you're building more than we asked for."
+    </div>
+  </div>
+
+  <!-- RISK: They already have their own systems -->
+  <div class="risk">
+    <div class="risk-label">Risk: "We already have STREAM for this"</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "We already manage our clients in STREAM. Why do we need another system?"<br><br>
+      <strong>Mitigation:</strong> ReelForge is not replacing STREAM. It's a production tool that sits alongside it. STREAM handles photo editing orders. ReelForge handles hook generation. In the future, they could integrate (hook generation as a STREAM workflow), but for the POC it's standalone. Thomas should say: <em>"This would plug into your existing workflow — your team already has the broker info in STREAM, we'd pull from that."</em>
+    </div>
+  </div>
+
+  <!-- ANNOTATION: Broker table columns -->
+  <div class="annotation" style="border-left-color: var(--brand);">
+    <div class="annotation-label">Table Column Decisions</div>
+    <div class="annotation-text">
+      <strong>Broker + DNA tags ("Modern · Mid-market")</strong> — shows the system has profiled each broker. Not just a name, but a classification that drives hook selection. When the premium broker shows "Traditional · Premium," the contact immediately gets that the same system produces different results.<br><br>
+      <strong>Brand colors</strong> — visual proof that we've extracted the brand. Quick recognition for the operator.<br><br>
+      <strong>Hooks count</strong> — production volume per broker. Signals ongoing relationship, not one-off.<br><br>
+      <strong>Return Rate</strong> — this is their SLA metric. 0.8% rework rate is their RE benchmark. Showing per-broker return rates (Homey 0.6%, Van der Berg 1.2%) says: "we track what you track, at your standard." The brand DNA and guardrails from Screen 2 are WHY the return rate is low — the system doesn't produce hooks that violate brand rules.<br><br>
+      <strong>Avg Views (the Trojan horse)</strong> — they don't track this. It sits casually in a table full of metrics they recognize. They didn't ask for it. But it's there. When they notice it, the question forms naturally: "Wait — you track how hooks perform after delivery?" That's how you expand their value offer without leading with it. Meet them at their KPIs, show one column they've never had.<br><br>
+      <strong>Sub-trends on both columns:</strong> Return Rate shows "↓ 0.3pp" (improving — fewer returns as the system learns guardrails). Avg Views shows "↑ 23%" (views growing as hooks optimize). Each metric owns its own trend. No orphaned "trend" column that doesn't belong to anything. Every number on the page is specific and accountable.
+    </div>
+  </div>
+
+  <!-- ANNOTATION: What BR contact is thinking -->
+  <div class="annotation" style="border-left-color: var(--red);">
+    <div class="annotation-label" style="color: var(--red);">What the BR contact is thinking</div>
+    <div class="annotation-text">
+      <strong>"0.8% return rate — that's our number."</strong> He recognizes the metric immediately. It's their RE SLA benchmark. Seeing it on hooks means: these guys understand how we operate. Trust starts here.<br><br>
+      <strong>"€2.30... we charge €3,500..."</strong> He's doing the margin math. Don't say it for him.<br><br>
+      <strong>"34 seconds? We do 24 hours."</strong> The turnaround contrast hits. Even if he knows it's a demo, the order of magnitude difference is memorable.<br><br>
+      <strong>"Avg Views... huh."</strong> He didn't expect to see this. He scans past it, then comes back. Every hook they've ever delivered disappeared into the broker's feed. This table shows it coming back. He doesn't say anything yet — but the question is forming.<br><br>
+      <strong>"Two brokers, different DNA tags."</strong> He sees Homey (Modern/Mid-market) next to Van der Berg (Traditional/Premium). Different return rates too (0.6% vs 1.2%). Already imagining 5,000 rows. "What happens when I click one?"
+    </div>
+  </div>
+
+  <!-- ANNOTATION: Demo script -->
+  <div class="demo-script">
+    <strong>Demo script:</strong>
+    <p><strong>Thomas opens the app.</strong> Lets the header KPIs breathe for 2 seconds. Says nothing about the cost number.</p>
+    <p><em>"This is your production dashboard. Every broker in your system — brand identity, compliance, performance data. Your team opens this, picks a broker, generates a hook. Let me show you Homey."</em></p>
+    <p>Clicks <strong>Generate Hook →</strong> on the Homey row.</p>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 2: BROKER PRESET                      -->
+<!-- ============================================ -->
+<div id="broker" class="screen">
+  <div class="screen-header">
+    <div class="screen-num">Screen 2 of 4</div>
+    <h2>Broker Production Preset — Homey</h2>
+    <div class="subtitle">The intelligence brief. Not a form — a generated analysis of who this broker is and how to produce for them.</div>
+  </div>
+
+  <!-- ANNOTATION: User Story -->
+  <div class="annotation">
+    <div class="annotation-label">User Story</div>
+    <div class="annotation-text">As a Bright River operator, I want to see a full intelligence profile for each broker — their brand identity, DNA, constraints, and performance history — so I can trust the system will produce the right hook without me having to specify everything manually each time.</div>
+  </div>
+
+  <!-- ANNOTATION: Why this screen exists -->
+  <div class="annotation" style="border-left-color: var(--green);">
+    <div class="annotation-label" style="color: var(--green);">Why this exists</div>
+    <div class="annotation-text">
+      This is the key differentiator from hiring a freelancer. A freelancer starts from zero every time. The production preset means the system has <strong>studied this broker</strong> — who they are, who they serve, how they communicate, what hook types fit, what's forbidden. Every hook produced is informed by this intelligence. It's like STREAM's pre-defined instructions (Amazon specs, Zalando specs) — but for creative strategy, not crop dimensions.<br><br>
+      The three-column layout separates: <strong>Left</strong> = what we extracted (visual identity + production stats), <strong>Center</strong> = what we understood (brand intelligence — the star), <strong>Right</strong> = what we learned over time (performance + optimization data).
+    </div>
+  </div>
+
+  <!-- ANNOTATION: Brand Intelligence is the product -->
+  <div class="annotation" style="border-left-color: var(--orange);">
+    <div class="annotation-label" style="color: var(--orange);">Design Decision: Brand Intelligence is the product</div>
+    <div class="annotation-text">
+      The center column — Brand Intelligence — is deliberately the largest. This IS the product. The hook video is the output, but the intelligence is why the output is good.<br><br>
+      <strong>"Who they are"</strong> — narrative summary, not tags. Shows we deeply understood the brand, not just scraped colors.<br>
+      <strong>"Target audience signal"</strong> — demographics, price segment, geography. Determines which hook formats resonate with their audience.<br>
+      <strong>"Communication style"</strong> — tone tags + a voice description ("your friend who knows real estate"). This shapes the influencer's demeanor, voiceover tone, caption style.<br>
+      <strong>"Hook approach rules"</strong> — ✓/✗/~ for each hook type with reasoning. This is prescriptive — the system uses these to filter and rank hooks. Cinematic ✗ means it's greyed out in Stage 3.<br>
+      <strong>"Brand guardrails"</strong> — hard constraints the system never violates. This is HOW brand compliance stays at 100%.
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "How did you get all this information?"</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "This looks impressive but where did you actually get the brand DNA? You scraped the website for colors, sure — but how do you know their audience is 25-38 couples?"<br><br>
+      <strong>Mitigation:</strong> Thomas should be transparent: <em>"We extract the visual identity automatically from the website. The brand DNA comes from a combination of scraping + AI analysis of their content, positioning, and market segment. In production, the operator would review and refine this — just like your team reviews edited images in STREAM before approving."</em> The one-time review is acceptable in their workflow. They already do it for photo editing specs.<br><br>
+      <strong>For the demo:</strong> It's hardcoded. Don't pretend it was scraped live. Thomas can say: "We've pre-built these profiles for today's demo."
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "This is too much detail — our operators won't read all this"</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "My team processes thousands of listings. They won't sit and read a brand intelligence page."<br><br>
+      <strong>Mitigation:</strong> The operator doesn't need to read it every time. It's set up once, reviewed once, then the system uses it automatically. The operator's daily flow is: open dashboard → click broker → upload property → get hook. The preset page is for onboarding and review, not for daily use. Thomas: <em>"Your team sets this up once per broker. After that, it runs in the background."</em>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="mockup-container">
+  <div class="mockup-label">Mockup — Broker Production Preset (Homey) <span>One-time setup, then runs automatically</span></div>
+  <div style="padding: 20px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <div style="font-size: 12px; color: var(--muted); cursor: pointer;" onclick="showScreen('dashboard')">← Brokers <span style="margin: 0 4px;">/</span> <span style="font-weight: 600; color: var(--fg);">Homey</span></div>
+    <span class="btn" onclick="showScreen('production')">Generate Hook for Homey →</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 220px 1fr 260px; gap: 14px;">
+    <!-- COL 1: Visual Identity + Production -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="card">
+        <div class="section-label">Visual Identity</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: #4CAF50; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: white;">H</div>
+          <div><div style="font-weight: 700; font-size: 14px;">Homey</div><div style="font-size: 10px; color: var(--muted);">homey.nl</div></div>
+        </div>
+        <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+          <div style="width: 24px; height: 24px; border-radius: 4px; background: #4CAF50;"></div>
+          <div style="width: 24px; height: 24px; border-radius: 4px; background: #2E7D32;"></div>
+          <div style="width: 24px; height: 24px; border-radius: 4px; background: #1B1B1B;"></div>
+          <div style="width: 24px; height: 24px; border-radius: 4px; background: #FFFFFF; border: 1px solid var(--border);"></div>
+        </div>
+        <div style="font-size: 11px; color: var(--muted);">Montserrat · Inter</div>
+      </div>
+      <div class="card">
+        <div class="section-label">Production</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Hooks</span><span class="mono" style="font-weight: 600;">32</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Return Rate</span><span class="mono" style="font-weight: 600; color: var(--green);">0.6%</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Turnaround</span><span class="mono" style="font-weight: 600;">34s</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Cost / Hook</span><span class="mono" style="font-weight: 600;">€2.10</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: Brand Intelligence -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <div class="section-label" style="margin-bottom: 0;">Brand Intelligence</div>
+        <div style="font-size: 9px; color: var(--muted); background: var(--bg); padding: 3px 8px; border-radius: 4px;">Extracted from website + social + market data</div>
+      </div>
+
+      <div style="margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <h3 style="font-size: 13px;">Who they are</h3>
+        <p style="font-size: 12px; color: var(--muted); line-height: 1.7;">Homey is a <strong style="color: var(--fg);">modern, approachable real estate platform</strong> targeting first-time buyers and young families in mid-market Dutch suburban areas. They compete on transparency and ease of use — not prestige. Brand language emphasizes "making it easy" and "feeling at home."</p>
+      </div>
+
+      <div style="margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <h3 style="font-size: 13px;">Target audience signal</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 8px;"><div style="font-size: 10px; color: var(--muted);">Primary demographic</div><div style="font-size: 12px; font-weight: 500;">25–38, couples, first home</div></div>
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 8px;"><div style="font-size: 10px; color: var(--muted);">Price segment</div><div style="font-size: 12px; font-weight: 500;">€250K–€500K listings</div></div>
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 8px;"><div style="font-size: 10px; color: var(--muted);">Geographic focus</div><div style="font-size: 12px; font-weight: 500;">Suburban Netherlands</div></div>
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 8px;"><div style="font-size: 10px; color: var(--muted);">Social presence</div><div style="font-size: 12px; font-weight: 500;">Instagram (active) · TikTok (new)</div></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <h3 style="font-size: 13px;">Communication style</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px;">
+          <span class="pill pill-green">Warm</span><span class="pill pill-green">Conversational</span><span class="pill pill-green">Emoji-friendly</span><span class="pill pill-green">Casual Dutch</span><span class="pill pill-green">Question-led hooks</span>
+        </div>
+        <p style="font-size: 11px; color: var(--muted);">Voice: <strong style="color: var(--fg);">"Your friend who happens to know real estate."</strong> Not authoritative. Not salesy.</p>
+      </div>
+
+      <div style="margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <h3 style="font-size: 13px;">Hook approach rules</h3>
+        <div style="display: flex; flex-direction: column; gap: 5px; font-size: 12px;">
+          <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--green);">✓</span><span><strong>AI Influencer</strong> — approachable persona, casual outfit, matches "friend" tone</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--green);">✓</span><span><strong>Door Reveal</strong> — builds curiosity, works for suburban properties with clear front doors</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--green);">✓</span><span><strong>Price Tag Reveal</strong> — "guess the price" fits their transparency positioning</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--red);">✗</span><span style="color: var(--muted);"><strong>Cinematic / Drone</strong> — too premium for brand, creates expectation mismatch</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--red);">✗</span><span style="color: var(--muted);"><strong>Luxury Reveal</strong> — contradicts mid-market identity</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--orange);">~</span><span><strong>Before/After</strong> — works for renovated properties only, conditional</span></div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size: 13px;">Brand guardrails</h3>
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <div style="display: flex; align-items: start; gap: 8px; font-size: 12px; background: rgba(255,107,107,0.06); padding: 8px 10px; border-radius: 6px; border: 1px solid rgba(255,107,107,0.12);"><span style="color: var(--red);">⛔</span><span>Never position as luxury or exclusive — undermines accessibility promise</span></div>
+          <div style="display: flex; align-items: start; gap: 8px; font-size: 12px; background: rgba(255,107,107,0.06); padding: 8px 10px; border-radius: 6px; border: 1px solid rgba(255,107,107,0.12);"><span style="color: var(--red);">⛔</span><span>No high-fashion styling on influencer — keep casual, relatable</span></div>
+          <div style="display: flex; align-items: start; gap: 8px; font-size: 12px; background: rgba(255,152,0,0.06); padding: 8px 10px; border-radius: 6px; border: 1px solid rgba(255,152,0,0.12);"><span style="color: var(--orange);">⚠️</span><span>Dutch language only for voiceover — English captions OK for reach</span></div>
+        </div>
+      </div>
+
+      <!-- Rejection log -->
+      <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h3 style="font-size: 13px; margin-bottom: 0;">Rejection Log</h3>
+          <div style="font-size: 9px; color: var(--muted); background: var(--bg); padding: 3px 8px; border-radius: 4px;">2 of 32 hooks returned · 0.6% return rate</div>
+        </div>
+
+        <!-- Log entries -->
+        <div style="display: flex; flex-direction: column; gap: 0;">
+
+          <!-- Entry 1 -->
+          <div style="border-left: 2px solid var(--red); padding: 10px 14px; margin-left: 8px; position: relative;">
+            <div style="position: absolute; left: -5px; top: 14px; width: 8px; height: 8px; border-radius: 50%; background: var(--red);"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <div style="font-size: 10px; color: var(--red); font-weight: 600;">RETURNED</div>
+              <div style="font-size: 10px; color: var(--muted);">Hook #8 · Mar 18, 2026</div>
+            </div>
+            <div style="font-size: 12px; margin-bottom: 6px;">Influencer styling too formal — broker said "this doesn't look like us"</div>
+            <div style="background: var(--bg); border-radius: 6px; padding: 8px 10px; border: 1px solid var(--border);">
+              <div style="font-size: 10px; color: var(--brand); font-weight: 600; margin-bottom: 3px;">System analysis</div>
+              <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Influencer was dressed in semi-formal blazer. Homey's tone is "friend who knows real estate" — formal styling contradicts approachable positioning. The broker's audience (25-38, first-time buyers) expects casual, relatable content.</div>
+              <div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;">
+                <span style="font-size: 10px; color: var(--green); font-weight: 600;">→ Guardrail added:</span>
+                <span style="font-size: 10px; background: rgba(255,107,107,0.08); color: var(--fg); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(255,107,107,0.15);">⛔ No formal/business attire on influencer</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 2 -->
+          <div style="border-left: 2px solid var(--red); padding: 10px 14px; margin-left: 8px; position: relative;">
+            <div style="position: absolute; left: -5px; top: 14px; width: 8px; height: 8px; border-radius: 50%; background: var(--red);"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <div style="font-size: 10px; color: var(--red); font-weight: 600;">RETURNED</div>
+              <div style="font-size: 10px; color: var(--muted);">Hook #3 · Mar 4, 2026</div>
+            </div>
+            <div style="font-size: 12px; margin-bottom: 6px;">Background hallucination — AI fabricated a garden fence that doesn't exist on the property</div>
+            <div style="background: var(--bg); border-radius: 6px; padding: 8px 10px; border: 1px solid var(--border);">
+              <div style="font-size: 10px; color: var(--brand); font-weight: 600; margin-bottom: 3px;">System analysis</div>
+              <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Wide-angle shot gave the model too much background context to fill. AI hallucinated property details (fence, garden path) that don't match the actual listing. This is a known risk when the camera is positioned far from the subject — the model invents surrounding elements.</div>
+              <div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;">
+                <span style="font-size: 10px; color: var(--green); font-weight: 600;">→ Guardrail added:</span>
+                <span style="font-size: 10px; background: rgba(255,107,107,0.08); color: var(--fg); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(255,107,107,0.15);">⛔ Close framing only — minimal visible background</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline footer -->
+          <div style="border-left: 2px solid var(--green); padding: 10px 14px; margin-left: 8px; position: relative;">
+            <div style="position: absolute; left: -5px; top: 14px; width: 8px; height: 8px; border-radius: 50%; background: var(--green);"></div>
+            <div style="font-size: 10px; color: var(--green); font-weight: 600; margin-bottom: 2px;">NO RETURNS SINCE</div>
+            <div style="font-size: 11px; color: var(--muted);">24 consecutive hooks accepted · Mar 18 → present</div>
+            <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Return rate: <strong style="color: var(--fg);">0.9%</strong> (month 1) → <strong style="color: var(--green);">0.6%</strong> (month 3)</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Performance -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <!-- Production SLA metrics first — their language -->
+      <div class="card">
+        <div class="section-label">Production SLA</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Return Rate</span><div><span class="mono" style="font-weight: 600; color: var(--green);">0.6%</span> <span style="font-size: 9px; color: var(--green);">↓ 0.3pp</span></div></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Turnaround</span><span class="mono" style="font-weight: 600;">34s</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Cost / Hook</span><span class="mono" style="font-weight: 600;">€2.10</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Hooks Delivered</span><span class="mono" style="font-weight: 600;">32</span></div>
+        </div>
+        <div style="font-size: 10px; color: var(--muted); margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border);">Return rate improving — 2 rejections in 32 hooks, both fed back into guardrails.</div>
+      </div>
+      <!-- Content performance second — the quiet value-add -->
+      <div class="card">
+        <div class="section-label">Content Performance</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Avg Views</span><div><span class="mono" style="font-weight: 600;">8.4K</span> <span style="font-size: 9px; color: var(--green);">↑ 23%</span></div></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Top Hook</span><span style="font-weight: 500;">Door Reveal</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">vs Standard</span><span class="mono" style="font-weight: 600; color: var(--green);">3.2x</span></div>
+        </div>
+        <div style="font-size: 10px; color: var(--muted); margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border);">Downstream data BR has never tracked. Sits here quietly.</div>
+      </div>
+      <div class="card">
+        <div class="section-label">Data Depth</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div><div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;"><span style="color: var(--muted);">Market</span><span class="mono" style="font-size: 10px; color: var(--green);">2,400+</span></div><div style="height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;"><div style="width: 85%; height: 100%; background: var(--green); border-radius: 2px;"></div></div></div>
+          <div><div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;"><span style="color: var(--muted);">Cross-industry</span><span class="mono" style="font-size: 10px; color: var(--green);">840</span></div><div style="height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;"><div style="width: 65%; height: 100%; background: var(--green); border-radius: 2px;"></div></div></div>
+          <div><div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;"><span style="color: var(--muted);">Broker-specific</span><span class="mono" style="font-size: 10px; color: var(--orange);">32</span></div><div style="height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;"><div style="width: 25%; height: 100%; background: var(--orange); border-radius: 2px;"></div></div></div>
+        </div>
+        <p style="font-size: 10px; color: var(--muted); margin-top: 8px;">At 100+ hooks → shifts to broker-optimized predictions</p>
+      </div>
+    </div>
+  </div>
+  </div><!-- end padding -->
+  </div><!-- end mockup-container -->
+
+  <!-- ANNOTATION: What BR contact is thinking -->
+  <div class="annotation" style="border-left-color: var(--red);">
+    <div class="annotation-label" style="color: var(--red);">What the BR contact is thinking</div>
+    <div class="annotation-text">
+      <strong>"They understood our brokers."</strong> Seeing "Modern · Mid-market · Approachable" next to Homey — he knows that's accurate. The system got it right.<br><br>
+      <strong>"Cinematic ✗ — yeah, that's right."</strong> He knows Homey wouldn't want drone shots. The fact that the system knows this too builds trust.<br><br>
+      <strong>"Month 1: 4.2K → Month 3: 8.4K"</strong> — the optimization trajectory. He's thinking: "Our current hooks don't improve. They're static. This gets better."<br><br>
+      <strong>"We don't have this on any of our 5,000 brokers."</strong> The brand intelligence profile is something they've never built. They have colors and logos in STREAM, but not audience analysis, communication style, hook approach rules. This is new.
+    </div>
+  </div>
+
+  <!-- ANNOTATION: Performance column rationale -->
+  <div class="annotation" style="border-left-color: var(--brand);">
+    <div class="annotation-label">Right Column: Meet them, then expand</div>
+    <div class="annotation-text">
+      <strong>Production SLA (top card — their world)</strong> — return rate with trend, turnaround, cost, hooks delivered. This is their SLA reporting format. They do this for photo editing. Now they see it for hooks. The return rate trend (↓ 0.3pp) shows the guardrail learning loop in action: rejections feed back into rules, future return rate drops. That's the optimization story told in THEIR metric.<br><br>
+      <strong>Content Performance (bottom card — the expansion)</strong> — avg views, top hook type, vs-standard multiplier. This sits below their SLA metrics, not above. It's secondary. But it's there. When the contact sees "8.4K avg views ↑ 23%" he'll think: "We've never tracked this." That's the door opening to the broader conversation — but we don't walk through it unless he does.<br><br>
+      <strong>Data Depth (progress bars)</strong> — shows where confidence comes from. Market data (high), cross-industry (medium), broker-specific (building). Honest about the cold start. This supports both the return rate story (more data → better guardrails → fewer rejections) and the views story (more data → better hook selection → higher views).
+    </div>
+  </div>
+
+  <div class="demo-script">
+    <strong>Demo script:</strong>
+    <p><em>"When we onboard a broker, we build a brand intelligence profile. We know Homey serves first-time buyers, their tone is 'your friend who knows real estate.' Influencer hooks work — but she needs to feel relatable, not glamorous. Cinematic? That would hurt this brand. The system knows that before it generates a single frame."</em></p>
+    <p>Points to guardrails. <em>"These are the hard rules. This is how brand compliance stays at 100%."</em></p>
+    <p>Points to performance. <em>"After 32 hooks, Door Reveal is the confirmed winner. Month one: 4,200 views. Month three: 8,400. The system learns."</em></p>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 3: PRODUCTION FLOW                    -->
+<!-- ============================================ -->
+<div id="production" class="screen">
+  <div class="screen-header">
+    <div class="screen-num">Screen 3 of 4</div>
+    <h2>Production Flow</h2>
+    <div class="subtitle">Three stages: Upload Listing → Creative Intelligence → Hook Selection. Collapsed from 5 stages.</div>
+  </div>
+
+  <!-- ANNOTATION: User Story -->
+  <div class="annotation">
+    <div class="annotation-label">User Story</div>
+    <div class="annotation-text">As a Bright River operator, I want to upload property assets for a pre-selected broker and have the system automatically analyze the property, recommend the best hook type, and let me override if needed — so I can produce hooks fast without making creative decisions from scratch.</div>
+  </div>
+
+  <!-- ANNOTATION: Why 3 stages not 5 -->
+  <div class="annotation" style="border-left-color: var(--green);">
+    <div class="annotation-label" style="color: var(--green);">Design Decision: 3 stages, not 5</div>
+    <div class="annotation-text">
+      The previous version had 5 sequential stages: Identify → Market Angles → Select Assets → Storyboard → Compose. From the Apr 1 sync:<br><br>
+      <strong>Storyboard removed:</strong> Thomas said "the proof is all in the hook — the final product. If we do a stellar job there they could care less of what the storyboard was." Only valuable if interactive (swap elements). We don't offer that optionality, so cut it.<br><br>
+      <strong>Compose removed:</strong> The creative brief + optimization meter was internal/technical. The operator doesn't care about the prompt — they care about the result.<br><br>
+      <strong>Merged into 3:</strong> Upload (just property assets) → Creative Intelligence (property ID + market data + asset selection, shown simultaneously) → Hook Selection (the pricing table with recommendation). Each stage adds clear value. No filler.
+    </div>
+  </div>
+
+  <!-- Stage 1: Upload -->
+  <h3 style="margin-bottom: 12px;">Stage 1: Upload Listing</h3>
+
+  <!-- ANNOTATION: Upload simplification -->
+  <div class="annotation" style="border-left-color: var(--orange);">
+    <div class="annotation-label" style="color: var(--orange);">What changed from v1</div>
+    <div class="annotation-text">
+      Previously, this page had BOTH broker URL input AND property upload. Now the broker is already selected (from Screen 1 or 2). This page is purely: add the listing photos. The context bar at top reminds the operator which broker preset is active — "Producing for Homey · Modern · Mid-market · Influencer ✓ · Door Reveal preferred." Fast. No decisions to make here.<br><br>
+      <strong>Button says "Start Production"</strong> — not "Generate Hook." Production language signals this is a system, not a toy. Mirrors how STREAM uses "Create Order."
+    </div>
+  </div>
+
+  <div class="mockup-container">
+  <div class="mockup-label">Mockup — Stage 1: Upload Listing <span>Only property assets — broker already selected</span></div>
+  <div class="card" style="border: none; border-radius: 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 24px; height: 24px; border-radius: 5px; background: #4CAF50; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white;">H</div>
+        <div><span style="font-weight: 600; font-size: 12px;">Producing for Homey</span> <span style="color: var(--muted); font-size: 11px;">· Modern · Mid-market · Influencer ✓ · Door Reveal preferred</span></div>
+      </div>
+      <div style="font-size: 11px; color: var(--muted);">Return Rate <span class="mono" style="color: var(--green); font-weight: 600;">0.6%</span> · Hooks <span class="mono" style="font-weight: 600;">32</span></div>
+    </div>
+    <div style="max-width: 500px; margin: 0 auto; text-align: center;">
+      <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px;">Add listing assets</div>
+      <div style="font-size: 11px; color: var(--muted); margin-bottom: 16px;">Property photos and video for hook generation</div>
+      <div style="border: 2px dashed var(--border); border-radius: 10px; padding: 24px; margin-bottom: 12px;">
+        <div style="font-size: 20px; margin-bottom: 6px;">📁</div>
+        <div style="font-size: 12px;">Drop property photos & videos</div>
+        <div style="font-size: 10px; color: var(--muted); margin-top: 2px;">or click to browse</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-bottom: 14px;">
+        <div style="aspect-ratio: 1; background: var(--surface-raised); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--muted);">exterior</div>
+        <div style="aspect-ratio: 1; background: var(--surface-raised); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--muted);">living</div>
+        <div style="aspect-ratio: 1; background: var(--surface-raised); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--muted);">kitchen</div>
+        <div style="aspect-ratio: 1; background: var(--surface-raised); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--muted);">hallway</div>
+        <div style="aspect-ratio: 1; background: var(--surface-raised); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--muted);">bath</div>
+        <div style="aspect-ratio: 1; background: var(--surface-raised); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--muted);">garden</div>
+      </div>
+      <span class="btn">Start Production →</span>
+    </div>
+  </div>
+  </div><!-- end mockup-container -->
+
+  <!-- Stage 2: Creative Intelligence -->
+  <h3 style="margin-top: 24px; margin-bottom: 12px;">Stage 2: Creative Intelligence</h3>
+
+  <!-- ANNOTATION: Creative Intelligence -->
+  <div class="annotation" style="border-left-color: var(--green);">
+    <div class="annotation-label" style="color: var(--green);">Why this is the value moment</div>
+    <div class="annotation-text">
+      This is where the system earns its keep. Three intelligence panels appear progressively (shimmer → reveal animation, like the agent is analyzing in real time). Each panel answers a question:<br><br>
+      <strong>Property Analysis:</strong> "What is this property?" — categorization, feature detection with confidence scores. Shows the system understood the listing from photos alone.<br>
+      <strong>Market Intelligence:</strong> "Which hook has the lowest rejection risk for this property type?" — risk-first ranking with market data as secondary signal. Shows each hook type's risk level (Low/Med/High) based on hallucination potential, brand fit, and rejection history. Reference posts from Dutch RE are included but the lead metric is rejection risk, not views. They think: "They understand what gets rejected and why."<br>
+      <strong>Asset Selection:</strong> "Which photos should we use, and why?" — ties selected assets to the hook sequence with reasoning. Shows every decision is justified, not random.<br><br>
+      The brand DNA from Screen 2 flows through all three panels. The "Brand match" note at bottom of Asset Selection ties it back explicitly.
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "Is this data real?"</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "2,400+ Dutch RE social posts — where did that come from? Is that number real?"<br><br>
+      <strong>Mitigation:</strong> For the demo it's hardcoded. Thomas should be upfront: <em>"We've been building a dataset of Dutch real estate social content. The numbers you see here are based on our research — in the full build, this feeds from a live pipeline."</em> Don't claim the data pipeline is production-ready. Chicote's research backs the direction but the pipeline is rough.<br><br>
+      <strong>The honest framing:</strong> The market intelligence stage demonstrates the approach and the type of data. The specific numbers are illustrative. The system architecture is real — the dataset needs depth.
+    </div>
+  </div>
+
+  <!-- Source tag legend -->
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px; font-size: 10px; color: var(--muted);">
+    <span>Source tags:</span>
+    <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 2px 6px; border-radius: 3px; font-size: 9px; font-weight: 600;">MARKET</span>
+    <span style="font-size: 10px; color: var(--muted);">2,400+ posts dataset</span>
+    <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 2px 6px; border-radius: 3px; font-size: 9px; font-weight: 600;">BROKER</span>
+    <span style="font-size: 10px; color: var(--muted);">Homey's 32-hook history</span>
+    <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 2px 6px; border-radius: 3px; font-size: 9px; font-weight: 600;">GUARDRAIL</span>
+    <span style="font-size: 10px; color: var(--muted);">From rejection log</span>
+  </div>
+
+  <div class="mockup-container">
+  <div class="mockup-label">Mockup — Stage 2: Creative Intelligence <span>Three panels, each backed by market + broker data</span></div>
+  <div style="padding: 16px;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+
+    <!-- PANEL 1: Property Analysis -->
+    <div class="card">
+      <div class="section-label">1. Property Analysis</div>
+      <div style="font-size: 15px; font-weight: 700; margin-bottom: 3px;">Suburban Family Home</div>
+      <div style="font-size: 11px; color: var(--muted); margin-bottom: 10px;">Modern Renovation · Mid-to-High Range</div>
+
+      <!-- Features with source-attributed insights -->
+      <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
+        <div style="background: var(--bg); border-radius: 6px; padding: 8px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+            <span style="font-weight: 600;">Open-Plan Kitchen</span>
+            <span class="mono" style="color: var(--green); font-size: 10px;">97%</span>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+            <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+            <span style="font-size: 10px; color: var(--muted);">#1 engagement driver for suburban homes</span>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px;">
+            <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+            <span style="font-size: 10px; color: var(--muted);">Homey kitchen-led hooks: 40% lower return rate</span>
+          </div>
+        </div>
+
+        <div style="background: var(--bg); border-radius: 6px; padding: 8px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+            <span style="font-weight: 600;">South-Facing Garden</span>
+            <span class="mono" style="color: var(--green); font-size: 10px;">92%</span>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+            <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+            <span style="font-size: 10px; color: var(--muted);">Garden reveals = emotional payoff in 78% of top posts</span>
+          </div>
+        </div>
+
+        <div style="background: var(--bg); border-radius: 6px; padding: 8px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+            <span style="font-weight: 600;">Clear Front Door</span>
+            <span class="mono" style="color: var(--green); font-size: 10px;">95%</span>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+            <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 5px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span>
+            <span style="font-size: 10px; color: var(--muted);">Enables Door Reveal — close framing, low hallucination</span>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px;">
+            <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+            <span style="font-size: 10px; color: var(--muted);">24 consecutive accepts on door-based hooks</span>
+          </div>
+        </div>
+
+        <div style="background: var(--bg); border-radius: 6px; padding: 8px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+            <span style="font-weight: 600;">Modern Renovation</span>
+            <span class="mono" style="color: var(--green); font-size: 10px;">91%</span>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+            <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+            <span style="font-size: 10px; color: var(--muted);">Renovated interiors outperform original by 1.8x in reveal hooks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: Hook-Asset Matching -->
+    <div class="card">
+      <div class="section-label">2. Hook-Asset Matching</div>
+      <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Which hooks are possible with these assets?</div>
+
+      <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;">
+        <!-- Door Reveal — matched -->
+        <div style="background: rgba(122,186,122,0.06); border: 1px solid rgba(122,186,122,0.15); border-radius: 6px; padding: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span style="font-weight: 600; font-size: 12px; color: var(--green);">🚪 Door Reveal</span>
+            <span style="font-size: 10px; color: var(--green); font-weight: 600;">3/3 assets matched</span>
+          </div>
+          <div style="font-size: 10px; color: var(--muted); display: flex; flex-direction: column; gap: 2px;">
+            <div>Exterior → establishing shot (front door = anchor)</div>
+            <div>Kitchen → hero reveal (post-door moment)</div>
+            <div>Garden → emotional payoff (final frames)</div>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px;">
+            <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+            <span style="font-size: 9px; color: var(--muted);">3.2x for suburban · top performing hook type</span>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px;">
+            <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+            <span style="font-size: 9px; color: var(--muted);">24/24 accepted for Homey · top performer for this brand</span>
+          </div>
+        </div>
+
+        <!-- Price Tag — partial match -->
+        <div style="border: 1px solid var(--border); border-radius: 6px; padding: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span style="font-weight: 600; font-size: 12px;">💰 Price Tag</span>
+            <span style="font-size: 10px; color: var(--muted);">2/3 assets matched</span>
+          </div>
+          <div style="font-size: 10px; color: var(--muted); display: flex; flex-direction: column; gap: 2px;">
+            <div>Exterior → sign placement in garden ✓</div>
+            <div>Garden → background context ✓</div>
+            <div style="color: var(--orange);">Interior sequence → no matched assets for reveal</div>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px;">
+            <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+            <span style="font-size: 9px; color: var(--muted);">2.4x · "guess the price" format trending in NL</span>
+          </div>
+        </div>
+
+        <!-- Before/After — weak match -->
+        <div style="border: 1px solid var(--border); border-radius: 6px; padding: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span style="font-weight: 600; font-size: 12px;">🔄 Before/After</span>
+            <span style="font-size: 10px; color: var(--orange);">0/2 assets matched</span>
+          </div>
+          <div style="font-size: 10px; color: var(--orange);">
+            Needs pre-renovation photos — this property is already modern. No contrast available.
+          </div>
+        </div>
+
+        <!-- Cinematic — blocked -->
+        <div style="border: 1px solid var(--border); border-radius: 6px; padding: 8px; opacity: 0.45;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span style="font-weight: 600; font-size: 12px;">🎬 Cinematic</span>
+            <span style="font-size: 10px; color: var(--red);">Blocked</span>
+          </div>
+          <div style="font-size: 10px; color: var(--muted);">
+            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+              <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 5px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span>
+              <span style="font-size: 9px;">Brand DNA: too premium for Homey · wide shots = hallucination risk</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: Risk + Recommendation -->
+    <div class="card">
+      <div class="section-label">3. Risk + Recommendation</div>
+      <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--green);">→ Door Reveal</div>
+      <div style="font-size: 11px; color: var(--muted); margin-bottom: 12px;">Lowest complexity · highest brand fit · best market signal</div>
+
+      <!-- Risk breakdown -->
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+            <span>Hallucination complexity</span>
+            <span style="color: var(--green); font-weight: 600;">Low</span>
+          </div>
+          <div style="height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;"><div style="width: 15%; height: 100%; background: var(--green); border-radius: 2px;"></div></div>
+          <div style="display: flex; gap: 4px; margin-top: 3px;">
+            <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 5px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span>
+            <span style="font-size: 9px; color: var(--muted);">Close framing enforced — minimal fabrication needed</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+            <span>Brand fit</span>
+            <span style="color: var(--green);">●●●●○</span>
+          </div>
+          <div style="display: flex; gap: 4px; margin-top: 3px;">
+            <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+            <span style="font-size: 9px; color: var(--muted);">Approachable persona matches "friend" tone</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+            <span>Asset coverage</span>
+            <span style="color: var(--green); font-weight: 600;">3/3</span>
+          </div>
+          <div style="font-size: 9px; color: var(--muted); margin-top: 3px;">All required assets available — no gaps to fill</div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+            <span>Market signal</span>
+            <span class="mono" style="font-weight: 600;">3.2x</span>
+          </div>
+          <div style="display: flex; gap: 4px; margin-top: 3px;">
+            <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+            <span style="font-size: 9px; color: var(--muted);">Top performer for Dutch suburban RE</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+            <span>Broker track record</span>
+            <span style="color: var(--green); font-weight: 600;">24/24</span>
+          </div>
+          <div style="display: flex; gap: 4px; margin-top: 3px;">
+            <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+            <span style="font-size: 9px; color: var(--muted);">Zero returns on this hook type for Homey</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reference posts -->
+      <div style="padding-top: 8px; border-top: 1px solid var(--border);">
+        <div style="font-size: 10px; color: var(--muted); margin-bottom: 6px;">Reference posts</div>
+        <div style="display: flex; flex-direction: column; gap: 4px; font-size: 10px;">
+          <div style="display: flex; justify-content: space-between; background: var(--bg); padding: 4px 8px; border-radius: 4px;"><span style="color: var(--muted);">Door reveal · suburban · @homestyle_nl</span><span class="mono" style="font-weight: 600;">24.1K</span></div>
+          <div style="display: flex; justify-content: space-between; background: var(--bg); padding: 4px 8px; border-radius: 4px;"><span style="color: var(--muted);">Door reveal · family · @makelaarsdam</span><span class="mono" style="font-weight: 600;">18.7K</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div><!-- end padding -->
+  </div><!-- end mockup-container -->
+
+  <!-- Stage 3: Hook Selection -->
+  <h3 style="margin-top: 24px; margin-bottom: 12px;">Stage 3: Hook Selection</h3>
+
+  <!-- ANNOTATION: Hook Selection -->
+  <div class="annotation" style="border-left-color: var(--orange);">
+    <div class="annotation-label" style="color: var(--orange);">Design Decision: Pricing table layout</div>
+    <div class="annotation-text">
+      Thomas specifically asked for this: <em>"I basically want to have it's kind of like a magic box where they just tell us what they need and then we do the magic... if they want to overrule be my guess but we will see back in the data."</em> And: <em>"It's like price tables like when you have this recommended sort of outline."</em><br><br>
+      Each hook card shows four scores: <strong>Rejection risk</strong> (primary — Low/Med/High based on hallucination risk + brand fit + rejection history), <strong>Brand fit</strong>, <strong>Property fit</strong>, and <strong>Market data</strong> (secondary — performance multiplier from research). Rejection risk leads because that's their SLA. Market data supports but doesn't lead.<br><br>
+      <strong>The risk framing is key:</strong> from the sync, "creative ambition and rejection rate are directly proportional." The more creative the hook, the higher the hallucination risk, the more likely it gets rejected. Door Reveal is recommended not just because it performs well — but because it's the <em>safest</em> hook for this brand and property type. Cinematic is blocked for two reasons: brand guardrail (too premium) AND high hallucination risk (wide shots). The system is honest about why each option is risky.
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "We only have 1-2 actual hook videos"</div>
+    <div class="risk-text">
+      <strong>Reality:</strong> We currently have the door reveal video, and Thomas may have generated a second hook overnight. Showing 4 hook type cards when we can only play 1-2 actual videos creates a gap.<br><br>
+      <strong>Mitigation:</strong> The pricing table shows the recommendation and options. When Thomas clicks "Generate Door Reveal →" it produces the actual video we have. The other cards are visible but Thomas doesn't click them — he says: <em>"We recommend Door Reveal for Homey. The other options are available but the data says this one."</em> The optionality is demonstrated without needing to generate every variant.
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "What if I want a hook type that isn't listed?"</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "Our clients want something custom — what if their idea isn't one of these four templates?"<br><br>
+      <strong>Mitigation:</strong> Thomas: <em>"These are the hook patterns with proven market data. We can add new patterns as we validate them — the system learns which patterns perform for which property types. The library grows with every hook published."</em> Frame it as an expanding library, not a fixed menu.
+    </div>
+  </div>
+
+  <div class="mockup-container">
+  <div class="mockup-label">Mockup — Stage 3: Hook Selection <span>Pricing table with recommendation + brand guardrails</span></div>
+  <div style="padding: 16px;">
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;">
+    <!-- Door Reveal — RECOMMENDED -->
+    <div class="card" style="border-color: var(--green); border-width: 2px; position: relative;">
+      <div style="position: absolute; top: -9px; left: 50%; transform: translateX(-50%); background: var(--green); color: var(--bg); padding: 2px 10px; border-radius: 10px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Recommended</div>
+      <div style="text-align: center; margin-top: 4px;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🚪</div>
+        <div style="font-weight: 700; font-size: 13px;">Door Reveal</div>
+        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">AI influencer opens branded door → property revealed</div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--green); font-weight: 600;">Low</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span style="color: var(--green);">●●●●○</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span style="color: var(--green);">●●●●●</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono" style="font-weight: 600;">3.2x</span></div>
+      </div>
+      <div style="font-size: 9px; color: var(--green); margin-top: 6px;">24 consecutive accepts for Homey · close framing limits hallucination</div>
+    </div>
+    <!-- Price Tag -->
+    <div class="card">
+      <div style="text-align: center; margin-top: 4px;">
+        <div style="font-size: 20px; margin-bottom: 6px;">💰</div>
+        <div style="font-weight: 700; font-size: 13px;">Price Tag</div>
+        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">"Guess the price" — sign in garden reveals listing price</div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--green);">Low</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span>●●●●○</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span>●●●○○</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono">2.4x</span></div>
+      </div>
+      <div style="font-size: 9px; color: var(--muted); margin-top: 6px;">Transparency fits brand · needs garden for sign placement</div>
+    </div>
+    <!-- Before/After -->
+    <div class="card">
+      <div style="text-align: center; margin-top: 4px;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🔄</div>
+        <div style="font-weight: 700; font-size: 13px;">Before/After</div>
+        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">Split-screen transformation — staging vs reality</div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--orange); font-weight: 600;">Medium</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span>●●●○○</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span style="color: var(--orange);">●●○○○</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono">2.1x</span></div>
+      </div>
+      <div style="font-size: 9px; color: var(--orange); margin-top: 6px;">⚠ Property is already modern — low contrast for before/after. Higher hallucination risk on split-screen.</div>
+    </div>
+    <!-- Cinematic — BLOCKED -->
+    <div class="card" style="opacity: 0.45;">
+      <div style="text-align: center; margin-top: 4px;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🎬</div>
+        <div style="font-weight: 700; font-size: 13px;">Cinematic</div>
+        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">Drone + slow motion luxury reveal</div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--red); font-weight: 600;">High</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span style="color: var(--red);">●○○○○</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span>●●●○○</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono">1.8x</span></div>
+      </div>
+      <div style="font-size: 9px; color: var(--red); margin-top: 6px;">✗ Brand guardrail: too premium for Homey · wide shots = high hallucination risk</div>
+    </div>
+  </div>
+  <div style="text-align: center; padding-bottom: 16px;"><span class="btn" onclick="showScreen('reveal')">Generate Door Reveal →</span></div>
+  </div><!-- end padding -->
+  </div><!-- end mockup-container -->
+
+  <!-- ANNOTATION: What BR contact is thinking at this point -->
+  <div class="annotation" style="border-left-color: var(--red);">
+    <div class="annotation-label" style="color: var(--red);">What the BR contact is thinking after Stage 3</div>
+    <div class="annotation-text">
+      <strong>"It recommended Door Reveal and I can see exactly why."</strong> — 3.2x performance, high brand fit, high property fit. Not arbitrary.<br><br>
+      <strong>"It blocked Cinematic for Homey."</strong> — That's correct. The system made the right call. Trust is building.<br><br>
+      <strong>"What happens with the premium broker?"</strong> — He's already imagining the second demo. Same system, different intelligence. That's the scalability proof.<br><br>
+      <strong>"This is more than video generation."</strong> — He came expecting hooks. He's seeing a creative intelligence system. The question shifts from "can you make hooks" to "can you make this work at our scale."
+    </div>
+  </div>
+
+  <div class="demo-script">
+    <strong>Demo script (full Stage 3):</strong>
+    <p><em>"Here's the recommendation. Door Reveal — 3.2x average performance, high brand fit, high property fit. Notice Cinematic is greyed out — the system knows that's wrong for Homey's positioning. The operator can pick any available option, but the data says Door Reveal."</em></p>
+    <p>Clicks <strong>Generate Door Reveal →</strong></p>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 4: REVEAL                             -->
+<!-- ============================================ -->
+<div id="reveal" class="screen">
+  <div class="screen-header">
+    <div class="screen-num">Screen 4 of 4</div>
+    <h2>Hook Reveal + Delivery Package</h2>
+    <div class="subtitle">The climax. Video + honest metrics + data-backed adjustments + exportable delivery package.</div>
+  </div>
+
+  <!-- ANNOTATION: User Story -->
+  <div class="annotation">
+    <div class="annotation-label">User Story</div>
+    <div class="annotation-text">As a Bright River operator, I want to see the generated hook with clear production metrics and expected performance data, adjust parameters with visible trade-offs, and export a complete delivery package (video + brief) that I can hand to the broker.</div>
+  </div>
+
+  <!-- ANNOTATION: The honest KPI split -->
+  <div class="annotation" style="border-left-color: var(--orange);">
+    <div class="annotation-label" style="color: var(--orange);">Critical Design Decision: Honest KPI Split</div>
+    <div class="annotation-text">
+      The metrics panel is deliberately split into two sections with a visible divider:<br><br>
+      <strong>Left: "Production Quality"</strong> — Brand Compliant (100%), Turnaround (34s), Cost (€2.10), Guardrail Violations (0). These are defensible claims. Brand compliance is enforced by rules. Turnaround is measurable. Cost is calculable. These mirror BR's own KPIs (99.4% FTR, 24H turnaround, rework rate).<br><br>
+      <strong>Right: "Expected Performance"</strong> — Views (3.2x), Retention (67%), Brand Recall (+41%), Data Points (2,400+). These are labeled "Based on market benchmarks" — explicitly not guaranteed. They're predictions from research data, not measured outcomes from this specific hook.<br><br>
+      <strong>Why the split matters:</strong> We originally showed a single FTR number (99.2%) which borrowed BR's metric and applied it to creative work — dishonest. Creative acceptance is subjective. Brand compliance is objective. By splitting, we're honest about what we guarantee (production quality) and what we project (performance). BR respects this — they're metric-first people. They'll see through inflated claims but respect transparent ones.
+    </div>
+  </div>
+
+  <!-- ANNOTATION: Delivery package rationale -->
+  <div class="annotation" style="border-left-color: var(--green);">
+    <div class="annotation-label" style="color: var(--green);">The Sleeper Hit: Delivery Package</div>
+    <div class="annotation-text">
+      The export isn't just an MP4 file. It's a package: hook video + performance brief + selected assets. This is the element that <strong>amplifies Bright River's value offer to their broker clients.</strong><br><br>
+      When the operator hands the broker a performance brief that says "This hook was selected based on 2,400 data points, optimized for your brand DNA, expected 3.2x vs standard" — the broker sees a company that's data-driven, not just creative. It makes BR look like the smartest production partner in the market.<br><br>
+      This is not something BR asked for. But it's something that makes their existing sales motion stronger. Their CTA is "let's talk numbers" — now they have numbers to talk about for video hooks too.
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "The hook video quality isn't great"</div>
+    <div class="risk-text">
+      <strong>Reality:</strong> Thomas acknowledged AI video quality is uncertain. Higgs Field hallucinates on complex scenes. The door reveal works for standalone houses but covers ~5% of inventory. Apartments and connected houses are unproven.<br><br>
+      <strong>Mitigation:</strong> The intelligence around the hook (rationale, metrics, trade-offs, delivery package) is deliberately rich to compensate. Even if the hook itself is imperfect, the system's reasoning is impressive. Thomas: <em>"The creative quality will improve as AI video tools mature. What doesn't change is the intelligence layer — the brand DNA, the data-backed selection, the optimization loop. That's the system. The hook generation is the output layer that improves."</em><br><br>
+      <strong>Be honest:</strong> If they say "the video quality isn't there yet," don't fight it. Agree and pivot to what IS strong: the intelligence, the data, the brand compliance, the optimization trajectory.
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "These trade-off numbers look made up"</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "+41% brand recall" and "-12% watch-through" — where do these come from?<br><br>
+      <strong>Mitigation:</strong> For the demo, these are illustrative. Thomas should not claim precision: <em>"These trade-off signals come from our market research. The exact numbers will calibrate as we produce more hooks and capture real performance data. The point is: the system doesn't just let you adjust — it tells you what you're trading."</em> The concept (informed trade-offs) is the sell, not the specific percentages.
+    </div>
+  </div>
+
+  <div class="mockup-container">
+  <div class="mockup-label">Mockup — Hook Reveal + Delivery Package <span>Split KPIs + data-backed adjustments + export</span></div>
+  <div style="padding: 20px;">
+  <div style="display: grid; grid-template-columns: 300px 1fr; gap: 20px;">
+    <!-- LEFT: Video -->
+    <div>
+      <div style="aspect-ratio: 9/16; background: #0a0a0a; border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative;">
+        <div style="font-size: 28px;">▶</div>
+        <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 5px; background: rgba(0,0,0,0.7); padding: 3px 7px; border-radius: 4px;"><div style="width: 12px; height: 12px; border-radius: 2px; background: #4CAF50;"></div><span style="font-size: 9px; font-weight: 600;">Homey</span></div>
+          <div style="background: rgba(0,0,0,0.7); padding: 3px 7px; border-radius: 4px; font-size: 9px; color: var(--muted);">0:03</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 6px;">
+        <div class="btn" style="flex: 1; text-align: center; font-size: 11px; padding: 8px;">↓ Export Package</div>
+        <div style="flex: 1; text-align: center; border: 1px solid var(--border); border-radius: 8px; padding: 8px; font-size: 11px; font-weight: 500; cursor: pointer;">↻ New Variation</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Intelligence -->
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+
+      <!-- Metrics — split into two honest sections -->
+      <div class="card">
+        <div style="display: grid; grid-template-columns: 1fr 1px 1fr; gap: 16px;">
+          <!-- Production quality (their language) -->
+          <div>
+            <div class="section-label">Production Quality</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700; color: var(--green);">100%</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Brand Compliant</div></div>
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">34s</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Turnaround</div></div>
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">€2.10</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Production Cost</div></div>
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">0</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Guardrail Violations</div></div>
+            </div>
+          </div>
+          <!-- Separator -->
+          <div style="background: var(--border);"></div>
+          <!-- Content performance (new — they've never had this) -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div class="section-label" style="margin-bottom: 0;">Expected Performance</div>
+              <div style="font-size: 8px; color: var(--muted); background: var(--bg); padding: 2px 6px; border-radius: 3px;">Based on market benchmarks</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">3.2x</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Expected Views</div></div>
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">67%</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">3s Retention Lift</div></div>
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">+41%</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Brand Recall</div></div>
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">2,400+</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Data Points</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Creative rationale -->
+      <div class="card">
+        <div class="section-label">Creative Rationale</div>
+        <p style="font-size: 12px; color: var(--muted); line-height: 1.7;">Door Reveal for <strong style="color: var(--fg);">suburban family home</strong> with Homey's <strong style="color: var(--fg);">approachable, mid-market</strong> positioning. AI influencer dressed casually in <span style="color: #4CAF50; font-weight: 600;">Homey green</span>. Kitchen as hero shot (#1 engagement driver). Garden as emotional payoff.</p>
+        <div style="display: flex; gap: 5px; margin-top: 6px;"><span class="pill pill-green">Brand-matched</span><span class="pill pill-green">Property-optimized</span><span class="pill pill-green">Data-backed</span></div>
+      </div>
+
+      <!-- Data-backed adjustments -->
+      <div class="card">
+        <div class="section-label">Adjustments</div>
+        <div style="font-size: 11px; color: var(--muted); margin-bottom: 10px;">Each shows predicted trade-off.</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px;">
+            <div><div style="font-size: 12px; font-weight: 500;">More brand presence</div><div style="font-size: 10px; color: var(--muted);">Larger logo, brand overlay</div></div>
+            <div style="text-align: right;"><div style="font-size: 10px; color: var(--green);">+41% brand recall</div><div style="font-size: 10px; color: var(--orange);">-12% watch-through</div></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px;">
+            <div><div style="font-size: 12px; font-weight: 500;">Add voiceover</div><div style="font-size: 10px; color: var(--muted);">Dutch AI narration</div></div>
+            <div style="text-align: right;"><div style="font-size: 10px; color: var(--green);">+28% engagement</div><div style="font-size: 10px; color: var(--orange);">+€0.40 cost</div></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px;">
+            <div><div style="font-size: 12px; font-weight: 500;">Slower reveal</div><div style="font-size: 10px; color: var(--muted);">3s → 5s before door opens</div></div>
+            <div style="text-align: right;"><div style="font-size: 10px; color: var(--green);">+8% curiosity</div><div style="font-size: 10px; color: var(--red);">-22% scroll retention</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery package -->
+      <div style="border: 1px solid var(--green); border-radius: 10px; padding: 16px; background: rgba(122,186,122,0.03);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div class="section-label" style="margin-bottom: 0; color: var(--green);">Delivery Package</div>
+          <div style="font-size: 9px; color: var(--muted);">What the broker receives</div>
+        </div>
+        <p style="font-size: 11px; color: var(--muted); margin-bottom: 10px;">Export includes the hook video <strong style="color: var(--fg);">plus a performance brief</strong> the operator hands to the broker — making Bright River look data-driven.</p>
+        <div style="display: flex; gap: 8px;">
+          <div style="flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center;">
+            <div style="font-size: 14px; margin-bottom: 3px;">🎬</div>
+            <div style="font-size: 11px; font-weight: 600;">Hook Video</div>
+            <div style="font-size: 9px; color: var(--muted);">MP4 · 9:16 · 3s</div>
+          </div>
+          <div style="flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center;">
+            <div style="font-size: 14px; margin-bottom: 3px;">📊</div>
+            <div style="font-size: 11px; font-weight: 600;">Performance Brief</div>
+            <div style="font-size: 9px; color: var(--muted);">Why this hook · metrics · brand match</div>
+          </div>
+          <div style="flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center;">
+            <div style="font-size: 14px; margin-bottom: 3px;">🖼️</div>
+            <div style="font-size: 11px; font-weight: 600;">Selected Assets</div>
+            <div style="font-size: 9px; color: var(--muted);">Hero shots used</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- end padding -->
+  </div><!-- end mockup-container -->
+
+  <!-- ANNOTATION: What BR contact is thinking -->
+  <div class="annotation" style="border-left-color: var(--red);">
+    <div class="annotation-label" style="color: var(--red);">What the BR contact is thinking</div>
+    <div class="annotation-text">
+      <strong>"€2.10... we charge €3,500 for this."</strong> — The margin story hits hardest here, in context of a finished product. Not abstract anymore — it's a real hook for a real broker at that cost.<br><br>
+      <strong>"Production Quality vs Expected Performance — that's honest."</strong> — They're metric-first people. The split tells them we're not bullshitting. We guarantee what's measurable, we project what's data-backed. That builds more trust than inflating a single number.<br><br>
+      <strong>"The delivery package... we could hand this to our brokers."</strong> — This is the moment it shifts from "cool demo" to "I can see how this works in our business." The performance brief makes THEM look data-driven to THEIR clients.<br><br>
+      <strong>"What about the second broker?"</strong> — He's ready for the brand translation demo. That's when Thomas goes back and runs Van der Berg.
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- DELIVERY PACKAGE DEEP DIVE                   -->
+  <!-- ============================================ -->
+
+  <h3 style="margin-top: 32px;">The Delivery Package — What the Broker Actually Receives</h3>
+
+  <!-- ANNOTATION: How it fits into BR's current delivery -->
+  <div class="annotation" style="border-left-color: var(--green);">
+    <div class="annotation-label" style="color: var(--green);">How this fits into BR's current value offer</div>
+    <div class="annotation-text">
+      <strong>Today, BR's delivery is purely assets:</strong><br>
+      Photographer uploads raw photos → BR edits them → delivers polished photos back via STREAM. The broker gets their images and that's it. No explanation. No context. No "here's why we cropped it this way." Just files.<br><br>
+
+      <strong>Their delivery flow:</strong><br>
+      <code>Raw assets → STREAM → Polished assets → Broker downloads → Published to Funda/website</code><br><br>
+
+      <strong>ReelForge adds a new layer to this delivery:</strong><br>
+      <code>Property assets → ReelForge → Hook video + Performance Brief + Selected Assets → Operator delivers to broker</code><br><br>
+
+      The performance brief is the differentiator. It transforms the delivery from <strong>"here's your content"</strong> to <strong>"here's your content, here's why it's optimized for your brand, and here's what we expect it to do."</strong><br><br>
+
+      This matters because:<br>
+      <strong>1.</strong> It makes the €3,500 (or whatever they charge) feel justified — the broker sees intelligence, not just a video file<br>
+      <strong>2.</strong> It creates a recurring conversation — "last month your hooks averaged 8.4K views, up 23% from the previous month" is a retention mechanism<br>
+      <strong>3.</strong> It makes BR look like a creative intelligence partner, not just a production shop — exactly the positioning upgrade they need against AI disruption<br>
+      <strong>4.</strong> It mirrors their existing language — "let's talk numbers" is literally their section header on bright-river.com. Now they have numbers for video hooks too.
+    </div>
+  </div>
+
+  <!-- DELIVERY PACKAGE MOCKUP -->
+  <div class="mockup-container">
+  <div class="mockup-label">Mockup — Delivery Package Preview <span>What the operator exports and hands to the broker</span></div>
+  <div style="padding: 24px; background: var(--surface);">
+
+    <!-- Package header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 36px; height: 36px; border-radius: 8px; background: #4CAF50; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: white;">H</div>
+        <div>
+          <div style="font-weight: 700; font-size: 16px;">Hook Delivery — Homey</div>
+          <div style="font-size: 11px; color: var(--muted);">Suburban Family Home · Kerkstraat 42, Haarlem · April 2, 2026</div>
+        </div>
+      </div>
+      <div style="font-size: 10px; color: var(--muted); text-align: right;">
+        <div>Produced by <strong style="color: var(--fg);">Bright River</strong></div>
+        <div>Powered by ReelForge</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px;">
+
+      <!-- LEFT: Video + files -->
+      <div>
+        <!-- Video thumbnail -->
+        <div style="aspect-ratio: 9/16; background: #0a0a0a; border-radius: 10px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative;">
+          <div style="font-size: 24px;">▶</div>
+          <div style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; font-size: 10px;">Door Reveal · 0:03</div>
+        </div>
+
+        <!-- Included files -->
+        <div style="border: 1px solid var(--border); border-radius: 8px; padding: 12px;">
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Package Contents</div>
+          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: var(--bg); border-radius: 4px;">
+              <span>hook-homey-kerkstraat42.mp4</span>
+              <span style="color: var(--muted); font-size: 10px;">2.4 MB</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: var(--bg); border-radius: 4px;">
+              <span>performance-brief.pdf</span>
+              <span style="color: var(--muted); font-size: 10px;">148 KB</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: var(--bg); border-radius: 4px;">
+              <span>selected-assets.zip</span>
+              <span style="color: var(--muted); font-size: 10px;">8.1 MB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Performance brief preview -->
+      <div>
+        <div style="border: 1px solid var(--border); border-radius: 10px; padding: 20px; background: var(--bg);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div style="font-weight: 700; font-size: 14px;">Performance Brief</div>
+            <div style="font-size: 9px; color: var(--muted); background: var(--surface); padding: 3px 8px; border-radius: 4px;">Preview — exported as PDF</div>
+          </div>
+
+          <!-- Hook summary -->
+          <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Hook Summary</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+              <div style="border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center;">
+                <div style="font-size: 10px; color: var(--muted); margin-bottom: 2px;">Hook Type</div>
+                <div style="font-weight: 600;">Door Reveal</div>
+              </div>
+              <div style="border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center;">
+                <div style="font-size: 10px; color: var(--muted); margin-bottom: 2px;">Property</div>
+                <div style="font-weight: 600;">Suburban Family Home</div>
+              </div>
+              <div style="border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center;">
+                <div style="font-size: 10px; color: var(--muted); margin-bottom: 2px;">Platform</div>
+                <div style="font-weight: 600;">TikTok · Reels</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Why this hook -->
+          <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Why This Hook</div>
+            <p style="font-size: 12px; color: var(--muted); line-height: 1.7;">
+              Door Reveal was selected for this <strong style="color: var(--fg);">suburban family home</strong> based on Homey's brand positioning (approachable, mid-market) and market performance data. This hook type averages <strong style="color: var(--fg);">3.2x more views</strong> than standard property intros for Dutch suburban listings. The AI influencer is styled to match Homey's "your friend who knows real estate" tone — casual, relatable, dressed in brand-matching green.
+            </p>
+          </div>
+
+          <!-- Expected performance -->
+          <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Expected Performance</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+              <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
+                <div class="mono" style="font-size: 20px; font-weight: 700; color: var(--green);">3.2x</div>
+                <div style="font-size: 9px; color: var(--muted);">vs standard intro</div>
+              </div>
+              <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
+                <div class="mono" style="font-size: 20px; font-weight: 700;">67%</div>
+                <div style="font-size: 9px; color: var(--muted);">3s retention lift</div>
+              </div>
+              <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
+                <div class="mono" style="font-size: 20px; font-weight: 700;">+41%</div>
+                <div style="font-size: 9px; color: var(--muted);">brand recall</div>
+              </div>
+            </div>
+            <div style="font-size: 10px; color: var(--muted); margin-top: 6px; text-align: center;">Based on analysis of 2,400+ Dutch real estate social posts · Q1 2026</div>
+          </div>
+
+          <!-- Brand match -->
+          <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Brand Match</div>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--green);">✓</span><span>Logo integrated into influencer styling (green accent clothing)</span></div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--green);">✓</span><span>Brand colors applied to door frame overlay and text elements</span></div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--green);">✓</span><span>Tone matches "approachable, casual" — influencer styled as relatable, not glamorous</span></div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--green);">✓</span><span>No luxury positioning — consistent with mid-market brand identity</span></div>
+            </div>
+          </div>
+
+          <!-- Key property features highlighted -->
+          <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Property Features Highlighted</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="padding: 4px 10px; border-radius: 20px; font-size: 11px; border: 1px solid var(--border);">Open-Plan Kitchen (hero shot)</span>
+              <span style="padding: 4px 10px; border-radius: 20px; font-size: 11px; border: 1px solid var(--border);">South-Facing Garden (reveal moment)</span>
+              <span style="padding: 4px 10px; border-radius: 20px; font-size: 11px; border: 1px solid var(--border);">Modern Renovation (positioning)</span>
+            </div>
+          </div>
+
+          <!-- Optimization note -->
+          <div style="background: rgba(122,186,122,0.06); border: 1px solid rgba(122,186,122,0.15); border-radius: 6px; padding: 12px;">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 4px;">Optimization Note</div>
+            <p style="font-size: 11px; color: var(--muted); line-height: 1.6;">
+              This is hook #33 for Homey. Door Reveal has been confirmed as the top-performing hook type for this broker after 14 A/B comparisons. Average views have increased from 4,200 (month 1) to 8,400 (month 3) as the system optimized for Homey's audience. Performance is expected to continue improving with each published hook.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- end mockup-container -->
+
+  <!-- ANNOTATION: How the delivery package changes the broker relationship -->
+  <div class="annotation" style="border-left-color: var(--brand);">
+    <div class="annotation-label">How this changes the broker relationship</div>
+    <div class="annotation-text">
+      <strong>Before ReelForge — BR's delivery to broker:</strong><br>
+      "Here are your edited photos. Here's your floor plan. Here's your video." → Broker publishes. No feedback loop. No performance data. Relationship is transactional: per-listing, per-delivery.<br><br>
+
+      <strong>With ReelForge — BR's delivery to broker:</strong><br>
+      "Here's your hook, here's why we chose this approach for your brand, here's what we expect it to do, and here's how your hooks are performing month over month." → Broker sees a data-driven partner, not just a production shop.<br><br>
+
+      <strong>What this enables for BR:</strong><br>
+      1. <strong>Higher perceived value</strong> — the performance brief justifies premium pricing. The broker is paying for intelligence, not just a video file.<br>
+      2. <strong>Monthly performance reviews</strong> — BR already does monthly KPI reporting for photo editing (rework rate, on-time %). Now they add hook performance metrics. Same cadence, new data. Broker is locked in.<br>
+      3. <strong>Upsell opportunity</strong> — "Your Door Reveal hooks are averaging 8.4K views. We think we can push that to 12K with voiceover narration. Want to try it for your next 5 listings?" That's a conversation BR has never been able to have.<br>
+      4. <strong>Competitive moat</strong> — if a broker considers switching to a freelancer, the freelancer can make a video but can't deliver a performance brief backed by 2,400 data points and 32 hooks of broker-specific history. The data is the lock-in.
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk">
+    <div class="risk-label">Risk: "This is more than we asked for — we just want the video"</div>
+    <div class="risk-text">
+      <strong>They might think:</strong> "Our operators deliver video files. They're not going to create performance reports."<br><br>
+      <strong>Mitigation:</strong> The performance brief is auto-generated — the operator clicks "Export Package" and the PDF is created automatically from the data already in the system. Zero extra work. Thomas: <em>"Your operator doesn't write this. The system generates it. They click export, they get the video plus the brief. It's one click."</em><br><br>
+      <strong>If they still push back:</strong> The brief is optional. They can export just the MP4. But once a broker sees the brief and asks "where did this come from?" — that's the conversation starter for the premium tier.
+    </div>
+  </div>
+
+  <div class="demo-script">
+    <strong>Demo script:</strong>
+    <p><em>"There's the hook. But look at the metrics."</em> Points to split KPI panel.</p>
+    <p><em>"Left side: production quality. 100% brand compliant, 34 seconds, two euros ten. That's what used to cost 3,500. Right side: expected performance based on 2,400 data points. 3.2x views, 67% retention lift. This is data you've never had on your hooks before."</em></p>
+    <p>Points to adjustments. <em>"Every option shows the trade-off. More brand = better recall but lower watch-through. The operator makes an informed call."</em></p>
+    <p>Points to delivery package. <em>"The broker doesn't just get a video. They get a performance brief — why this hook, what it's optimized for. Your team hands that over and they see a company that's data-driven, not just creative."</em></p>
+    <p style="margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);"><strong>Power move:</strong> <em>"Now let me show you the same flow for a completely different broker."</em> Goes back, runs the premium red broker. Cinematic is now recommended, influencer dimmed. Same system, different intelligence.</p>
+  </div>
+</div>
+
+<script>
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const map = { dashboard: 0, broker: 1, production: 2, reveal: 3 };
+  tabs[map[id]].classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Home, BarChart3, ImageIcon, LayoutGrid, Wand2 } from "lucide-react";
+import { Home, BarChart3, ImageIcon, LayoutGrid, Wand2, ArrowRight } from "lucide-react";
 import { OptimizationMeter } from "@/components/optimization-meter";
 import { ShimmerBlock } from "@/components/shimmer";
 import {
@@ -21,38 +21,32 @@ interface AnalysisPhaseProps {
 }
 
 const STAGES = [
-  { id: "identify", icon: Home, label: "Identify Property", duration: 3500 },
-  { id: "angles", icon: BarChart3, label: "Market Angles", duration: 3500 },
-  { id: "assets", icon: ImageIcon, label: "Select Assets", duration: 3000 },
-  { id: "storyboard", icon: LayoutGrid, label: "Storyboard", duration: 3500 },
-  { id: "compose", icon: Wand2, label: "Compose Hook", duration: 4000 },
+  { id: "identify", icon: Home, label: "Identify Property", duration: 5500 },
+  { id: "angles", icon: BarChart3, label: "Market Angles", duration: 5500 },
+  { id: "assets", icon: ImageIcon, label: "Select Assets", duration: 5000 },
+  { id: "storyboard", icon: LayoutGrid, label: "Storyboard", duration: 5500 },
+  { id: "compose", icon: Wand2, label: "Compose Hook", duration: 6000 },
 ] as const;
 
 export function AnalysisPhase({ brandData, assets, onComplete }: AnalysisPhaseProps) {
   const [activeStage, setActiveStage] = useState(0);
   const [stageRevealed, setStageRevealed] = useState(false);
 
-  // Advance through stages
+  // Reveal content after shimmer
   useEffect(() => {
-    if (activeStage >= STAGES.length) {
-      const timer = setTimeout(onComplete, 1500);
-      return () => clearTimeout(timer);
-    }
-
-    // Shimmer phase
+    if (activeStage >= STAGES.length) return;
     setStageRevealed(false);
     const shimmerTimer = setTimeout(() => setStageRevealed(true), 1000);
+    return () => clearTimeout(shimmerTimer);
+  }, [activeStage]);
 
-    // Auto-advance after stage duration
-    const advanceTimer = setTimeout(() => {
+  const handleNext = () => {
+    if (activeStage >= STAGES.length - 1) {
+      onComplete();
+    } else {
       setActiveStage((s) => s + 1);
-    }, STAGES[activeStage].duration);
-
-    return () => {
-      clearTimeout(shimmerTimer);
-      clearTimeout(advanceTimer);
-    };
-  }, [activeStage, onComplete]);
+    }
+  };
 
   if (activeStage >= STAGES.length) return null;
 
@@ -106,12 +100,24 @@ export function AnalysisPhase({ brandData, assets, onComplete }: AnalysisPhasePr
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
+                className="space-y-8"
               >
                 {currentStage.id === "identify" && <IdentifyStage assets={assets} />}
                 {currentStage.id === "angles" && <AnglesStage />}
                 {currentStage.id === "assets" && <AssetsStage />}
                 {currentStage.id === "storyboard" && <StoryboardStage />}
                 {currentStage.id === "compose" && <ComposeStage brandData={brandData} />}
+
+                {/* Next step button */}
+                <div className="flex justify-center pt-2">
+                  <button
+                    onClick={handleNext}
+                    className="group flex items-center gap-2 rounded-lg bg-foreground text-background px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90 cursor-pointer"
+                  >
+                    {activeStage >= STAGES.length - 1 ? "Generate Hook" : "Continue"}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </button>
+                </div>
               </motion.div>
             )}
           </motion.div>
