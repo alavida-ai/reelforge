@@ -8,7 +8,7 @@ interface AdjustmentCardProps {
 
 export function AdjustmentCard({ adj }: AdjustmentCardProps) {
   return (
-    <div className="rounded-xl border border-border overflow-hidden">
+    <div className="rounded-xl overflow-hidden card-elevated">
       {/* Header */}
       <div className="flex items-center justify-between px-3.5 py-2.5 bg-background">
         <span className="text-[12px] font-semibold text-foreground">

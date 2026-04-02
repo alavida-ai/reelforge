@@ -22,7 +22,7 @@ function StatRow({
 
 export function PerformanceCard({ perf }: PerformanceCardProps) {
   return (
-    <div className="bg-card rounded-xl border border-border p-4">
+    <div className="card-elevated rounded-xl p-5">
       <SectionLabel>Content Performance</SectionLabel>
       <div className="flex flex-col gap-1.5">
         <StatRow label="Avg Views">

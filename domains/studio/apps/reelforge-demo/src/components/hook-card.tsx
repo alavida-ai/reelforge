@@ -24,9 +24,9 @@ export function HookCard({ result }: HookCardProps) {
   return (
     <div
       className={cn(
-        "rounded-xl overflow-hidden relative",
-        isRecommended && "border-2 border-[var(--color-green)]",
-        !isRecommended && "border border-border",
+        "rounded-xl overflow-hidden relative transition-all duration-200",
+        isRecommended && "card-hero border-2 border-[var(--color-green)] shadow-[0_0_20px_oklch(0.48_0.14_150/10%)]",
+        !isRecommended && "card-elevated",
         isBlocked && "opacity-50",
       )}
     >

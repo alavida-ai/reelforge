@@ -43,7 +43,7 @@ export function BrandIntelligence({ broker }: BrandIntelligenceProps) {
   const bi = broker.brandIntelligence;
 
   return (
-    <div className="bg-card rounded-xl border border-border p-4">
+    <div className="card-hero rounded-xl p-5">
       {/* Header */}
       <div className="flex justify-between items-center mb-3.5">
         <SectionLabel className="mb-0">Brand Intelligence</SectionLabel>
@@ -167,7 +167,7 @@ function AudienceMiniCard({
   value: string;
 }) {
   return (
-    <div className="border border-border rounded-md px-2 py-1.5">
+    <div className="card-elevated rounded-lg px-2.5 py-2">
       <div className="text-[10px] text-muted-foreground">{label}</div>
       <div className="text-xs font-medium">{value}</div>
     </div>

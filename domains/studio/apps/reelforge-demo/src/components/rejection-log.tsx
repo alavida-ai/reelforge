@@ -39,7 +39,7 @@ export function RejectionLog({ log }: RejectionLogProps) {
             <div className="text-xs mb-1.5">{entry.reason}</div>
 
             {/* System analysis card */}
-            <div className="bg-background rounded-md p-2.5 border border-border">
+            <div className="card-elevated rounded-lg p-3">
               <div className="text-[10px] font-semibold text-brand mb-0.5">
                 System analysis
               </div>

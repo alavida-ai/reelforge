@@ -18,7 +18,7 @@ export function PerformanceBrief({ broker }: PerformanceBriefProps) {
     .replace(/-+$/, "");
 
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
+    <div className="card-hero rounded-xl p-6">
       {/* Package header */}
       <div className="flex items-center gap-3 mb-4 pb-3 border-b border-border">
         <div
@@ -109,7 +109,7 @@ export function PerformanceBrief({ broker }: PerformanceBriefProps) {
         </div>
 
         {/* RIGHT -- The brief document */}
-        <div className="bg-background rounded-xl border border-border p-5 space-y-4">
+        <div className="rounded-xl border border-border p-5 space-y-4" style={{ background: 'oklch(0.10 0.015 275)', boxShadow: 'inset 0 2px 8px oklch(0 0 0 / 20%)' }}>
           {/* 1. Hook Summary */}
           <div>
             <h4 className="text-[10px] uppercase tracking-wider text-muted-foreground/60 mb-2">

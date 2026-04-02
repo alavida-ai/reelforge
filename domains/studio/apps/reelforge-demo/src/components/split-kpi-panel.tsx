@@ -16,16 +16,17 @@ export function SplitKpiPanel({ data }: SplitKpiPanelProps) {
   const ep = data.expectedPerformance;
 
   return (
-    <div className="bg-card rounded-xl border border-border p-4">
-      <div className="grid grid-cols-[1fr_1px_1fr] gap-4">
+    <div className="card-hero rounded-xl p-5">
+      <div className="grid grid-cols-[1fr_1px_1fr] gap-5">
         {/* LEFT -- Production Quality (DOMINANT) */}
         <div>
           <SectionLabel>Production Quality</SectionLabel>
           <div className="grid grid-cols-2 gap-3 mt-1">
             {/* Return Rate -- LEAD metric */}
-            <div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-[20px] font-bold text-[var(--color-green)] font-mono leading-none">
+            <div className="relative">
+              <div className="absolute -inset-2 rounded-lg bg-[var(--color-green)]/5 pointer-events-none" />
+              <div className="relative flex items-baseline gap-1">
+                <span className="text-[24px] font-extrabold text-[var(--color-green)] font-mono leading-none">
                   {pq.returnRate}
                 </span>
                 <span className={`text-[12px] font-semibold ${trendColor(pq.returnRateTrend)}`}>
@@ -70,7 +71,7 @@ export function SplitKpiPanel({ data }: SplitKpiPanelProps) {
         <div className="bg-border" />
 
         {/* RIGHT -- Expected Performance (MUTED, smaller) */}
-        <div>
+        <div className="opacity-80">
           <div className="flex items-center gap-2 mb-2.5">
             <SectionLabel className="mb-0">Expected Performance</SectionLabel>
             <span className="text-[8px] text-muted-foreground/60 bg-muted px-1.5 py-0.5 rounded">

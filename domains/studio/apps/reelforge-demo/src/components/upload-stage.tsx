@@ -48,7 +48,7 @@ export function UploadStage({ broker, onStart, started }: UploadStageProps) {
         </p>
 
         {/* Drop zone */}
-        <div className="border-2 border-dashed border-border rounded-xl p-6 mb-3">
+        <div className="border-2 border-dashed border-border rounded-xl p-8 mb-3 hover:border-brand/30 transition-colors duration-200">
           <div className="text-[20px] mb-1.5">📁</div>
           <div className="text-[12px]">Drop property photos & videos</div>
           <div className="text-[10px] text-muted-foreground mt-0.5">
@@ -74,10 +74,10 @@ export function UploadStage({ broker, onStart, started }: UploadStageProps) {
           onClick={onStart}
           disabled={started}
           className={cn(
-            "px-4 py-2 rounded-md text-[11px] font-semibold transition-all",
+            "px-5 py-2.5 rounded-lg text-[12px] font-semibold transition-all duration-200",
             started
               ? "bg-brand/40 text-primary-foreground/60 cursor-default"
-              : "bg-brand text-primary-foreground hover:opacity-90 cursor-pointer",
+              : "bg-brand text-primary-foreground hover:opacity-90 hover:shadow-[0_0_16px_oklch(0.72_0.10_300/25%)] cursor-pointer",
           )}
         >
           {started ? "Production Started ✓" : "Start Production →"}

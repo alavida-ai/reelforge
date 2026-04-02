@@ -14,7 +14,7 @@ export function VisualIdentityCard({ broker }: VisualIdentityCardProps) {
   ];
 
   return (
-    <div className="bg-card rounded-xl border border-border p-4">
+    <div className="card-elevated rounded-xl p-5">
       <SectionLabel>Visual Identity</SectionLabel>
 
       {/* Logo + name */}

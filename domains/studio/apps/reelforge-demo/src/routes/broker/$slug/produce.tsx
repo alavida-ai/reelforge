@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Nav } from "@/components/nav";
-import { SectionLabel } from "@/components/section-label";
 import { SourceTagLegend } from "@/components/source-tag";
 import { UploadStage } from "@/components/upload-stage";
 import { IntelligencePanels } from "@/components/intelligence-panels";
@@ -23,7 +22,7 @@ function ProductionFlowPage() {
     return (
       <>
         <Nav />
-        <div className="pt-14 max-w-[1200px] mx-auto px-6 py-12">
+        <div className="pt-16 max-w-[1200px] mx-auto px-6 py-12">
           <p className="text-muted-foreground">Broker not found.</p>
         </div>
       </>
@@ -33,20 +32,17 @@ function ProductionFlowPage() {
   return (
     <>
       <Nav brokerSlug={broker.slug} brokerName={broker.name} />
-      <div className="pt-14 max-w-[1200px] mx-auto px-5 py-5">
-        {/* Screen header */}
-        <div className="mb-5">
-          <div className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground mb-1">
-            Screen 3 of 4
-          </div>
-          <h1 className="text-lg font-bold">Production Flow</h1>
-          <p className="text-[11px] text-muted-foreground">
-            Upload listing → Creative Intelligence → Hook Selection
+      <div className="pt-16 max-w-[1200px] mx-auto px-6 py-6">
+        {/* Page header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-foreground">Hook Production</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Upload listing assets, analyze creative intelligence, select the best hook.
           </p>
         </div>
 
         {/* Stage 1: Upload — always visible */}
-        <div className="rounded-xl bg-card border border-border p-4 mb-4">
+        <div className="card-elevated rounded-xl p-5 mb-5">
           <UploadStage
             broker={broker}
             onStart={() => setStage(2)}
@@ -60,12 +56,12 @@ function ProductionFlowPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mb-4"
+            className="mb-5"
           >
-            <div className="flex items-center justify-between mb-3">
-              <SectionLabel className="mb-0">
-                Stage 2 — Creative Intelligence
-              </SectionLabel>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-foreground">
+                Creative Intelligence
+              </h2>
               <SourceTagLegend />
             </div>
             <IntelligencePanels
@@ -83,9 +79,9 @@ function ProductionFlowPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
           >
-            <SectionLabel className="mb-3">
-              Stage 3 — Hook Selection
-            </SectionLabel>
+            <h2 className="text-lg font-bold text-foreground mb-4">
+              Hook Selection
+            </h2>
             <HookSelection
               results={broker.hookSelectionResults}
               brokerSlug={broker.slug}

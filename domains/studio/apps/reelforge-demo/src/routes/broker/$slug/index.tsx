@@ -20,7 +20,7 @@ function BrokerPresetPage() {
     return (
       <>
         <Nav />
-        <div className="pt-14 max-w-[1200px] mx-auto px-6 py-12">
+        <div className="pt-16 max-w-[1200px] mx-auto px-6 py-12">
           <p className="text-muted-foreground">Broker not found.</p>
         </div>
       </>
@@ -30,32 +30,34 @@ function BrokerPresetPage() {
   return (
     <>
       <Nav brokerSlug={broker.slug} brokerName={broker.name} />
-      <div className="pt-14 max-w-[1200px] mx-auto px-5 py-5">
-        {/* Breadcrumb + CTA */}
-        <div className="flex justify-between items-center mb-4">
-          <div className="text-xs text-muted-foreground">
-            <Link
-              to="/dashboard"
-              className="hover:text-foreground transition-colors"
+      <div className="pt-16 max-w-[1200px] mx-auto px-6 py-6">
+        {/* Hero header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold text-white shadow-lg"
+              style={{ backgroundColor: broker.colors.primary }}
             >
-              ← Brokers
-            </Link>{" "}
-            <span className="mx-1">/</span>{" "}
-            <span className="font-semibold text-foreground">{broker.name}</span>
+              {broker.logoLetter}
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">{broker.name}</h1>
+              <p className="text-sm text-muted-foreground">{broker.tagline}</p>
+            </div>
           </div>
           <Link
             to="/broker/$slug/produce"
             params={{ slug: broker.slug }}
-            className="px-3 py-1.5 rounded-md bg-brand text-primary-foreground text-[11px] font-semibold hover:opacity-90 transition-opacity"
+            className="px-4 py-2 rounded-lg bg-brand text-primary-foreground text-[12px] font-semibold hover:opacity-90 hover:shadow-[0_0_16px_oklch(0.72_0.10_300/25%)] transition-all duration-200"
           >
-            Generate Hook for {broker.name} →
+            Generate Hook &rarr;
           </Link>
         </div>
 
         {/* 3-column grid */}
-        <div className="grid grid-cols-[220px_1fr_260px] gap-3.5">
+        <div className="grid grid-cols-[240px_1fr_280px] gap-4">
           {/* Left column: Visual Identity + Production */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             <VisualIdentityCard broker={broker} />
             <ProductionStatsCard sla={broker.productionSla} />
           </div>
@@ -64,7 +66,7 @@ function BrokerPresetPage() {
           <BrandIntelligence broker={broker} />
 
           {/* Right column: SLA + Performance + Data Depth */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             <SlaCard sla={broker.productionSla} />
             <PerformanceCard perf={broker.contentPerformance} />
             <DataDepthCard depth={broker.dataDepth} />

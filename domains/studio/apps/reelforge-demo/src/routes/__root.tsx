@@ -38,6 +38,7 @@ function RootLayout() {
         <HeadContent />
       </head>
       <body className="font-sans antialiased bg-background text-foreground min-h-screen">
+        <div className="ambient-glow" />
         <Outlet />
         <Scripts />
       </body>

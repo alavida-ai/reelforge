@@ -9,7 +9,7 @@ export function VideoPreview({ broker }: VideoPreviewProps) {
     <div className="flex flex-col gap-2.5">
       {/* 9:16 video placeholder */}
       <div
-        className="relative rounded-xl border border-border overflow-hidden"
+        className="relative rounded-xl overflow-hidden card-elevated"
         style={{ aspectRatio: "9/16", background: "#0a0a0a" }}
       >
         {/* Brand accent strip */}
@@ -55,7 +55,7 @@ export function VideoPreview({ broker }: VideoPreviewProps) {
       {/* Action buttons */}
       <div className="flex gap-2">
         <button
-          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors"
+          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-semibold transition-all duration-200 hover:opacity-80"
           style={{
             background: `${broker.colors.primary}14`,
             color: broker.colors.primary,
@@ -63,7 +63,7 @@ export function VideoPreview({ broker }: VideoPreviewProps) {
         >
           <span>&#8595;</span> Export Package
         </button>
-        <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+        <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-border text-[11px] font-medium text-muted-foreground hover:text-foreground hover:bg-[oklch(1_0_0/3%)] transition-all duration-200">
           <span>&#8635;</span> New Variation
         </button>
       </div>

@@ -19,7 +19,7 @@ function buildTabs(
 ): TabDef[] {
   const tabs: TabDef[] = [
     {
-      label: "1. Dashboard",
+      label: "Dashboard",
       to: "/dashboard",
       requiresBroker: false,
     },
@@ -28,19 +28,19 @@ function buildTabs(
   if (brokerSlug) {
     tabs.push(
       {
-        label: `2. ${brokerName ?? "Broker Preset"}`,
+        label: brokerName ?? "Broker",
         to: "/broker/$slug",
         params: { slug: brokerSlug },
         requiresBroker: true,
       },
       {
-        label: "3. Production Flow",
+        label: "Produce",
         to: "/broker/$slug/produce",
         params: { slug: brokerSlug },
         requiresBroker: true,
       },
       {
-        label: "4. Hook Reveal",
+        label: "Deliver",
         to: "/broker/$slug/reveal",
         params: { slug: brokerSlug },
         requiresBroker: true,
@@ -58,13 +58,19 @@ export function Nav({ brokerSlug, brokerName }: NavProps) {
   const tabs = buildTabs(brokerSlug, brokerName);
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 h-12 flex items-center justify-between border-b border-border bg-background/95 backdrop-blur px-4">
-      <span className="text-sm font-semibold text-foreground tracking-tight">
-        Bright River{" "}
-        <span className="text-muted-foreground font-normal">/</span>{" "}
-        <span className="text-brand">ReelForge</span>
-      </span>
+    <nav className="fixed top-0 inset-x-0 z-50 h-14 flex items-center justify-between border-b border-border/50 bg-background/80 backdrop-blur-xl px-5">
+      {/* Left: Brand identity */}
+      <div className="flex items-center gap-3">
+        <span className="text-sm font-bold text-foreground tracking-tight">
+          Bright River
+        </span>
+        <div className="w-px h-5 bg-border/60" />
+        <span className="text-sm font-medium text-brand tracking-tight">
+          ReelForge
+        </span>
+      </div>
 
+      {/* Right: Navigation tabs */}
       <div className="flex items-center gap-1">
         {tabs.map((tab) => {
           const isActive = currentPath === tab.to;
@@ -75,13 +81,16 @@ export function Nav({ brokerSlug, brokerName }: NavProps) {
               to={tab.to}
               params={tab.params as any}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors",
+                "relative px-3.5 py-1.5 rounded-lg text-[12px] font-medium transition-all duration-200",
                 isActive
-                  ? "bg-brand-subtle text-brand"
-                  : "text-muted-foreground hover:text-foreground hover:bg-brand-subtle/50",
+                  ? "bg-brand/15 text-brand shadow-[0_0_12px_oklch(0.72_0.10_300/15%)]"
+                  : "text-muted-foreground hover:text-foreground hover:bg-[oklch(1_0_0/4%)]",
               )}
             >
               {tab.label}
+              {isActive && (
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] rounded-full bg-brand/60" />
+              )}
             </Link>
           );
         })}

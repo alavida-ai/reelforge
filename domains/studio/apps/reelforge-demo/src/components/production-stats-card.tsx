@@ -26,7 +26,7 @@ function StatRow({
 
 export function ProductionStatsCard({ sla }: ProductionStatsCardProps) {
   return (
-    <div className="bg-card rounded-xl border border-border p-4">
+    <div className="card-elevated rounded-xl p-5">
       <SectionLabel>Production</SectionLabel>
       <div className="flex flex-col gap-1.5">
         <StatRow label="Hooks" value={sla.hooksDelivered} />

@@ -26,7 +26,7 @@ export function HookSelection({ results, brokerSlug }: HookSelectionProps) {
         <Link
           to="/broker/$slug/reveal"
           params={{ slug: brokerSlug }}
-          className="inline-block px-5 py-2.5 rounded-md bg-brand text-primary-foreground text-[12px] font-semibold hover:opacity-90 transition-opacity"
+          className="inline-block px-5 py-2.5 rounded-lg bg-brand text-primary-foreground text-[12px] font-semibold hover:opacity-90 hover:shadow-[0_0_16px_oklch(0.72_0.10_300/25%)] transition-all duration-200"
         >
           Generate {recommendedName} →
         </Link>

@@ -35,7 +35,7 @@ export function DataDepthCard({ depth }: DataDepthCardProps) {
   const orange = "var(--color-orange)";
 
   return (
-    <div className="bg-card rounded-xl border border-border p-4">
+    <div className="card-elevated rounded-xl p-5">
       <SectionLabel>Data Depth</SectionLabel>
       <div className="flex flex-col gap-2">
         <DepthRow

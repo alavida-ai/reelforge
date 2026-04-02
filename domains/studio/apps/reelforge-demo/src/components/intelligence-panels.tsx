@@ -21,8 +21,8 @@ interface IntelligencePanelsProps {
 
 function PropertyAnalysisPanel({ property }: { property: DemoProperty }) {
   return (
-    <div className="rounded-xl bg-card border border-border p-3.5">
-      <SectionLabel>1. Property Analysis</SectionLabel>
+    <div className="card-elevated rounded-xl p-4">
+      <SectionLabel>Property Analysis</SectionLabel>
       <div className="text-[15px] font-bold mb-0.5">{property.type}</div>
       <div className="text-[11px] text-muted-foreground mb-2.5">
         {property.subtype}
@@ -62,8 +62,8 @@ function HookAssetPanel({
   hookResults: HookSelectionResult[];
 }) {
   return (
-    <div className="rounded-xl bg-card border border-border p-3.5">
-      <SectionLabel>2. Hook-Asset Matching</SectionLabel>
+    <div className="card-elevated rounded-xl p-4">
+      <SectionLabel>Hook-Asset Matching</SectionLabel>
       <div className="text-[13px] font-semibold mb-2">
         Which hooks are possible with these assets?
       </div>
@@ -164,8 +164,8 @@ function RiskRecommendationPanel({
     : undefined;
 
   return (
-    <div className="rounded-xl bg-card border border-border p-3.5">
-      <SectionLabel>3. Risk + Recommendation</SectionLabel>
+    <div className="card-elevated rounded-xl p-4">
+      <SectionLabel>Risk + Recommendation</SectionLabel>
 
       {recommendedHookType && (
         <>

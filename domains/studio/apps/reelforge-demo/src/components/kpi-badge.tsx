@@ -5,32 +5,36 @@ interface KpiBadgeProps {
   label: string;
   highlight?: boolean;
   size?: "sm" | "md" | "lg";
+  className?: string;
 }
-
-const valueSizeMap = {
-  sm: "text-sm",
-  md: "text-lg",
-  lg: "text-xl",
-} as const;
 
 export function KpiBadge({
   value,
   label,
   highlight = false,
   size = "md",
+  className,
 }: KpiBadgeProps) {
   return (
-    <div className="flex flex-col items-start">
+    <div
+      className={cn(
+        "metric-tile flex flex-col",
+        highlight && "ring-1 ring-[var(--color-green)]/20",
+        className,
+      )}
+    >
       <span
         className={cn(
-          "font-mono font-bold leading-tight",
-          valueSizeMap[size],
-          highlight ? "text-green" : "text-foreground",
+          "font-mono font-extrabold tracking-tight",
+          size === "sm" && "text-sm",
+          size === "md" && "text-xl",
+          size === "lg" && "text-2xl",
+          highlight ? "text-[var(--color-green)]" : "text-foreground",
         )}
       >
         {value}
       </span>
-      <span className="text-[9px] uppercase tracking-wider text-muted-foreground leading-tight mt-0.5">
+      <span className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">
         {label}
       </span>
     </div>
