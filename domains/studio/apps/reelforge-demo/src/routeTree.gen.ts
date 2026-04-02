@@ -16,6 +16,8 @@ import { Route as BrokerSlugIndexRouteImport } from './routes/broker/$slug/index
 import { Route as BrokerSlugRevealRouteImport } from './routes/broker/$slug/reveal'
 import { Route as BrokerSlugProduceRouteImport } from './routes/broker/$slug/produce'
 import { Route as BrokerSlugProduceIndexRouteImport } from './routes/broker/$slug/produce/index'
+import { Route as BrokerSlugProduceHooksRouteImport } from './routes/broker/$slug/produce/hooks'
+import { Route as BrokerSlugProduceAnalysisRouteImport } from './routes/broker/$slug/produce/analysis'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -52,6 +54,17 @@ const BrokerSlugProduceIndexRoute = BrokerSlugProduceIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BrokerSlugProduceRoute,
 } as any)
+const BrokerSlugProduceHooksRoute = BrokerSlugProduceHooksRouteImport.update({
+  id: '/hooks',
+  path: '/hooks',
+  getParentRoute: () => BrokerSlugProduceRoute,
+} as any)
+const BrokerSlugProduceAnalysisRoute =
+  BrokerSlugProduceAnalysisRouteImport.update({
+    id: '/analysis',
+    path: '/analysis',
+    getParentRoute: () => BrokerSlugProduceRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -60,6 +73,8 @@ export interface FileRoutesByFullPath {
   '/broker/$slug/produce': typeof BrokerSlugProduceRouteWithChildren
   '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
   '/broker/$slug/': typeof BrokerSlugIndexRoute
+  '/broker/$slug/produce/analysis': typeof BrokerSlugProduceAnalysisRoute
+  '/broker/$slug/produce/hooks': typeof BrokerSlugProduceHooksRoute
   '/broker/$slug/produce/': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRoutesByTo {
@@ -67,6 +82,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
   '/broker/$slug': typeof BrokerSlugIndexRoute
+  '/broker/$slug/produce/analysis': typeof BrokerSlugProduceAnalysisRoute
+  '/broker/$slug/produce/hooks': typeof BrokerSlugProduceHooksRoute
   '/broker/$slug/produce': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRoutesById {
@@ -77,6 +94,8 @@ export interface FileRoutesById {
   '/broker/$slug/produce': typeof BrokerSlugProduceRouteWithChildren
   '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
   '/broker/$slug/': typeof BrokerSlugIndexRoute
+  '/broker/$slug/produce/analysis': typeof BrokerSlugProduceAnalysisRoute
+  '/broker/$slug/produce/hooks': typeof BrokerSlugProduceHooksRoute
   '/broker/$slug/produce/': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRouteTypes {
@@ -88,6 +107,8 @@ export interface FileRouteTypes {
     | '/broker/$slug/produce'
     | '/broker/$slug/reveal'
     | '/broker/$slug/'
+    | '/broker/$slug/produce/analysis'
+    | '/broker/$slug/produce/hooks'
     | '/broker/$slug/produce/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -95,6 +116,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/broker/$slug/reveal'
     | '/broker/$slug'
+    | '/broker/$slug/produce/analysis'
+    | '/broker/$slug/produce/hooks'
     | '/broker/$slug/produce'
   id:
     | '__root__'
@@ -104,6 +127,8 @@ export interface FileRouteTypes {
     | '/broker/$slug/produce'
     | '/broker/$slug/reveal'
     | '/broker/$slug/'
+    | '/broker/$slug/produce/analysis'
+    | '/broker/$slug/produce/hooks'
     | '/broker/$slug/produce/'
   fileRoutesById: FileRoutesById
 }
@@ -164,14 +189,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrokerSlugProduceIndexRouteImport
       parentRoute: typeof BrokerSlugProduceRoute
     }
+    '/broker/$slug/produce/hooks': {
+      id: '/broker/$slug/produce/hooks'
+      path: '/hooks'
+      fullPath: '/broker/$slug/produce/hooks'
+      preLoaderRoute: typeof BrokerSlugProduceHooksRouteImport
+      parentRoute: typeof BrokerSlugProduceRoute
+    }
+    '/broker/$slug/produce/analysis': {
+      id: '/broker/$slug/produce/analysis'
+      path: '/analysis'
+      fullPath: '/broker/$slug/produce/analysis'
+      preLoaderRoute: typeof BrokerSlugProduceAnalysisRouteImport
+      parentRoute: typeof BrokerSlugProduceRoute
+    }
   }
 }
 
 interface BrokerSlugProduceRouteChildren {
+  BrokerSlugProduceAnalysisRoute: typeof BrokerSlugProduceAnalysisRoute
+  BrokerSlugProduceHooksRoute: typeof BrokerSlugProduceHooksRoute
   BrokerSlugProduceIndexRoute: typeof BrokerSlugProduceIndexRoute
 }
 
 const BrokerSlugProduceRouteChildren: BrokerSlugProduceRouteChildren = {
+  BrokerSlugProduceAnalysisRoute: BrokerSlugProduceAnalysisRoute,
+  BrokerSlugProduceHooksRoute: BrokerSlugProduceHooksRoute,
   BrokerSlugProduceIndexRoute: BrokerSlugProduceIndexRoute,
 }
 
