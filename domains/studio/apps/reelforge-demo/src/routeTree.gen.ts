@@ -16,6 +16,7 @@ import { Route as BrokerSlugIndexRouteImport } from './routes/broker/$slug/index
 import { Route as BrokerSlugRevealRouteImport } from './routes/broker/$slug/reveal'
 import { Route as BrokerSlugProduceRouteImport } from './routes/broker/$slug/produce'
 import { Route as BrokerSlugProduceIndexRouteImport } from './routes/broker/$slug/produce/index'
+import { Route as BrokerSlugProduceRiskRouteImport } from './routes/broker/$slug/produce/risk'
 import { Route as BrokerSlugProduceHooksRouteImport } from './routes/broker/$slug/produce/hooks'
 import { Route as BrokerSlugProduceAnalysisRouteImport } from './routes/broker/$slug/produce/analysis'
 
@@ -54,6 +55,11 @@ const BrokerSlugProduceIndexRoute = BrokerSlugProduceIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BrokerSlugProduceRoute,
 } as any)
+const BrokerSlugProduceRiskRoute = BrokerSlugProduceRiskRouteImport.update({
+  id: '/risk',
+  path: '/risk',
+  getParentRoute: () => BrokerSlugProduceRoute,
+} as any)
 const BrokerSlugProduceHooksRoute = BrokerSlugProduceHooksRouteImport.update({
   id: '/hooks',
   path: '/hooks',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/broker/$slug/': typeof BrokerSlugIndexRoute
   '/broker/$slug/produce/analysis': typeof BrokerSlugProduceAnalysisRoute
   '/broker/$slug/produce/hooks': typeof BrokerSlugProduceHooksRoute
+  '/broker/$slug/produce/risk': typeof BrokerSlugProduceRiskRoute
   '/broker/$slug/produce/': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRoutesByTo {
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/broker/$slug': typeof BrokerSlugIndexRoute
   '/broker/$slug/produce/analysis': typeof BrokerSlugProduceAnalysisRoute
   '/broker/$slug/produce/hooks': typeof BrokerSlugProduceHooksRoute
+  '/broker/$slug/produce/risk': typeof BrokerSlugProduceRiskRoute
   '/broker/$slug/produce': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRoutesById {
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/broker/$slug/': typeof BrokerSlugIndexRoute
   '/broker/$slug/produce/analysis': typeof BrokerSlugProduceAnalysisRoute
   '/broker/$slug/produce/hooks': typeof BrokerSlugProduceHooksRoute
+  '/broker/$slug/produce/risk': typeof BrokerSlugProduceRiskRoute
   '/broker/$slug/produce/': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRouteTypes {
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/broker/$slug/'
     | '/broker/$slug/produce/analysis'
     | '/broker/$slug/produce/hooks'
+    | '/broker/$slug/produce/risk'
     | '/broker/$slug/produce/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/broker/$slug'
     | '/broker/$slug/produce/analysis'
     | '/broker/$slug/produce/hooks'
+    | '/broker/$slug/produce/risk'
     | '/broker/$slug/produce'
   id:
     | '__root__'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/broker/$slug/'
     | '/broker/$slug/produce/analysis'
     | '/broker/$slug/produce/hooks'
+    | '/broker/$slug/produce/risk'
     | '/broker/$slug/produce/'
   fileRoutesById: FileRoutesById
 }
@@ -189,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrokerSlugProduceIndexRouteImport
       parentRoute: typeof BrokerSlugProduceRoute
     }
+    '/broker/$slug/produce/risk': {
+      id: '/broker/$slug/produce/risk'
+      path: '/risk'
+      fullPath: '/broker/$slug/produce/risk'
+      preLoaderRoute: typeof BrokerSlugProduceRiskRouteImport
+      parentRoute: typeof BrokerSlugProduceRoute
+    }
     '/broker/$slug/produce/hooks': {
       id: '/broker/$slug/produce/hooks'
       path: '/hooks'
@@ -209,12 +228,14 @@ declare module '@tanstack/react-router' {
 interface BrokerSlugProduceRouteChildren {
   BrokerSlugProduceAnalysisRoute: typeof BrokerSlugProduceAnalysisRoute
   BrokerSlugProduceHooksRoute: typeof BrokerSlugProduceHooksRoute
+  BrokerSlugProduceRiskRoute: typeof BrokerSlugProduceRiskRoute
   BrokerSlugProduceIndexRoute: typeof BrokerSlugProduceIndexRoute
 }
 
 const BrokerSlugProduceRouteChildren: BrokerSlugProduceRouteChildren = {
   BrokerSlugProduceAnalysisRoute: BrokerSlugProduceAnalysisRoute,
   BrokerSlugProduceHooksRoute: BrokerSlugProduceHooksRoute,
+  BrokerSlugProduceRiskRoute: BrokerSlugProduceRiskRoute,
   BrokerSlugProduceIndexRoute: BrokerSlugProduceIndexRoute,
 }
 
