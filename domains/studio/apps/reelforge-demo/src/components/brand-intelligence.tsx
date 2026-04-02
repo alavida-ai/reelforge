@@ -9,6 +9,7 @@ import {
   Check,
   X,
   AlertTriangle,
+  ShieldAlert,
 } from "lucide-react";
 import type { Broker, HookApproachRule } from "@/data/types";
 
@@ -151,15 +152,15 @@ function statusBadge(status: HookApproachRule["status"]) {
   }
 }
 
-function hookIcon(hookType: string) {
-  const lower = hookType.toLowerCase();
-  if (lower.includes("door")) return "🚪";
-  if (lower.includes("price")) return "💰";
-  if (lower.includes("cinematic") || lower.includes("drone")) return "🎬";
-  if (lower.includes("luxury")) return "✨";
-  if (lower.includes("before") || lower.includes("after")) return "🔄";
-  if (lower.includes("influencer")) return "🧑";
-  return "🎯";
+function statusBorderColor(status: HookApproachRule["status"]) {
+  switch (status) {
+    case "approved":
+      return "border-l-[var(--color-green)]";
+    case "blocked":
+      return "border-l-destructive";
+    case "conditional":
+      return "border-l-[var(--color-orange)]";
+  }
 }
 
 function HookRulesSection({ rules }: { rules: HookApproachRule[] }) {
@@ -168,7 +169,7 @@ function HookRulesSection({ rules }: { rules: HookApproachRule[] }) {
   return (
     <div>
       <h3 className="text-sm font-semibold mb-3">Hook Approach Rules</h3>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="flex flex-col gap-2">
         {rules.map((rule) => {
           const isExpanded = expandedRule === rule.hookType;
           return (
@@ -179,22 +180,24 @@ function HookRulesSection({ rules }: { rules: HookApproachRule[] }) {
                 setExpandedRule(isExpanded ? null : rule.hookType)
               }
               className={cn(
-                "text-left rounded-lg border border-border p-3 transition-colors hover:bg-muted/50",
+                "text-left rounded-md border border-border border-l-2 px-3 py-2.5 transition-colors hover:bg-muted/50",
+                statusBorderColor(rule.status),
                 isExpanded && "bg-muted/50",
               )}
             >
-              <div className="flex items-start justify-between gap-2 mb-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="text-base">{hookIcon(rule.hookType)}</span>
-                  <span className="text-sm font-medium">{rule.hookType}</span>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-sm font-semibold truncate">
+                    {rule.hookType}
+                  </span>
+                  {statusBadge(rule.status)}
                 </div>
                 {isExpanded ? (
-                  <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                  <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                 ) : (
-                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                 )}
               </div>
-              <div className="mb-1.5">{statusBadge(rule.status)}</div>
               {isExpanded && (
                 <p className="text-xs text-muted-foreground leading-relaxed mt-2 pt-2 border-t border-border">
                   {rule.reasoning}
@@ -218,23 +221,27 @@ function GuardrailsSection({
   return (
     <div>
       <h3 className="text-sm font-semibold mb-3">Guardrails</h3>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col divide-y divide-border">
         {guardrails.map((g) => (
           <div
             key={g.rule}
-            className={cn(
-              "flex items-center gap-2.5 text-sm px-3 py-2 rounded-md",
-              g.severity === "hard"
-                ? "bg-destructive/5 text-destructive"
-                : "bg-[var(--color-orange)]/5 text-[var(--color-orange)]",
-            )}
+            className="flex items-start gap-2.5 py-2.5 first:pt-0 last:pb-0"
           >
             {g.severity === "hard" ? (
-              <X className="w-4 h-4 shrink-0" />
+              <ShieldAlert className="w-4 h-4 shrink-0 text-destructive mt-0.5" />
             ) : (
-              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <AlertTriangle className="w-4 h-4 shrink-0 text-[var(--color-orange)] mt-0.5" />
             )}
-            <span className="text-foreground text-sm">{g.rule}</span>
+            <span
+              className={cn(
+                "text-sm leading-relaxed",
+                g.severity === "hard"
+                  ? "text-destructive"
+                  : "text-[var(--color-orange)]",
+              )}
+            >
+              {g.rule}
+            </span>
           </div>
         ))}
       </div>
