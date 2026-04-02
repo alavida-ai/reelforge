@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { SectionLabel } from "@/components/section-label";
 import type { Broker } from "@/data/types";
 
 interface VisualIdentityCardProps {
@@ -8,52 +7,61 @@ interface VisualIdentityCardProps {
 
 export function VisualIdentityCard({ broker }: VisualIdentityCardProps) {
   const colorSwatches = [
-    broker.colors.primary,
-    broker.colors.secondary,
-    broker.colors.accent,
-    broker.colors.background,
+    { color: broker.colors.primary, label: "Primary" },
+    { color: broker.colors.secondary, label: "Secondary" },
+    { color: broker.colors.accent, label: "Accent" },
+    { color: broker.colors.background, label: "Background" },
   ];
 
   return (
     <Card>
       <CardContent className="p-5">
-        <SectionLabel>Visual Identity</SectionLabel>
-
-        {/* Logo + name */}
-        <div className="flex items-center gap-2.5 mb-3">
-          <div
-            className="w-9 h-9 rounded-lg flex items-center justify-center text-[15px] font-bold text-white"
-            style={{ backgroundColor: broker.colors.primary }}
-          >
-            {broker.logoLetter}
-          </div>
-          <div>
-            <div className="font-bold text-sm">{broker.name}</div>
-            <div className="text-[10px] text-muted-foreground">
-              {broker.websiteUrl}
+        <div className="flex items-center justify-between">
+          {/* Logo + name + website */}
+          <div className="flex items-center gap-3">
+            <div
+              className="w-12 h-12 rounded-lg flex items-center justify-center text-xl font-bold text-white shrink-0"
+              style={{ backgroundColor: broker.colors.primary }}
+            >
+              {broker.logoLetter}
+            </div>
+            <div>
+              <h2 className="font-semibold text-base">{broker.name}</h2>
+              <p className="text-xs text-muted-foreground">
+                {broker.websiteUrl}
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* Color swatches */}
-        <div className="flex gap-1.5 mb-2">
-          {colorSwatches.map((color) => (
-            <div
-              key={color}
-              className="w-6 h-6 rounded"
-              style={{
-                backgroundColor: color,
-                border:
-                  color === "#FFFFFF" || color === "#ffffff"
-                    ? "1px solid var(--border)"
-                    : undefined,
-              }}
-            />
-          ))}
-        </div>
+          {/* Color palette swatches */}
+          <div className="flex items-center gap-2">
+            {colorSwatches.map(({ color, label }) => (
+              <div key={label} className="flex flex-col items-center gap-1">
+                <div
+                  className="w-8 h-8 rounded-md"
+                  style={{
+                    backgroundColor: color,
+                    border:
+                      color === "#FFFFFF" || color === "#ffffff"
+                        ? "1px solid var(--border)"
+                        : undefined,
+                  }}
+                />
+                <span className="text-[9px] text-muted-foreground">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
 
-        {/* Font names */}
-        <div className="text-[11px] text-muted-foreground">{broker.fonts}</div>
+          {/* Fonts */}
+          <div className="text-right">
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-0.5">
+              Fonts
+            </div>
+            <div className="text-sm font-medium">{broker.fonts}</div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

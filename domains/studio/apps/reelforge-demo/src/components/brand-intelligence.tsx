@@ -1,41 +1,19 @@
+import { useState } from "react";
 import { cn } from "@/lib";
 import { Card, CardContent } from "@/components/ui/card";
-import { SectionLabel } from "@/components/section-label";
-import { RejectionLog } from "@/components/rejection-log";
-import type { Broker, HookApproachRule, Guardrail } from "@/data/types";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  ChevronDown,
+  ChevronRight,
+  Check,
+  X,
+  AlertTriangle,
+} from "lucide-react";
+import type { Broker, HookApproachRule } from "@/data/types";
 
 interface BrandIntelligenceProps {
   broker: Broker;
-}
-
-/* -- Helpers ------------------------------------------------------------ */
-
-function statusIcon(status: HookApproachRule["status"]) {
-  switch (status) {
-    case "approved":
-      return (
-        <span className="text-[var(--color-green)] shrink-0">✓</span>
-      );
-    case "blocked":
-      return (
-        <span className="text-[var(--color-red)] shrink-0">✗</span>
-      );
-    case "conditional":
-      return (
-        <span className="text-[var(--color-orange)] shrink-0">~</span>
-      );
-  }
-}
-
-function guardrailStyle(severity: Guardrail["severity"]) {
-  if (severity === "hard") {
-    return "bg-[rgba(255,107,107,0.06)] border-[rgba(255,107,107,0.12)] text-[var(--color-red)]";
-  }
-  return "bg-[rgba(255,152,0,0.06)] border-[rgba(255,152,0,0.12)] text-[var(--color-orange)]";
-}
-
-function guardrailIcon(severity: Guardrail["severity"]) {
-  return severity === "hard" ? "⛔" : "⚠️";
 }
 
 /* -- Component ---------------------------------------------------------- */
@@ -45,189 +23,221 @@ export function BrandIntelligence({ broker }: BrandIntelligenceProps) {
 
   return (
     <Card>
-      <CardContent className="p-5">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-3.5">
-          <SectionLabel className="mb-0">Brand Intelligence</SectionLabel>
-          <div className="text-[9px] text-muted-foreground bg-muted px-2 py-0.5 rounded">
-            Extracted from website + social + market data
-          </div>
-        </div>
+      <CardContent className="p-6">
+        <h2 className="text-lg font-semibold mb-1">Brand Intelligence</h2>
+        <p className="text-xs text-muted-foreground mb-5">
+          Extracted from website, social, and market data
+        </p>
 
-        {/* Section 1: Who they are */}
-        <div className="border-b border-border pb-3 mb-3">
-          <h3 className="text-[13px] font-semibold mb-1">Who they are</h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            <WhoTheyAreText text={bi.whoTheyAre} />
-          </p>
-        </div>
+        {/* Section 1: Brand DNA */}
+        <BrandDnaSection
+          whoTheyAre={bi.whoTheyAre}
+          tags={bi.communicationStyle.tags}
+          voice={bi.communicationStyle.voiceDescription}
+        />
 
-        {/* Section 2: Target audience signal */}
-        <div className="border-b border-border pb-3 mb-3">
-          <h3 className="text-[13px] font-semibold mb-2">
-            Target audience signal
-          </h3>
-          <div className="grid grid-cols-2 gap-1.5">
-            <AudienceMiniCard
-              label="Primary demographic"
-              value={bi.targetAudience.demographic}
-            />
-            <AudienceMiniCard
-              label="Price segment"
-              value={bi.targetAudience.priceSegment}
-            />
-            <AudienceMiniCard
-              label="Geographic focus"
-              value={bi.targetAudience.geographicFocus}
-            />
-            <AudienceMiniCard
-              label="Social presence"
-              value={bi.targetAudience.socialPresence}
-            />
-          </div>
-        </div>
+        <Separator className="my-5" />
 
-        {/* Section 3: Communication style */}
-        <div className="border-b border-border pb-3 mb-3">
-          <h3 className="text-[13px] font-semibold mb-2">
-            Communication style
-          </h3>
-          <div className="flex flex-wrap gap-1.5 mb-2">
-            {bi.communicationStyle.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-[var(--color-green-subtle)] text-[var(--color-green)]"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <p className="text-[11px] text-muted-foreground">
-            Voice:{" "}
-            <strong className="text-foreground">
-              {bi.communicationStyle.voiceDescription}
-            </strong>
-          </p>
-        </div>
+        {/* Section 2: Audience */}
+        <AudienceSection audience={bi.targetAudience} />
 
-        {/* Section 4: Hook approach rules */}
-        <div className="border-b border-border pb-3 mb-3">
-          <h3 className="text-[13px] font-semibold mb-2">
-            Hook approach rules
-          </h3>
-          <div className="flex flex-col gap-1.5">
-            {bi.hookApproachRules.map((rule) => (
-              <div
-                key={rule.hookType}
-                className="flex items-center gap-2 text-xs"
-              >
-                {statusIcon(rule.status)}
-                <span
-                  className={cn(
-                    rule.status === "blocked" && "text-muted-foreground",
-                  )}
-                >
-                  <strong>{rule.hookType}</strong> — {rule.reasoning}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Separator className="my-5" />
 
-        {/* Section 5: Brand guardrails */}
-        <div>
-          <h3 className="text-[13px] font-semibold mb-2">Brand guardrails</h3>
-          <div className="flex flex-col gap-1.5">
-            {bi.guardrails.map((g) => (
-              <div
-                key={g.rule}
-                className={cn(
-                  "flex items-start gap-2 text-xs px-2.5 py-2 rounded-md border",
-                  guardrailStyle(g.severity),
-                )}
-              >
-                <span>{guardrailIcon(g.severity)}</span>
-                <span className="text-foreground">{g.rule}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Section 3: Hook Rules */}
+        <HookRulesSection rules={bi.hookApproachRules} />
 
-        {/* Section 6: Rejection log */}
-        <RejectionLog log={broker.rejectionLog} />
+        <Separator className="my-5" />
+
+        {/* Section 4: Guardrails */}
+        <GuardrailsSection guardrails={bi.guardrails} />
       </CardContent>
     </Card>
   );
 }
 
-/* -- Sub-components ----------------------------------------------------- */
+/* -- Section 1: Brand DNA ----------------------------------------------- */
 
-function AudienceMiniCard({
-  label,
-  value,
+function BrandDnaSection({
+  whoTheyAre,
+  tags,
+  voice,
 }: {
-  label: string;
-  value: string;
+  whoTheyAre: string;
+  tags: string[];
+  voice: string;
 }) {
   return (
-    <div className="rounded-lg border border-border px-2.5 py-2 bg-muted/50">
-      <div className="text-[10px] text-muted-foreground">{label}</div>
-      <div className="text-xs font-medium">{value}</div>
+    <div>
+      <h3 className="text-sm font-semibold mb-2">Brand DNA</h3>
+      <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+        {whoTheyAre}
+      </p>
+      <div className="flex flex-wrap gap-1.5 mb-3">
+        {tags.map((tag) => (
+          <Badge key={tag} variant="outline" className="text-xs">
+            {tag}
+          </Badge>
+        ))}
+      </div>
+      <blockquote className="border-l-2 border-border pl-3 text-sm text-muted-foreground italic">
+        {voice}
+      </blockquote>
     </div>
   );
 }
 
-/**
- * Renders the "who they are" paragraph with key phrases bolded.
- */
-function WhoTheyAreText({ text }: { text: string }) {
-  const keyPhrases = [
-    "modern, approachable real estate platform",
-    "making it easy",
-    "feeling at home",
+/* -- Section 2: Audience ------------------------------------------------ */
+
+function AudienceSection({
+  audience,
+}: {
+  audience: Broker["brandIntelligence"]["targetAudience"];
+}) {
+  const items = [
+    { label: "Primary demographic", value: audience.demographic },
+    { label: "Price segment", value: audience.priceSegment },
+    { label: "Geographic focus", value: audience.geographicFocus },
+    { label: "Social presence", value: audience.socialPresence },
   ];
 
-  const parts: Array<{ text: string; bold: boolean }> = [];
-  let remaining = text;
+  return (
+    <div>
+      <h3 className="text-sm font-semibold mb-3">Audience</h3>
+      <div className="grid grid-cols-2 gap-3">
+        {items.map((item) => (
+          <div key={item.label}>
+            <div className="text-[11px] text-muted-foreground mb-0.5">
+              {item.label}
+            </div>
+            <div className="text-sm font-medium">{item.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-  while (remaining.length > 0) {
-    let earliestIndex = remaining.length;
-    let matchedPhrase = "";
+/* -- Section 3: Hook Rules ---------------------------------------------- */
 
-    for (const phrase of keyPhrases) {
-      const idx = remaining.toLowerCase().indexOf(phrase.toLowerCase());
-      if (idx !== -1 && idx < earliestIndex) {
-        earliestIndex = idx;
-        matchedPhrase = phrase;
-      }
-    }
-
-    if (matchedPhrase && earliestIndex < remaining.length) {
-      if (earliestIndex > 0) {
-        parts.push({ text: remaining.slice(0, earliestIndex), bold: false });
-      }
-      parts.push({
-        text: remaining.slice(earliestIndex, earliestIndex + matchedPhrase.length),
-        bold: true,
-      });
-      remaining = remaining.slice(earliestIndex + matchedPhrase.length);
-    } else {
-      parts.push({ text: remaining, bold: false });
-      remaining = "";
-    }
+function statusBadge(status: HookApproachRule["status"]) {
+  switch (status) {
+    case "approved":
+      return (
+        <Badge
+          variant="outline"
+          className="text-[var(--color-green)] border-[var(--color-green)]/30 gap-1"
+        >
+          <Check className="w-3 h-3" />
+          Approved
+        </Badge>
+      );
+    case "blocked":
+      return (
+        <Badge variant="destructive" className="gap-1">
+          <X className="w-3 h-3" />
+          Blocked
+        </Badge>
+      );
+    case "conditional":
+      return (
+        <Badge
+          variant="outline"
+          className="text-[var(--color-orange)] border-[var(--color-orange)]/30 gap-1"
+        >
+          <AlertTriangle className="w-3 h-3" />
+          Conditional
+        </Badge>
+      );
   }
+}
+
+function hookIcon(hookType: string) {
+  const lower = hookType.toLowerCase();
+  if (lower.includes("door")) return "🚪";
+  if (lower.includes("price")) return "💰";
+  if (lower.includes("cinematic") || lower.includes("drone")) return "🎬";
+  if (lower.includes("luxury")) return "✨";
+  if (lower.includes("before") || lower.includes("after")) return "🔄";
+  if (lower.includes("influencer")) return "🧑";
+  return "🎯";
+}
+
+function HookRulesSection({ rules }: { rules: HookApproachRule[] }) {
+  const [expandedRule, setExpandedRule] = useState<string | null>(null);
 
   return (
-    <>
-      {parts.map((part, i) =>
-        part.bold ? (
-          <strong key={i} className="text-foreground">
-            {part.text}
-          </strong>
-        ) : (
-          <span key={i}>{part.text}</span>
-        ),
-      )}
-    </>
+    <div>
+      <h3 className="text-sm font-semibold mb-3">Hook Approach Rules</h3>
+      <div className="grid grid-cols-2 gap-2">
+        {rules.map((rule) => {
+          const isExpanded = expandedRule === rule.hookType;
+          return (
+            <button
+              key={rule.hookType}
+              type="button"
+              onClick={() =>
+                setExpandedRule(isExpanded ? null : rule.hookType)
+              }
+              className={cn(
+                "text-left rounded-lg border border-border p-3 transition-colors hover:bg-muted/50",
+                isExpanded && "bg-muted/50",
+              )}
+            >
+              <div className="flex items-start justify-between gap-2 mb-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">{hookIcon(rule.hookType)}</span>
+                  <span className="text-sm font-medium">{rule.hookType}</span>
+                </div>
+                {isExpanded ? (
+                  <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                )}
+              </div>
+              <div className="mb-1.5">{statusBadge(rule.status)}</div>
+              {isExpanded && (
+                <p className="text-xs text-muted-foreground leading-relaxed mt-2 pt-2 border-t border-border">
+                  {rule.reasoning}
+                </p>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* -- Section 4: Guardrails ---------------------------------------------- */
+
+function GuardrailsSection({
+  guardrails,
+}: {
+  guardrails: Broker["brandIntelligence"]["guardrails"];
+}) {
+  return (
+    <div>
+      <h3 className="text-sm font-semibold mb-3">Guardrails</h3>
+      <div className="flex flex-col gap-2">
+        {guardrails.map((g) => (
+          <div
+            key={g.rule}
+            className={cn(
+              "flex items-center gap-2.5 text-sm px-3 py-2 rounded-md",
+              g.severity === "hard"
+                ? "bg-destructive/5 text-destructive"
+                : "bg-[var(--color-orange)]/5 text-[var(--color-orange)]",
+            )}
+          >
+            {g.severity === "hard" ? (
+              <X className="w-4 h-4 shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+            )}
+            <span className="text-foreground text-sm">{g.rule}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

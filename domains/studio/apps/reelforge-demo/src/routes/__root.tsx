@@ -5,8 +5,12 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
-import { Agentation } from "agentation";
+import { lazy, Suspense } from "react";
 import appCss from "@/styles/globals.css?url";
+
+const Agentation = lazy(() =>
+  import("agentation").then((m) => ({ default: m.Agentation }))
+);
 
 export const Route = createRootRoute({
   head: () => ({
@@ -40,7 +44,9 @@ function RootLayout() {
       </head>
       <body className="font-sans antialiased bg-background text-foreground min-h-screen">
         <Outlet />
-        <Agentation endpoint="http://localhost:4747" />
+        <Suspense fallback={null}>
+          <Agentation endpoint="http://localhost:4747" />
+        </Suspense>
         <Scripts />
       </body>
     </html>
