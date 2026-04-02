@@ -15,6 +15,7 @@ import { Route as BrokerSlugRouteImport } from './routes/broker/$slug'
 import { Route as BrokerSlugIndexRouteImport } from './routes/broker/$slug/index'
 import { Route as BrokerSlugRevealRouteImport } from './routes/broker/$slug/reveal'
 import { Route as BrokerSlugProduceRouteImport } from './routes/broker/$slug/produce'
+import { Route as BrokerSlugProduceIndexRouteImport } from './routes/broker/$slug/produce/index'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -46,30 +47,37 @@ const BrokerSlugProduceRoute = BrokerSlugProduceRouteImport.update({
   path: '/produce',
   getParentRoute: () => BrokerSlugRoute,
 } as any)
+const BrokerSlugProduceIndexRoute = BrokerSlugProduceIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BrokerSlugProduceRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/broker/$slug': typeof BrokerSlugRouteWithChildren
-  '/broker/$slug/produce': typeof BrokerSlugProduceRoute
+  '/broker/$slug/produce': typeof BrokerSlugProduceRouteWithChildren
   '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
   '/broker/$slug/': typeof BrokerSlugIndexRoute
+  '/broker/$slug/produce/': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
-  '/broker/$slug/produce': typeof BrokerSlugProduceRoute
   '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
   '/broker/$slug': typeof BrokerSlugIndexRoute
+  '/broker/$slug/produce': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/broker/$slug': typeof BrokerSlugRouteWithChildren
-  '/broker/$slug/produce': typeof BrokerSlugProduceRoute
+  '/broker/$slug/produce': typeof BrokerSlugProduceRouteWithChildren
   '/broker/$slug/reveal': typeof BrokerSlugRevealRoute
   '/broker/$slug/': typeof BrokerSlugIndexRoute
+  '/broker/$slug/produce/': typeof BrokerSlugProduceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,13 +88,14 @@ export interface FileRouteTypes {
     | '/broker/$slug/produce'
     | '/broker/$slug/reveal'
     | '/broker/$slug/'
+    | '/broker/$slug/produce/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dashboard'
-    | '/broker/$slug/produce'
     | '/broker/$slug/reveal'
     | '/broker/$slug'
+    | '/broker/$slug/produce'
   id:
     | '__root__'
     | '/'
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/broker/$slug/produce'
     | '/broker/$slug/reveal'
     | '/broker/$slug/'
+    | '/broker/$slug/produce/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -147,17 +157,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrokerSlugProduceRouteImport
       parentRoute: typeof BrokerSlugRoute
     }
+    '/broker/$slug/produce/': {
+      id: '/broker/$slug/produce/'
+      path: '/'
+      fullPath: '/broker/$slug/produce/'
+      preLoaderRoute: typeof BrokerSlugProduceIndexRouteImport
+      parentRoute: typeof BrokerSlugProduceRoute
+    }
   }
 }
 
+interface BrokerSlugProduceRouteChildren {
+  BrokerSlugProduceIndexRoute: typeof BrokerSlugProduceIndexRoute
+}
+
+const BrokerSlugProduceRouteChildren: BrokerSlugProduceRouteChildren = {
+  BrokerSlugProduceIndexRoute: BrokerSlugProduceIndexRoute,
+}
+
+const BrokerSlugProduceRouteWithChildren =
+  BrokerSlugProduceRoute._addFileChildren(BrokerSlugProduceRouteChildren)
+
 interface BrokerSlugRouteChildren {
-  BrokerSlugProduceRoute: typeof BrokerSlugProduceRoute
+  BrokerSlugProduceRoute: typeof BrokerSlugProduceRouteWithChildren
   BrokerSlugRevealRoute: typeof BrokerSlugRevealRoute
   BrokerSlugIndexRoute: typeof BrokerSlugIndexRoute
 }
 
 const BrokerSlugRouteChildren: BrokerSlugRouteChildren = {
-  BrokerSlugProduceRoute: BrokerSlugProduceRoute,
+  BrokerSlugProduceRoute: BrokerSlugProduceRouteWithChildren,
   BrokerSlugRevealRoute: BrokerSlugRevealRoute,
   BrokerSlugIndexRoute: BrokerSlugIndexRoute,
 }
