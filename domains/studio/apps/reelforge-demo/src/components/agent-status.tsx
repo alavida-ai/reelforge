@@ -1,5 +1,5 @@
 // src/components/agent-status.tsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Loader2, Check } from "lucide-react";
 import { cn } from "@/lib";
 
@@ -18,34 +18,42 @@ export function useAgentSequence(steps: AgentStep[]) {
   const [currentStep, setCurrentStep] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  // Use ref for steps to avoid re-triggering the timer effect
+  const stepsRef = useRef(steps);
+  stepsRef.current = steps;
 
   useEffect(() => {
-    if (currentStep >= steps.length) {
+    if (currentStep >= stepsRef.current.length) {
       setCompleted(true);
       return;
     }
     const timer = setTimeout(() => {
       setCompletedSteps((prev) => [...prev, currentStep]);
       setCurrentStep((s) => s + 1);
-    }, steps[currentStep].duration);
+    }, stepsRef.current[currentStep].duration);
     return () => clearTimeout(timer);
-  }, [currentStep, steps]);
+  }, [currentStep]);
 
   return { currentStep, completed, completedSteps };
 }
 
 export function AgentStatus({ steps, onComplete, onStepComplete }: AgentStatusProps) {
   const { currentStep, completed, completedSteps } = useAgentSequence(steps);
+  // Use refs for callbacks to avoid effect re-triggers
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+  const onStepCompleteRef = useRef(onStepComplete);
+  onStepCompleteRef.current = onStepComplete;
 
   useEffect(() => {
-    if (completed) onComplete();
-  }, [completed, onComplete]);
+    if (completed) onCompleteRef.current();
+  }, [completed]);
 
   useEffect(() => {
     if (completedSteps.length > 0) {
-      onStepComplete?.(completedSteps[completedSteps.length - 1]);
+      onStepCompleteRef.current?.(completedSteps[completedSteps.length - 1]);
     }
-  }, [completedSteps, onStepComplete]);
+  }, [completedSteps]);
 
   return (
     <div className="space-y-1.5 mb-5">
