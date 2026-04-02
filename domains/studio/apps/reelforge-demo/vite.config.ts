@@ -8,4 +8,11 @@ export default defineConfig({
     tailwindcss(),
     ...tanstackStart(),
   ],
+  server: {
+    watch: {
+      // Prevent infinite reload loop — TanStack Router regenerates this file,
+      // Vite detects the change, triggers reload, which triggers regen again.
+      ignored: ["**/routeTree.gen.ts"],
+    },
+  },
 });
