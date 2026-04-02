@@ -6,8 +6,11 @@ Agentic workspace for the ReelForge demo dashboard POC. Governed by the Agonda f
 
 | Domain | Owner | What it owns |
 |--------|-------|-------------|
-
-No domains defined yet.
+| `client` | — | Bright River context — company profile, products, industries, value prop, brand identity, language/tone |
+| `branding` | — | CI branding templates for video overlays |
+| `content` | — | Hook research and visual hook creative briefs |
+| `market` | — | Market research and competitive landscape |
+| `studio` | — | ReelForge demo app (Next.js), UI components, demo data |
 
 ## Domain Structure
 
