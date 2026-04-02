@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import { SectionLabel } from "@/components/section-label";
 import { ThinProgress } from "@/components/thin-progress";
 import type { Broker } from "@/data/types";
@@ -35,31 +36,33 @@ export function DataDepthCard({ depth }: DataDepthCardProps) {
   const orange = "var(--color-orange)";
 
   return (
-    <div className="card-elevated rounded-xl p-5">
-      <SectionLabel>Data Depth</SectionLabel>
-      <div className="flex flex-col gap-2">
-        <DepthRow
-          label="Market"
-          count={depth.market.count}
-          percent={depth.market.percent}
-          color={green}
-        />
-        <DepthRow
-          label="Cross-industry"
-          count={depth.crossIndustry.count}
-          percent={depth.crossIndustry.percent}
-          color={green}
-        />
-        <DepthRow
-          label="Broker-specific"
-          count={depth.brokerSpecific.count}
-          percent={depth.brokerSpecific.percent}
-          color={orange}
-        />
-      </div>
-      <p className="text-[10px] text-muted-foreground mt-2">
-        At 100+ hooks → shifts to broker-optimized predictions
-      </p>
-    </div>
+    <Card>
+      <CardContent className="p-5">
+        <SectionLabel>Data Depth</SectionLabel>
+        <div className="flex flex-col gap-2">
+          <DepthRow
+            label="Market"
+            count={depth.market.count}
+            percent={depth.market.percent}
+            color={green}
+          />
+          <DepthRow
+            label="Cross-industry"
+            count={depth.crossIndustry.count}
+            percent={depth.crossIndustry.percent}
+            color={green}
+          />
+          <DepthRow
+            label="Broker-specific"
+            count={depth.brokerSpecific.count}
+            percent={depth.brokerSpecific.percent}
+            color={orange}
+          />
+        </div>
+        <p className="text-[10px] text-muted-foreground mt-2">
+          At 100+ hooks → shifts to broker-optimized predictions
+        </p>
+      </CardContent>
+    </Card>
   );
 }

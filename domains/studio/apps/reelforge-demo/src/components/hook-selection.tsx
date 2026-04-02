@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 import { HookCard } from "@/components/hook-card";
 import { getHookType } from "@/data/get-data";
 import type { HookSelectionResult } from "@/data/types";
@@ -26,9 +27,10 @@ export function HookSelection({ results, brokerSlug }: HookSelectionProps) {
         <Link
           to="/broker/$slug/reveal"
           params={{ slug: brokerSlug }}
-          className="inline-block px-5 py-2.5 rounded-lg bg-brand text-primary-foreground text-[12px] font-semibold hover:opacity-90 hover:shadow-[0_0_16px_oklch(0.72_0.10_300/25%)] transition-all duration-200"
         >
-          Generate {recommendedName} →
+          <Button>
+            Generate {recommendedName} →
+          </Button>
         </Link>
       </div>
     </div>

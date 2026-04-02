@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import { SectionLabel } from "@/components/section-label";
 import type { Broker } from "@/data/types";
 
@@ -26,18 +27,20 @@ function StatRow({
 
 export function ProductionStatsCard({ sla }: ProductionStatsCardProps) {
   return (
-    <div className="card-elevated rounded-xl p-5">
-      <SectionLabel>Production</SectionLabel>
-      <div className="flex flex-col gap-1.5">
-        <StatRow label="Hooks" value={sla.hooksDelivered} />
-        <StatRow
-          label="Return Rate"
-          value={sla.returnRate}
-          valueClassName="text-[var(--color-green)]"
-        />
-        <StatRow label="Turnaround" value={sla.turnaround} />
-        <StatRow label="Cost / Hook" value={sla.costPerHook} />
-      </div>
-    </div>
+    <Card>
+      <CardContent className="p-5">
+        <SectionLabel>Production</SectionLabel>
+        <div className="flex flex-col gap-1.5">
+          <StatRow label="Hooks" value={sla.hooksDelivered} />
+          <StatRow
+            label="Return Rate"
+            value={sla.returnRate}
+            valueClassName="text-[var(--color-green)]"
+          />
+          <StatRow label="Turnaround" value={sla.turnaround} />
+          <StatRow label="Cost / Hook" value={sla.costPerHook} />
+        </div>
+      </CardContent>
+    </Card>
   );
 }

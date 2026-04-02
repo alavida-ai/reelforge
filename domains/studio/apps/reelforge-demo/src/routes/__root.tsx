@@ -5,6 +5,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import { Agentation } from "agentation";
 import appCss from "@/styles/globals.css?url";
 
 export const Route = createRootRoute({
@@ -38,8 +39,8 @@ function RootLayout() {
         <HeadContent />
       </head>
       <body className="font-sans antialiased bg-background text-foreground min-h-screen">
-        <div className="ambient-glow" />
         <Outlet />
+        <Agentation endpoint="http://localhost:4747" />
         <Scripts />
       </body>
     </html>

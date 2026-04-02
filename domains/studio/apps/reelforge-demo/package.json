@@ -28,6 +28,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "agent-tail": "^0.4.0",
+    "agentation": "^3.0.2",
     "shadcn": "^4.0.5",
     "tailwindcss": "^4",
     "typescript": "^5",

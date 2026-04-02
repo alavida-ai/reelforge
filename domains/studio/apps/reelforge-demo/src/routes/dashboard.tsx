@@ -16,21 +16,16 @@ function DashboardPage() {
   return (
     <>
       <Nav />
-      <div className="pt-16 max-w-[1200px] mx-auto px-6 py-8">
-        {/* Page title */}
-        <h1 className="text-2xl font-bold text-foreground mb-6">
-          Operations Overview
-        </h1>
-
-        {/* KPI Tiles */}
-        <div className="flex gap-3 mb-8">
-          <KpiBadge value={kpis.hooksThisWeek} label="Hooks This Week" />
-          <KpiBadge value={kpis.avgTurnaround} label="Avg Turnaround" />
-          <KpiBadge value={kpis.returnRate} label="Return Rate" highlight />
-          <KpiBadge value={kpis.avgCost} label="Avg Cost / Hook" />
+      <div className="pt-14 max-w-5xl mx-auto px-6 py-8">
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-2xl font-bold">Brokers</h1>
+          <div className="flex items-center gap-8">
+            <KpiBadge value={kpis.hooksThisWeek} label="Hooks this week" />
+            <KpiBadge value={kpis.avgTurnaround} label="Avg turnaround" />
+            <KpiBadge value={kpis.returnRate} label="Return rate" highlight />
+            <KpiBadge value={kpis.avgCost} label="Avg cost" />
+          </div>
         </div>
-
-        {/* Broker Table */}
         <BrokerTable brokers={brokers} />
       </div>
     </>

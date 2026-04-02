@@ -1,3 +1,4 @@
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { RiskBadge } from "@/components/risk-badge";
 import { InsightLine } from "@/components/source-tag";
 import type { Adjustment } from "@/data/types";
@@ -8,17 +9,17 @@ interface AdjustmentCardProps {
 
 export function AdjustmentCard({ adj }: AdjustmentCardProps) {
   return (
-    <div className="rounded-xl overflow-hidden card-elevated">
+    <Card>
       {/* Header */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 bg-background">
+      <CardContent className="flex items-center justify-between px-4 py-2.5">
         <span className="text-[12px] font-semibold text-foreground">
           {adj.name}
         </span>
         <RiskBadge level={adj.risk} />
-      </div>
+      </CardContent>
 
       {/* Body */}
-      <div className="px-3.5 py-3 space-y-2.5">
+      <CardContent className="px-4 pb-3 space-y-2.5">
         {/* What changes */}
         <div>
           <span className="text-[10px] font-bold text-foreground block mb-0.5">
@@ -45,10 +46,10 @@ export function AdjustmentCard({ adj }: AdjustmentCardProps) {
             <InsightLine key={i} insight={insight} />
           ))}
         </div>
-      </div>
+      </CardContent>
 
       {/* Trade-off footer */}
-      <div className="border-t border-border px-3.5 py-2 flex gap-3">
+      <CardFooter className="px-4 py-2 flex gap-3">
         <div className="flex items-start gap-1 flex-1">
           <span className="text-[10px] font-bold text-[var(--color-green)] shrink-0">
             +
@@ -65,7 +66,7 @@ export function AdjustmentCard({ adj }: AdjustmentCardProps) {
             {adj.tradeoffs.negative}
           </span>
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }

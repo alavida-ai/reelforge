@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Card, CardContent } from "@/components/ui/card";
 import { Nav } from "@/components/nav";
 import { VideoPreview } from "@/components/video-preview";
 import { SplitKpiPanel } from "@/components/split-kpi-panel";
@@ -19,7 +20,7 @@ function HookRevealPage() {
     return (
       <>
         <Nav />
-        <div className="pt-16 max-w-[1200px] mx-auto px-6 py-12">
+        <div className="pt-14 max-w-5xl mx-auto px-6 py-12">
           <p className="text-muted-foreground">Broker not found.</p>
         </div>
       </>
@@ -31,10 +32,10 @@ function HookRevealPage() {
   return (
     <>
       <Nav brokerSlug={broker.slug} brokerName={broker.name} />
-      <div className="pt-16 max-w-[1200px] mx-auto px-6 py-6">
+      <div className="pt-14 max-w-5xl mx-auto px-6 py-6">
         {/* Page header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="text-2xl font-bold">
             {broker.name} &mdash; Hook Delivery
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
@@ -55,36 +56,40 @@ function HookRevealPage() {
             {/* KPI Panel */}
             <SplitKpiPanel data={reveal} />
 
-            {/* Creative Rationale (inline) */}
-            <div className="card-elevated rounded-xl p-5">
-              <h3 className="text-sm font-bold text-foreground mb-2">Creative Rationale</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {reveal.creativeRationale}
-              </p>
-              <div className="flex gap-1.5 mt-2.5">
-                {reveal.creativeTags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[var(--color-green-subtle)] text-[var(--color-green)]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+            {/* Creative Rationale */}
+            <Card>
+              <CardContent className="p-5">
+                <h3 className="text-sm font-bold mb-2">Creative Rationale</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {reveal.creativeRationale}
+                </p>
+                <div className="flex gap-1.5 mt-2.5">
+                  {reveal.creativeTags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[var(--color-green-subtle)] text-[var(--color-green)]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
 
             {/* Adjustments */}
-            <div className="card-elevated rounded-xl p-5">
-              <h3 className="text-sm font-bold text-foreground mb-1">Adjustments</h3>
-              <p className="text-[10px] text-muted-foreground/60 mb-3">
-                Optional modifications with risk and trade-off transparency
-              </p>
-              <div className="space-y-3">
-                {reveal.adjustments.map((adj) => (
-                  <AdjustmentCard key={adj.name} adj={adj} />
-                ))}
-              </div>
-            </div>
+            <Card>
+              <CardContent className="p-5">
+                <h3 className="text-sm font-bold mb-1">Adjustments</h3>
+                <p className="text-[10px] text-muted-foreground mb-3">
+                  Optional modifications with risk and trade-off transparency
+                </p>
+                <div className="space-y-3">
+                  {reveal.adjustments.map((adj) => (
+                    <AdjustmentCard key={adj.name} adj={adj} />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
 
             {/* Delivery Package */}
             <DeliveryPackage broker={broker} />
@@ -93,7 +98,7 @@ function HookRevealPage() {
 
         {/* Delivery package deep dive */}
         <div className="mt-8 mb-8">
-          <h2 className="text-xl font-bold text-foreground mb-4">
+          <h2 className="text-xl font-bold mb-4">
             Delivery Package &mdash; Full Brief
           </h2>
           <PerformanceBrief broker={broker} />

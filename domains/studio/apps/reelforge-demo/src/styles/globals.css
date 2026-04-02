@@ -12,12 +12,6 @@
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --color-brand: var(--brand);
-  --color-brand-bright: var(--brand-bright);
-  --color-brand-glow: var(--brand-glow);
-  --color-brand-subtle: var(--brand-subtle);
-  --color-brand-dim: var(--brand-dim);
-  --color-brand-blue: var(--brand-blue);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
   --color-ring: var(--ring);
@@ -44,34 +38,27 @@
 }
 
 :root {
-  /* Always-dark demo theme */
-  --background: oklch(0.09 0.02 275);
-  --foreground: oklch(0.93 0.008 280);
-  --card: oklch(0.13 0.025 275);
-  --card-foreground: oklch(0.93 0.008 280);
-  --popover: oklch(0.13 0.025 275);
-  --popover-foreground: oklch(0.93 0.008 280);
-  --surface: oklch(0.15 0.025 275);
-  --surface-raised: oklch(0.18 0.025 275);
-  --primary: oklch(0.93 0.008 280);
-  --primary-foreground: oklch(0.09 0.02 275);
-  --secondary: oklch(0.17 0.02 275);
-  --secondary-foreground: oklch(0.88 0.01 280);
-  --muted: oklch(0.17 0.02 275);
-  --muted-foreground: oklch(0.55 0.015 280);
-  --accent: oklch(0.72 0.10 300);
-  --accent-foreground: oklch(0.09 0.02 275);
-  --brand: oklch(0.72 0.10 300);
-  --brand-bright: oklch(0.78 0.10 300);
-  --brand-glow: oklch(0.72 0.10 300 / 20%);
-  --brand-subtle: oklch(0.72 0.10 300 / 7%);
-  --brand-dim: oklch(0.50 0.07 300);
-  --brand-blue: oklch(0.68 0.16 245);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.72 0.10 300);
-  --radius: 8px;
+  --background: oklch(0.09 0.005 270);
+  --foreground: oklch(0.95 0.005 270);
+  --card: oklch(0.12 0.005 270);
+  --card-foreground: oklch(0.95 0.005 270);
+  --popover: oklch(0.12 0.005 270);
+  --popover-foreground: oklch(0.95 0.005 270);
+  --surface: oklch(0.14 0.005 270);
+  --surface-raised: oklch(0.17 0.005 270);
+  --primary: oklch(0.95 0.005 270);
+  --primary-foreground: oklch(0.09 0.005 270);
+  --secondary: oklch(0.17 0.005 270);
+  --secondary-foreground: oklch(0.95 0.005 270);
+  --muted: oklch(0.17 0.005 270);
+  --muted-foreground: oklch(0.55 0.01 270);
+  --accent: oklch(0.20 0.005 270);
+  --accent-foreground: oklch(0.95 0.005 270);
+  --destructive: oklch(0.55 0.2 25);
+  --border: oklch(0.20 0.005 270);
+  --input: oklch(0.20 0.005 270);
+  --ring: oklch(0.40 0.01 270);
+  --radius: 0.5rem;
 
   /* Source tag colors */
   --color-market: #5ba0d0;
@@ -92,11 +79,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(
-      ellipse at top right,
-      oklch(0.13 0.04 290 / 15%) 0%,
-      transparent 50%
-    );
   }
   html {
     @apply font-sans antialiased;
@@ -113,61 +95,12 @@
   .shimmer {
     background: linear-gradient(
       90deg,
-      oklch(0.12 0.04 275 / 0%) 0%,
-      oklch(0.12 0.04 275 / 3%) 50%,
-      oklch(0.12 0.04 275 / 0%) 100%
+      oklch(0.12 0.005 270 / 0%) 0%,
+      oklch(0.12 0.005 270 / 3%) 50%,
+      oklch(0.12 0.005 270 / 0%) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 2s ease-in-out infinite;
-  }
-  .ambient-glow {
-    position: fixed;
-    top: -30%;
-    right: -15%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(
-      ellipse at center,
-      oklch(0.42 0.18 295 / 4%) 0%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
-  .glow-line {
-    background: linear-gradient(
-      90deg,
-      oklch(0.42 0.18 295 / 0%) 0%,
-      oklch(0.42 0.18 295 / 20%) 50%,
-      oklch(0.42 0.18 295 / 0%) 100%
-    );
-  }
-  .glass {
-    background: oklch(0.13 0.025 275 / 60%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  .card-elevated {
-    background: oklch(0.13 0.025 275);
-    border: 1px solid oklch(1 0 0 / 6%);
-    box-shadow:
-      0 1px 2px oklch(0 0 0 / 20%),
-      0 0 0 1px oklch(1 0 0 / 3%),
-      inset 0 1px 0 oklch(1 0 0 / 3%);
-  }
-  .card-hero {
-    background: oklch(0.14 0.03 275);
-    border: 1px solid oklch(1 0 0 / 8%);
-    box-shadow:
-      0 4px 12px oklch(0 0 0 / 30%),
-      0 0 0 1px oklch(1 0 0 / 4%),
-      inset 0 1px 0 oklch(1 0 0 / 4%);
-  }
-  .metric-tile {
-    background: oklch(0.12 0.02 275);
-    border: 1px solid oklch(1 0 0 / 5%);
-    border-radius: 10px;
-    padding: 12px 16px;
   }
 }
 
