@@ -12,12 +12,6 @@
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --color-brand: var(--brand);
-  --color-brand-bright: var(--brand-bright);
-  --color-brand-glow: var(--brand-glow);
-  --color-brand-subtle: var(--brand-subtle);
-  --color-brand-dim: var(--brand-dim);
-  --color-brand-blue: var(--brand-blue);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
   --color-ring: var(--ring);
@@ -44,70 +38,39 @@
 }
 
 :root {
-  /* Cool white with the faintest navy undertone */
-  --background: oklch(0.985 0.003 270);
-  --foreground: oklch(0.12 0.04 275);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0.04 275);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0.04 275);
-  --surface: oklch(0.97 0.004 270);
-  --surface-raised: oklch(0.945 0.006 270);
+  --background: oklch(0.09 0.005 270);
+  --foreground: oklch(0.95 0.005 270);
+  --card: oklch(0.12 0.005 270);
+  --card-foreground: oklch(0.95 0.005 270);
+  --popover: oklch(0.12 0.005 270);
+  --popover-foreground: oklch(0.95 0.005 270);
+  --surface: oklch(0.14 0.005 270);
+  --surface-raised: oklch(0.17 0.005 270);
+  --primary: oklch(0.95 0.005 270);
+  --primary-foreground: oklch(0.09 0.005 270);
+  --secondary: oklch(0.17 0.005 270);
+  --secondary-foreground: oklch(0.95 0.005 270);
+  --muted: oklch(0.17 0.005 270);
+  --muted-foreground: oklch(0.55 0.01 270);
+  --accent: oklch(0.20 0.005 270);
+  --accent-foreground: oklch(0.95 0.005 270);
+  --destructive: oklch(0.55 0.2 25);
+  --border: oklch(0.20 0.005 270);
+  --input: oklch(0.20 0.005 270);
+  --ring: oklch(0.40 0.01 270);
+  --radius: 0.5rem;
 
-  /* Bright River navy — #10113D — dominant, not just text */
-  --primary: oklch(0.12 0.04 275);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.95 0.006 275);
-  --secondary-foreground: oklch(0.12 0.04 275);
-  --muted: oklch(0.95 0.006 275);
-  --muted-foreground: oklch(0.42 0.02 275);
-
-  /* Bright River purple — their CTA purple, confident on white */
-  --accent: oklch(0.45 0.20 290);
-  --accent-foreground: oklch(0.99 0 0);
-  --brand: oklch(0.45 0.20 290);
-  --brand-bright: oklch(0.50 0.20 290);
-  --brand-glow: oklch(0.45 0.20 290 / 10%);
-  --brand-subtle: oklch(0.45 0.20 290 / 4%);
-  --brand-dim: oklch(0.38 0.16 290);
-
-  /* Bright River blue #2EA3F2 */
-  --brand-blue: oklch(0.65 0.17 245);
-
-  --destructive: oklch(0.55 0.22 25);
-  --border: oklch(0.12 0.04 275 / 10%);
-  --input: oklch(0.12 0.04 275 / 5%);
-  --ring: oklch(0.42 0.18 295);
-  --radius: 8px;
-}
-
-.dark {
-  --background: oklch(0.11 0.035 275);
-  --foreground: oklch(0.93 0.008 280);
-  --card: oklch(0.14 0.035 275);
-  --card-foreground: oklch(0.93 0.008 280);
-  --popover: oklch(0.14 0.035 275);
-  --popover-foreground: oklch(0.93 0.008 280);
-  --surface: oklch(0.16 0.035 275);
-  --surface-raised: oklch(0.19 0.035 275);
-  --primary: oklch(0.93 0.008 280);
-  --primary-foreground: oklch(0.11 0.035 275);
-  --secondary: oklch(0.17 0.03 275);
-  --secondary-foreground: oklch(0.88 0.01 280);
-  --muted: oklch(0.17 0.03 275);
-  --muted-foreground: oklch(0.55 0.015 280);
-  --accent: oklch(0.72 0.10 300);
-  --accent-foreground: oklch(0.11 0.035 275);
-  --brand: oklch(0.72 0.10 300);
-  --brand-bright: oklch(0.78 0.10 300);
-  --brand-glow: oklch(0.72 0.10 300 / 20%);
-  --brand-subtle: oklch(0.72 0.10 300 / 7%);
-  --brand-dim: oklch(0.50 0.07 300);
-  --brand-blue: oklch(0.68 0.16 245);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.72 0.10 300);
-  --destructive: oklch(0.704 0.191 22.216);
+  /* Source tag colors */
+  --color-market: #5ba0d0;
+  --color-market-bg: rgba(46, 134, 222, 0.12);
+  --color-broker: #7aba7a;
+  --color-broker-bg: rgba(122, 186, 122, 0.12);
+  --color-guardrail: #ff6b6b;
+  --color-guardrail-bg: rgba(255, 107, 107, 0.12);
+  --color-green: #7aba7a;
+  --color-green-subtle: rgba(76, 175, 80, 0.12);
+  --color-orange: #ff9800;
+  --color-red: #ff6b6b;
 }
 
 @layer base {
@@ -132,34 +95,12 @@
   .shimmer {
     background: linear-gradient(
       90deg,
-      oklch(0.12 0.04 275 / 0%) 0%,
-      oklch(0.12 0.04 275 / 3%) 50%,
-      oklch(0.12 0.04 275 / 0%) 100%
+      oklch(0.12 0.005 270 / 0%) 0%,
+      oklch(0.12 0.005 270 / 3%) 50%,
+      oklch(0.12 0.005 270 / 0%) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 2s ease-in-out infinite;
-  }
-  .ambient-glow {
-    position: fixed;
-    top: -30%;
-    right: -15%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(
-      ellipse at center,
-      oklch(0.42 0.18 295 / 4%) 0%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
-  .glow-line {
-    background: linear-gradient(
-      90deg,
-      oklch(0.42 0.18 295 / 0%) 0%,
-      oklch(0.42 0.18 295 / 20%) 50%,
-      oklch(0.42 0.18 295 / 0%) 100%
-    );
   }
 }
 

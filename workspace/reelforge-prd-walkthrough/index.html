@@ -857,74 +857,159 @@
   </div>
 
   <div class="mockup-container">
-  <div class="mockup-label">Mockup — Stage 3: Hook Selection <span>Pricing table with recommendation + brand guardrails</span></div>
+  <div class="mockup-label">Mockup — Stage 3: Hook Selection <span>Rich cards with risk, market, broker, and guardrail intelligence</span></div>
   <div style="padding: 16px;">
-  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+
     <!-- Door Reveal — RECOMMENDED -->
-    <div class="card" style="border-color: var(--green); border-width: 2px; position: relative;">
-      <div style="position: absolute; top: -9px; left: 50%; transform: translateX(-50%); background: var(--green); color: var(--bg); padding: 2px 10px; border-radius: 10px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Recommended</div>
-      <div style="text-align: center; margin-top: 4px;">
-        <div style="font-size: 20px; margin-bottom: 6px;">🚪</div>
-        <div style="font-weight: 700; font-size: 13px;">Door Reveal</div>
-        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">AI influencer opens branded door → property revealed</div>
+    <div style="border: 2px solid var(--green); border-radius: 10px; overflow: hidden; position: relative;">
+      <div style="position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--green); color: var(--bg); padding: 2px 12px; border-radius: 0 0 8px 8px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Recommended</div>
+
+      <!-- Header -->
+      <div style="padding: 14px 14px 10px; display: flex; justify-content: space-between; align-items: start;">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <div style="font-size: 22px;">🚪</div>
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">Door Reveal</div>
+            <div style="font-size: 10px; color: var(--muted);">AI influencer at branded door → opens → property interior revealed</div>
+          </div>
+        </div>
+        <span style="font-size: 9px; color: var(--green); font-weight: 600; background: rgba(122,186,122,0.1); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Complexity: Low</span>
       </div>
-      <div class="divider"></div>
-      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--green); font-weight: 600;">Low</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span style="color: var(--green);">●●●●○</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span style="color: var(--green);">●●●●●</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono" style="font-weight: 600;">3.2x</span></div>
+
+      <div style="padding: 0 14px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+        <!-- Hallucination risk -->
+        <div style="background: var(--bg); border-radius: 6px; padding: 8px;">
+          <div style="font-weight: 600; color: var(--fg); margin-bottom: 3px; font-size: 10px;">Hallucination risk</div>
+          <div style="color: var(--muted);">Low — single subject (influencer) against a real door. Close framing means minimal background for AI to fabricate. No neighborhood, no street, no invented architectural elements.</div>
+        </div>
+
+        <!-- Source-tagged insights -->
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+          <span style="font-size: 10px; color: var(--muted);">3.2x vs standard intro for Dutch suburban listings · top performing hook format in this segment</span>
+        </div>
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+          <span style="font-size: 10px; color: var(--muted);">24/24 accepted for Homey · zero returns · confirmed top performer for this brand</span>
+        </div>
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 5px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span>
+          <span style="font-size: 10px; color: var(--muted);">Close framing enforced · casual influencer styling only · no formal attire</span>
+        </div>
+
+        <!-- Assets matched -->
+        <div style="border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px;">
+          <div style="font-size: 10px; color: var(--muted); margin-bottom: 3px;">Assets matched: <strong style="color: var(--green);">3/3</strong></div>
+          <div style="font-size: 10px; color: var(--muted);">Exterior (anchor) · Kitchen (hero reveal) · Garden (payoff)</div>
+        </div>
       </div>
-      <div style="font-size: 9px; color: var(--green); margin-top: 6px;">24 consecutive accepts for Homey · close framing limits hallucination</div>
     </div>
+
     <!-- Price Tag -->
-    <div class="card">
-      <div style="text-align: center; margin-top: 4px;">
-        <div style="font-size: 20px; margin-bottom: 6px;">💰</div>
-        <div style="font-weight: 700; font-size: 13px;">Price Tag</div>
-        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">"Guess the price" — sign in garden reveals listing price</div>
+    <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
+      <div style="padding: 14px 14px 10px; display: flex; justify-content: space-between; align-items: start;">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <div style="font-size: 22px;">💰</div>
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">Price Tag Reveal</div>
+            <div style="font-size: 10px; color: var(--muted);">"Guess the price" — sign in garden → listing price revealed</div>
+          </div>
+        </div>
+        <span style="font-size: 9px; color: var(--green); font-weight: 600; background: rgba(122,186,122,0.1); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Complexity: Low</span>
       </div>
-      <div class="divider"></div>
-      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--green);">Low</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span>●●●●○</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span>●●●○○</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono">2.4x</span></div>
+
+      <div style="padding: 0 14px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+        <div style="background: var(--bg); border-radius: 6px; padding: 8px;">
+          <div style="font-weight: 600; color: var(--fg); margin-bottom: 3px; font-size: 10px;">Hallucination risk</div>
+          <div style="color: var(--muted);">Low — static price tag overlay on real garden photo. Text animation only — no generative video needed for the core hook. Interior sequence after reveal has standard risk.</div>
+        </div>
+
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+          <span style="font-size: 10px; color: var(--muted);">2.4x vs standard · "guess the price" trending in NL RE TikTok · gamification drives comments</span>
+        </div>
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+          <span style="font-size: 10px; color: var(--muted);">Fits Homey's transparency positioning — "making it easy" · not tested yet for this broker (no history)</span>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px;">
+          <div style="font-size: 10px; color: var(--muted); margin-bottom: 3px;">Assets matched: <strong>2/3</strong></div>
+          <div style="font-size: 10px; color: var(--muted);">Exterior (sign placement) · Garden (background) · <span style="color: var(--orange);">Interior sequence — no matched reveal asset</span></div>
+        </div>
       </div>
-      <div style="font-size: 9px; color: var(--muted); margin-top: 6px;">Transparency fits brand · needs garden for sign placement</div>
     </div>
+
     <!-- Before/After -->
-    <div class="card">
-      <div style="text-align: center; margin-top: 4px;">
-        <div style="font-size: 20px; margin-bottom: 6px;">🔄</div>
-        <div style="font-weight: 700; font-size: 13px;">Before/After</div>
-        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">Split-screen transformation — staging vs reality</div>
+    <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
+      <div style="padding: 14px 14px 10px; display: flex; justify-content: space-between; align-items: start;">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <div style="font-size: 22px;">🔄</div>
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">Before/After</div>
+            <div style="font-size: 10px; color: var(--muted);">Split-screen transformation — staging vs reality comparison</div>
+          </div>
+        </div>
+        <span style="font-size: 9px; color: var(--orange); font-weight: 600; background: rgba(255,152,0,0.1); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Complexity: Medium</span>
       </div>
-      <div class="divider"></div>
-      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--orange); font-weight: 600;">Medium</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span>●●●○○</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span style="color: var(--orange);">●●○○○</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono">2.1x</span></div>
+
+      <div style="padding: 0 14px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+        <div style="background: var(--bg); border-radius: 6px; padding: 8px;">
+          <div style="font-weight: 600; color: var(--fg); margin-bottom: 3px; font-size: 10px;">Hallucination risk</div>
+          <div style="color: var(--muted);">Medium — split-screen requires AI to generate a plausible "before" state from the current property photos. AI must fabricate older fixtures, different paint, worn elements. Risk of unrealistic or inconsistent details across the split.</div>
+        </div>
+
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+          <span style="font-size: 10px; color: var(--muted);">2.1x vs standard · works best for clearly renovated properties with dramatic contrast. This property is already modern — low contrast available.</span>
+        </div>
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+          <span style="font-size: 10px; color: var(--muted);">Never tested for Homey · no acceptance/rejection data for this hook type</span>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px;">
+          <div style="font-size: 10px; color: var(--muted); margin-bottom: 3px;">Assets matched: <strong style="color: var(--orange);">0/2</strong></div>
+          <div style="font-size: 10px; color: var(--orange);">Needs pre-renovation photos — not available. Property is already modern, no contrast source.</div>
+        </div>
       </div>
-      <div style="font-size: 9px; color: var(--orange); margin-top: 6px;">⚠ Property is already modern — low contrast for before/after. Higher hallucination risk on split-screen.</div>
     </div>
+
     <!-- Cinematic — BLOCKED -->
-    <div class="card" style="opacity: 0.45;">
-      <div style="text-align: center; margin-top: 4px;">
-        <div style="font-size: 20px; margin-bottom: 6px;">🎬</div>
-        <div style="font-weight: 700; font-size: 13px;">Cinematic</div>
-        <div style="font-size: 10px; color: var(--muted); margin-top: 3px;">Drone + slow motion luxury reveal</div>
+    <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden; opacity: 0.5;">
+      <div style="padding: 14px 14px 10px; display: flex; justify-content: space-between; align-items: start;">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <div style="font-size: 22px;">🎬</div>
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">Cinematic / Drone</div>
+            <div style="font-size: 10px; color: var(--muted);">Slow-motion aerial or gimbal sweep of the property exterior</div>
+          </div>
+        </div>
+        <span style="font-size: 9px; color: var(--red); font-weight: 600; background: rgba(255,107,107,0.1); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Blocked</span>
       </div>
-      <div class="divider"></div>
-      <div style="font-size: 11px; display: flex; flex-direction: column; gap: 3px;">
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Rejection risk</span><span style="color: var(--red); font-weight: 600;">High</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Brand fit</span><span style="color: var(--red);">●○○○○</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Property fit</span><span>●●●○○</span></div>
-        <div style="display: flex; justify-content: space-between;"><span style="color: var(--muted);">Market data</span><span class="mono">1.8x</span></div>
+
+      <div style="padding: 0 14px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+        <div style="background: rgba(255,107,107,0.04); border-radius: 6px; padding: 8px; border: 1px solid rgba(255,107,107,0.1);">
+          <div style="font-weight: 600; color: var(--red); margin-bottom: 3px; font-size: 10px;">Hallucination risk: High</div>
+          <div style="color: var(--muted);">Wide aerial/gimbal shots require AI to render the full property exterior, surrounding houses, street, landscaping. Every element beyond the actual property is fabricated. This is exactly the failure mode that caused Hook #3's rejection — AI invented a garden fence.</div>
+        </div>
+
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+          <span style="font-size: 10px; color: var(--muted);">1.8x vs standard · performs well for luxury properties with real drone footage — but AI-generated cinematic has high rejection rates across the market</span>
+        </div>
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 5px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span>
+          <span style="font-size: 10px; color: var(--muted);">Brand DNA: too premium for Homey's mid-market positioning · close framing enforced after Hook #3 rejection · wide shots violate both guardrails</span>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px;">
+          <div style="font-size: 10px; color: var(--red);">This hook type is blocked for Homey — brand guardrail + hallucination risk. Would require real drone footage to be viable.</div>
+        </div>
       </div>
-      <div style="font-size: 9px; color: var(--red); margin-top: 6px;">✗ Brand guardrail: too premium for Homey · wide shots = high hallucination risk</div>
     </div>
+
   </div>
   <div style="text-align: center; padding-bottom: 16px;"><span class="btn" onclick="showScreen('reveal')">Generate Door Reveal →</span></div>
   </div><!-- end padding -->
@@ -969,9 +1054,9 @@
     <div class="annotation-label" style="color: var(--orange);">Critical Design Decision: Honest KPI Split</div>
     <div class="annotation-text">
       The metrics panel is deliberately split into two sections with a visible divider:<br><br>
-      <strong>Left: "Production Quality"</strong> — Brand Compliant (100%), Turnaround (34s), Cost (€2.10), Guardrail Violations (0). These are defensible claims. Brand compliance is enforced by rules. Turnaround is measurable. Cost is calculable. These mirror BR's own KPIs (99.4% FTR, 24H turnaround, rework rate).<br><br>
+      <strong>Left: "Production Quality"</strong> — Return Rate (0.8% ↓), Turnaround (34s), Cost (€2.10), Guardrail Violations (0). These are defensible claims. Return rate is their SLA metric — 0.8% rework rate is what they track for photo editing, and now they see it for hooks too. The downward trend (↓) shows the guardrail learning loop working: rejections feed back into rules, future return rate drops. Turnaround is measurable. Cost is calculable.<br><br>
       <strong>Right: "Expected Performance"</strong> — Views (3.2x), Retention (67%), Brand Recall (+41%), Data Points (2,400+). These are labeled "Based on market benchmarks" — explicitly not guaranteed. They're predictions from research data, not measured outcomes from this specific hook.<br><br>
-      <strong>Why the split matters:</strong> We originally showed a single FTR number (99.2%) which borrowed BR's metric and applied it to creative work — dishonest. Creative acceptance is subjective. Brand compliance is objective. By splitting, we're honest about what we guarantee (production quality) and what we project (performance). BR respects this — they're metric-first people. They'll see through inflated claims but respect transparent ones.
+      <strong>Why the split matters:</strong> We originally showed brand compliance (100%) as the lead metric — but that's our internal metric, not theirs. Return rate IS their SLA metric. Leading with 0.8% return rate says "we track what you track, at your standard." By splitting, we're honest about what we guarantee (production quality in their language) and what we project (performance). BR respects this — they're metric-first people. They'll see through inflated claims but respect transparent ones.
     </div>
   </div>
 
@@ -991,16 +1076,30 @@
     <div class="risk-text">
       <strong>Reality:</strong> Thomas acknowledged AI video quality is uncertain. Higgs Field hallucinates on complex scenes. The door reveal works for standalone houses but covers ~5% of inventory. Apartments and connected houses are unproven.<br><br>
       <strong>Mitigation:</strong> The intelligence around the hook (rationale, metrics, trade-offs, delivery package) is deliberately rich to compensate. Even if the hook itself is imperfect, the system's reasoning is impressive. Thomas: <em>"The creative quality will improve as AI video tools mature. What doesn't change is the intelligence layer — the brand DNA, the data-backed selection, the optimization loop. That's the system. The hook generation is the output layer that improves."</em><br><br>
-      <strong>Be honest:</strong> If they say "the video quality isn't there yet," don't fight it. Agree and pivot to what IS strong: the intelligence, the data, the brand compliance, the optimization trajectory.
+      <strong>Be honest:</strong> If they say "the video quality isn't there yet," don't fight it. Agree and pivot to what IS strong: the intelligence, the data, the return rate trajectory, the optimization loop.
+    </div>
+  </div>
+
+  <!-- ANNOTATION: Adjustment card design -->
+  <div class="annotation" style="border-left-color: var(--orange);">
+    <div class="annotation-label" style="color: var(--orange);">Design Decision: Rich adjustment cards</div>
+    <div class="annotation-text">
+      Each adjustment card now shows 5 layers of information:<br><br>
+      <strong>1. What changes in production</strong> — concrete description of what the adjustment actually does to the video<br>
+      <strong>2. Hallucination risk</strong> — does this adjustment increase what the AI needs to fabricate? "Wider framing" = high risk because AI invents the neighborhood. "More brand overlay" = no risk because it's post-production only.<br>
+      <strong>3. Market signal</strong> — <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 4px; border-radius: 3px; font-size: 9px;">MARKET</span> what the research data says about this type of adjustment<br>
+      <strong>4. Broker signal</strong> — <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 4px; border-radius: 3px; font-size: 9px;">BROKER</span> / <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 4px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span> what this specific broker's history and rules say<br>
+      <strong>5. Trade-off summary</strong> — green (+) and orange/red (−) at the bottom<br><br>
+      The "Wider framing" card is deliberately scary — it shows High risk, references Hook #3's rejection, and flags a guardrail violation. This proves the system doesn't just enable everything — it actively warns the operator when an adjustment is dangerous. That's how you keep return rate low.
     </div>
   </div>
 
   <!-- RISK -->
   <div class="risk">
-    <div class="risk-label">Risk: "These trade-off numbers look made up"</div>
+    <div class="risk-label">Risk: "These insights look generic"</div>
     <div class="risk-text">
-      <strong>They might think:</strong> "+41% brand recall" and "-12% watch-through" — where do these come from?<br><br>
-      <strong>Mitigation:</strong> For the demo, these are illustrative. Thomas should not claim precision: <em>"These trade-off signals come from our market research. The exact numbers will calibrate as we produce more hooks and capture real performance data. The point is: the system doesn't just let you adjust — it tells you what you're trading."</em> The concept (informed trade-offs) is the sell, not the specific percentages.
+      <strong>They might think:</strong> "The market signals read like they were written by ChatGPT, not pulled from real data."<br><br>
+      <strong>Mitigation:</strong> For the demo these are illustrative, but grounded in Chicote's research direction. Thomas should frame it: <em>"These signals come from our market research pipeline — 2,400+ Dutch RE posts analyzed. In production, this updates as we capture more data."</em> The guardrail references (Hook #3 rejection) are more credible because they reference specific events from the broker's own history — that's harder to fake.
     </div>
   </div>
 
@@ -1029,11 +1128,11 @@
       <!-- Metrics — split into two honest sections -->
       <div class="card">
         <div style="display: grid; grid-template-columns: 1fr 1px 1fr; gap: 16px;">
-          <!-- Production quality (their language) -->
+          <!-- Production quality (their language — return rate leads) -->
           <div>
             <div class="section-label">Production Quality</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700; color: var(--green);">100%</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Brand Compliant</div></div>
+              <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700; color: var(--green);">0.8% <span style="font-size: 11px;">↓</span></div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Return Rate</div></div>
               <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">34s</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Turnaround</div></div>
               <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">€2.10</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Production Cost</div></div>
               <div style="text-align: center;"><div class="mono" style="font-size: 18px; font-weight: 700;">0</div><div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);">Guardrail Violations</div></div>
@@ -1067,20 +1166,134 @@
       <!-- Data-backed adjustments -->
       <div class="card">
         <div class="section-label">Adjustments</div>
-        <div style="font-size: 11px; color: var(--muted); margin-bottom: 10px;">Each shows predicted trade-off.</div>
-        <div style="display: flex; flex-direction: column; gap: 6px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px;">
-            <div><div style="font-size: 12px; font-weight: 500;">More brand presence</div><div style="font-size: 10px; color: var(--muted);">Larger logo, brand overlay</div></div>
-            <div style="text-align: right;"><div style="font-size: 10px; color: var(--green);">+41% brand recall</div><div style="font-size: 10px; color: var(--orange);">-12% watch-through</div></div>
+        <div style="font-size: 11px; color: var(--muted); margin-bottom: 12px;">Each adjustment shows what changes in production, the risk, and what market + broker data says.</div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+
+          <!-- Adjustment 1: More brand presence -->
+          <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--bg);">
+              <div style="font-size: 12px; font-weight: 600;">More brand presence</div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <span style="font-size: 9px; color: var(--green); font-weight: 600; background: rgba(122,186,122,0.1); padding: 2px 6px; border-radius: 3px;">Risk: Low</span>
+              </div>
+            </div>
+            <div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">What changes:</strong> Larger logo overlay, brand color tint on frames, brand name text in first 2 seconds
+              </div>
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">Hallucination risk:</strong> None — overlay only, no generative changes to the video content
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+                <span style="font-size: 10px; color: var(--muted);">Branded intros see higher recall but Dutch RE audience scrolls past heavy branding — top posts lead with property, not logo</span>
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+                <span style="font-size: 10px; color: var(--muted);">Homey brand is subtle by design — "making it easy" tone doesn't lead with logo. Light touch recommended.</span>
+              </div>
+              <div style="display: flex; gap: 8px; padding-top: 6px; border-top: 1px solid var(--border);">
+                <div style="font-size: 10px;"><span style="color: var(--green);">+</span> <span style="color: var(--muted);">Broker recognition on repeat views</span></div>
+                <div style="font-size: 10px;"><span style="color: var(--orange);">−</span> <span style="color: var(--muted);">May reduce scroll-stop rate if logo leads</span></div>
+              </div>
+            </div>
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px;">
-            <div><div style="font-size: 12px; font-weight: 500;">Add voiceover</div><div style="font-size: 10px; color: var(--muted);">Dutch AI narration</div></div>
-            <div style="text-align: right;"><div style="font-size: 10px; color: var(--green);">+28% engagement</div><div style="font-size: 10px; color: var(--orange);">+€0.40 cost</div></div>
+
+          <!-- Adjustment 2: Add voiceover -->
+          <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--bg);">
+              <div style="font-size: 12px; font-weight: 600;">Add voiceover narration</div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <span style="font-size: 9px; color: var(--orange); font-weight: 600; background: rgba(255,152,0,0.1); padding: 2px 6px; border-radius: 3px;">Risk: Medium</span>
+              </div>
+            </div>
+            <div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">What changes:</strong> Dutch AI voiceover (ElevenLabs) narrating property highlights over the visual hook. Adds ~€0.40 per hook.
+              </div>
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">Hallucination risk:</strong> Voice content could describe features that don't match the property if prompt isn't constrained to detected features only. Must be grounded in property analysis.
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+                <span style="font-size: 10px; color: var(--muted);">TikTok's algorithm surfaces voice-on content more than silent — but native captions currently outperforming voiceover in Dutch RE</span>
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+                <span style="font-size: 10px; color: var(--muted);">Homey hasn't used voiceover before — no broker-specific data. First use would be experimental.</span>
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 5px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span>
+                <span style="font-size: 10px; color: var(--muted);">Dutch only — English voiceover blocked for this broker. Voice must match "casual friend" tone.</span>
+              </div>
+              <div style="display: flex; gap: 8px; padding-top: 6px; border-top: 1px solid var(--border);">
+                <div style="font-size: 10px;"><span style="color: var(--green);">+</span> <span style="color: var(--muted);">Algorithm boost + accessibility</span></div>
+                <div style="font-size: 10px;"><span style="color: var(--orange);">−</span> <span style="color: var(--muted);">+€0.40 cost · voice mismatch risk · no broker data yet</span></div>
+              </div>
+            </div>
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px;">
-            <div><div style="font-size: 12px; font-weight: 500;">Slower reveal</div><div style="font-size: 10px; color: var(--muted);">3s → 5s before door opens</div></div>
-            <div style="text-align: right;"><div style="font-size: 10px; color: var(--green);">+8% curiosity</div><div style="font-size: 10px; color: var(--red);">-22% scroll retention</div></div>
+
+          <!-- Adjustment 3: Wider framing -->
+          <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--bg);">
+              <div style="font-size: 12px; font-weight: 600;">Wider framing — show more property</div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <span style="font-size: 9px; color: var(--red); font-weight: 600; background: rgba(255,107,107,0.1); padding: 2px 6px; border-radius: 3px;">Risk: High</span>
+              </div>
+            </div>
+            <div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">What changes:</strong> Camera pulls back to show more of the property exterior — garden, street context, neighborhood feel.
+              </div>
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">Hallucination risk:</strong> <strong style="color: var(--red);">High.</strong> AI will fabricate surrounding elements — neighboring houses, garden features, street details. This is exactly what caused Hook #3's rejection for Homey.
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+                <span style="font-size: 10px; color: var(--muted);">Wide establishing shots perform well for luxury properties — but require real footage, not AI-generated backgrounds</span>
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(255,107,107,0.12); color: var(--red); padding: 1px 5px; border-radius: 3px; font-size: 9px;">GUARDRAIL</span>
+                <span style="font-size: 10px; color: var(--muted);">Close framing enforced for Homey after Hook #3 rejection. Wider framing would violate this guardrail.</span>
+              </div>
+              <div style="display: flex; gap: 8px; padding-top: 6px; border-top: 1px solid var(--border);">
+                <div style="font-size: 10px;"><span style="color: var(--green);">+</span> <span style="color: var(--muted);">More property context visible</span></div>
+                <div style="font-size: 10px;"><span style="color: var(--red);">−</span> <span style="color: var(--muted);">Violates guardrail · high hallucination · likely rejection</span></div>
+              </div>
+            </div>
           </div>
+
+          <!-- Adjustment 4: Different hook type -->
+          <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--bg);">
+              <div style="font-size: 12px; font-weight: 600;">Switch to Price Tag Reveal</div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <span style="font-size: 9px; color: var(--green); font-weight: 600; background: rgba(122,186,122,0.1); padding: 2px 6px; border-radius: 3px;">Risk: Low</span>
+              </div>
+            </div>
+            <div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">What changes:</strong> Completely different hook — "guess the price" format with price tag sign in the garden, then reveals listing price. Different video, different assets used.
+              </div>
+              <div style="color: var(--muted);">
+                <strong style="color: var(--fg);">Hallucination risk:</strong> Low — static sign in a real garden photo. Minimal AI generation needed.
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(46,134,222,0.12); color: #5ba0d0; padding: 1px 5px; border-radius: 3px; font-size: 9px;">MARKET</span>
+                <span style="font-size: 10px; color: var(--muted);">2.4x vs standard — strong but below Door Reveal (3.2x). "Guess the price" is trending in Dutch RE but lower retention than curiosity-gap formats.</span>
+              </div>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <span style="background: rgba(122,186,122,0.12); color: var(--green); padding: 1px 5px; border-radius: 3px; font-size: 9px;">BROKER</span>
+                <span style="font-size: 10px; color: var(--muted);">Fits Homey's transparency positioning — "guess the price" aligns with "making it easy." Not tested yet for this broker.</span>
+              </div>
+              <div style="display: flex; gap: 8px; padding-top: 6px; border-top: 1px solid var(--border);">
+                <div style="font-size: 10px;"><span style="color: var(--green);">+</span> <span style="color: var(--muted);">Brand-aligned · low risk · trending format</span></div>
+                <div style="font-size: 10px;"><span style="color: var(--orange);">−</span> <span style="color: var(--muted);">Lower market performance than Door Reveal · no broker track record</span></div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -1119,7 +1332,7 @@
     <div class="annotation-label" style="color: var(--red);">What the BR contact is thinking</div>
     <div class="annotation-text">
       <strong>"€2.10... we charge €3,500 for this."</strong> — The margin story hits hardest here, in context of a finished product. Not abstract anymore — it's a real hook for a real broker at that cost.<br><br>
-      <strong>"Production Quality vs Expected Performance — that's honest."</strong> — They're metric-first people. The split tells them we're not bullshitting. We guarantee what's measurable, we project what's data-backed. That builds more trust than inflating a single number.<br><br>
+      <strong>"0.8% return rate — they track that too."</strong> — He sees his own SLA metric staring back at him. Not some made-up 'brand compliance' score — the actual metric his operations team reports on. And it's trending down. That's when trust clicks.<br><br>
       <strong>"The delivery package... we could hand this to our brokers."</strong> — This is the moment it shifts from "cool demo" to "I can see how this works in our business." The performance brief makes THEM look data-driven to THEIR clients.<br><br>
       <strong>"What about the second broker?"</strong> — He's ready for the brand translation demo. That's when Thomas goes back and runs Van der Berg.
     </div>
@@ -1239,12 +1452,34 @@
             </p>
           </div>
 
-          <!-- Expected performance -->
+          <!-- Production quality (in brief) -->
           <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
-            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Expected Performance</div>
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Production Quality</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
               <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
-                <div class="mono" style="font-size: 20px; font-weight: 700; color: var(--green);">3.2x</div>
+                <div class="mono" style="font-size: 20px; font-weight: 700; color: var(--green);">0.8% <span style="font-size: 13px;">↓</span></div>
+                <div style="font-size: 9px; color: var(--muted);">Return Rate</div>
+              </div>
+              <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
+                <div class="mono" style="font-size: 20px; font-weight: 700;">34s</div>
+                <div style="font-size: 9px; color: var(--muted);">Turnaround</div>
+              </div>
+              <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
+                <div class="mono" style="font-size: 20px; font-weight: 700;">€2.10</div>
+                <div style="font-size: 9px; color: var(--muted);">Production Cost</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expected performance -->
+          <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);">Expected Performance</div>
+              <div style="font-size: 8px; color: var(--muted); background: var(--surface); padding: 2px 6px; border-radius: 3px;">Based on market benchmarks</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+              <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
+                <div class="mono" style="font-size: 20px; font-weight: 700;">3.2x</div>
                 <div style="font-size: 9px; color: var(--muted);">vs standard intro</div>
               </div>
               <div style="text-align: center; padding: 10px; border: 1px solid var(--border); border-radius: 6px;">
@@ -1324,7 +1559,7 @@
   <div class="demo-script">
     <strong>Demo script:</strong>
     <p><em>"There's the hook. But look at the metrics."</em> Points to split KPI panel.</p>
-    <p><em>"Left side: production quality. 100% brand compliant, 34 seconds, two euros ten. That's what used to cost 3,500. Right side: expected performance based on 2,400 data points. 3.2x views, 67% retention lift. This is data you've never had on your hooks before."</em></p>
+    <p><em>"Left side: production quality. 0.8% return rate — that's your benchmark. 34 seconds, two euros ten. That's what used to cost 3,500. Right side: expected performance based on 2,400 data points. 3.2x views, 67% retention lift. This is data you've never had on your hooks before."</em></p>
     <p>Points to adjustments. <em>"Every option shows the trade-off. More brand = better recall but lower watch-through. The operator makes an informed call."</em></p>
     <p>Points to delivery package. <em>"The broker doesn't just get a video. They get a performance brief — why this hook, what it's optimized for. Your team hands that over and they see a company that's data-driven, not just creative."</em></p>
     <p style="margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);"><strong>Power move:</strong> <em>"Now let me show you the same flow for a completely different broker."</em> Goes back, runs the premium red broker. Cinematic is now recommended, influencer dimmed. Same system, different intelligence.</p>

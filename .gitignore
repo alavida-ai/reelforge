@@ -31,3 +31,5 @@ memory/
 **/assets/transitions/*.mp4
 **/assets/images/sample-listing/
 **/assets/images/details/
+.aidesigner/*
+!.aidesigner/.gitkeep
