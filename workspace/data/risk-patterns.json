@@ -1,0 +1,182 @@
+{
+  "metadata": {
+    "title": "AI Video Hallucination Risks for Real Estate Content",
+    "last_updated": "2026-04-01",
+    "purpose": "Catalog known hallucination failure modes in AI-generated video when applied to real estate content. Inform template design and framing choices to minimize risk of generating misleading or obviously artificial property visuals.",
+    "applies_to": ["Runway Gen-3", "Sora", "Kling", "Pika", "Luma Dream Machine", "general diffusion-based video models"]
+  },
+  "risk_categories": [
+    {
+      "category": "Architectural Hallucination",
+      "severity": "high",
+      "description": "AI generates impossible or inconsistent architectural elements that do not match the real property. This is the highest-risk category for RE content because viewers (especially Dutch viewers) have strong spatial intuition about buildings.",
+      "examples": [
+        "Extra windows that don't match the real facade",
+        "Impossible room proportions (too tall, too narrow)",
+        "Doors that lead nowhere or are inconsistent between frames",
+        "Staircases with impossible geometry",
+        "Roof lines that change between shots",
+        "Floor plans that don't match the actual property layout"
+      ],
+      "mitigation": "Use close-up framing to limit visible architectural context. Avoid wide exterior shots. Always use real listing photos as reference input. Use inpainting rather than full generation for architectural elements.",
+      "affected_hook_types": ["dramatic-unveil", "before-after-transformation", "process-reveal"],
+      "detection_difficulty": "medium",
+      "detection_notes": "Viewers familiar with the property or neighborhood will immediately notice. General viewers may not catch subtle inconsistencies but will notice major ones (floating stairs, impossible windows)."
+    },
+    {
+      "category": "Spatial Continuity Errors",
+      "severity": "high",
+      "description": "When generating multi-shot sequences (e.g., room-to-room walkthrough), AI fails to maintain consistent spatial relationships. A door on the left in one shot appears on the right in the next.",
+      "examples": [
+        "Room dimensions change between shots of the same room",
+        "Hallway connects to different rooms in different frames",
+        "Window views show different exteriors from the same room",
+        "Kitchen counter changes position mid-sequence",
+        "Ceiling height shifts between cuts"
+      ],
+      "mitigation": "Use single-room clips rather than continuous walkthroughs. Cut between real photos with AI-generated transitions. Avoid long uncut sequences through a property. Each clip should be self-contained.",
+      "affected_hook_types": ["process-reveal", "dramatic-unveil"],
+      "detection_difficulty": "low",
+      "detection_notes": "Even casual viewers notice spatial inconsistencies. This breaks immersion immediately."
+    },
+    {
+      "category": "Material and Texture Artifacts",
+      "severity": "medium",
+      "description": "AI generates materials that shift, shimmer, or morph in unnatural ways. Wood grain that flows like water, marble that changes pattern mid-frame, glass that reflects impossible scenes.",
+      "examples": [
+        "Wood flooring with grain that shifts direction during camera movement",
+        "Marble countertops with patterns that morph between frames",
+        "Glass reflections showing a scene different from the actual environment",
+        "Brick textures that blur or tessellate unnaturally",
+        "Metal fixtures that change finish (matte to glossy) mid-shot"
+      ],
+      "mitigation": "Keep material close-ups brief (under 2 seconds). Use faster cuts to mask material inconsistency. Avoid slow pans across large surfaces. Apply subtle motion blur in post-production.",
+      "affected_hook_types": ["process-reveal", "before-after-transformation"],
+      "detection_difficulty": "medium",
+      "detection_notes": "Subtle material artifacts are often missed on first watch (especially on mobile at low resolution) but become obvious on re-watch or larger screens."
+    },
+    {
+      "category": "Furniture and Object Hallucination",
+      "severity": "medium",
+      "description": "AI adds, removes, or morphs furniture and objects in ways that are unrealistic. Chairs with six legs, tables that float, appliances that blend into walls.",
+      "examples": [
+        "Chairs with extra or missing legs",
+        "Tables with impossible proportions",
+        "Appliances that partially merge with walls or counters",
+        "Decorative objects that change shape or disappear between frames",
+        "Light fixtures that defy gravity or lack mounting points"
+      ],
+      "mitigation": "Use real staged photos as base. For virtual staging, use specialized staging AI tools (e.g., REimagine, Virtual Staging AI) rather than general-purpose video generators. Review each frame for object consistency before publishing.",
+      "affected_hook_types": ["before-after-transformation", "process-reveal"],
+      "detection_difficulty": "low-medium",
+      "detection_notes": "Furniture hallucinations are a common 'uncanny valley' trigger. Viewers may not articulate what's wrong but will feel something is off."
+    },
+    {
+      "category": "Human Figure Distortion",
+      "severity": "high",
+      "description": "When AI generates human figures in property videos (e.g., an agent walking through a space), hands, faces, and body proportions frequently distort. Extra fingers, warped faces, impossible body positions.",
+      "examples": [
+        "Extra or missing fingers on a hand touching a door handle",
+        "Face distortion when turning toward camera",
+        "Body proportions that shift (arms too long, torso compressed)",
+        "Clothing that morphs or changes color mid-shot",
+        "Hair that defies physics or changes style between frames"
+      ],
+      "mitigation": "Avoid generating human figures entirely in AI video. Use real footage of the agent/personality and composite with AI-generated property visuals. If humans must appear, keep them in silhouette, out of focus, or in the background.",
+      "affected_hook_types": ["self-identification-pov", "dramatic-unveil"],
+      "detection_difficulty": "very-low",
+      "detection_notes": "Human figure distortion is the single most noticeable AI artifact. Viewers are extremely attuned to human form — even minor distortions are immediately detected and damage credibility."
+    },
+    {
+      "category": "Lighting and Shadow Inconsistency",
+      "severity": "low-medium",
+      "description": "AI generates lighting that is physically impossible — shadows from multiple directions, light sources that don't exist in the scene, time-of-day inconsistencies within a single sequence.",
+      "examples": [
+        "Shadows cast in two different directions in the same room",
+        "Sunlight streaming in from a wall with no windows",
+        "Interior lighting that changes warmth/intensity between frames",
+        "Exterior shots where sun position doesn't match shadow direction",
+        "Golden hour lighting on one side of a building and midday on the other"
+      ],
+      "mitigation": "Apply consistent color grading in post-production. Use AI video tools that accept lighting direction as an input parameter. Avoid mixing AI-generated exterior and interior shots of the same property in sequence.",
+      "affected_hook_types": ["dramatic-unveil", "cost-reveal-value-gap"],
+      "detection_difficulty": "high",
+      "detection_notes": "Most viewers do not consciously notice lighting inconsistencies. However, professional photographers and videographers will catch them immediately. Low risk for TikTok audiences."
+    },
+    {
+      "category": "Text and Signage Corruption",
+      "severity": "medium",
+      "description": "AI corrupts any text visible in the scene — street signs, house numbers, agency boards, shop names. Text becomes garbled, misspelled, or nonsensical.",
+      "examples": [
+        "Street name signs with garbled Dutch text",
+        "'Te Koop' (For Sale) signs with corrupted letters",
+        "House numbers that change between shots",
+        "Agency branding on signage that is unreadable",
+        "Shop names in the background that are clearly nonsensical"
+      ],
+      "mitigation": "Add all text elements in post-production, never rely on AI to generate readable text. Crop or blur any text-bearing elements in the input images. Use overlay templates for branding, pricing, and location information.",
+      "affected_hook_types": ["cost-reveal-value-gap", "before-after-transformation"],
+      "detection_difficulty": "very-low",
+      "detection_notes": "Garbled text is one of the most widely recognized AI artifacts. Dutch viewers will immediately spot corrupted Dutch text. Always add text as a post-production overlay."
+    },
+    {
+      "category": "Neighborhood and Context Hallucination",
+      "severity": "high",
+      "description": "When AI generates wider context around a property (street view, neighborhood, surroundings), it invents buildings, landmarks, and infrastructure that do not exist. This is particularly risky in the Netherlands where city architecture is distinctive and recognizable.",
+      "examples": [
+        "Canal houses with impossible gable shapes not found in that city",
+        "Background buildings in a style inconsistent with the neighborhood",
+        "Non-existent bridges, canals, or parks visible in exterior shots",
+        "Amsterdam-style architecture appearing in a Rotterdam neighborhood",
+        "Invented street layouts that don't match the real location"
+      ],
+      "mitigation": "Never use AI to generate neighborhood context. Use real drone footage or Google Street View stills for establishing shots. AI generation should be limited to interior scenes and tight exterior framings.",
+      "affected_hook_types": ["dramatic-unveil", "cost-reveal-value-gap"],
+      "detection_difficulty": "low",
+      "detection_notes": "Local viewers will immediately recognize fabricated neighborhood context. Dutch cities have highly distinctive architecture — Amsterdam grachtenpanden, Rotterdam modernism, Utrecht's Dom tower. Faking neighborhood context is extremely high-risk in NL."
+    }
+  ],
+  "framing_risk_matrix": [
+    {
+      "framing": "Close-up (single feature)",
+      "hallucination_risk": "low",
+      "examples": ["Door handle detail", "Kitchen faucet", "Floor material", "Window latch"],
+      "notes": "Limited context means fewer elements to hallucinate. Single-feature shots have the lowest error rate across all AI video models.",
+      "recommended_for": ["process-reveal", "before-after-transformation"]
+    },
+    {
+      "framing": "Medium shot (single room)",
+      "hallucination_risk": "medium",
+      "examples": ["Kitchen view from doorway", "Living room from one corner", "Bathroom overview"],
+      "notes": "Furniture layout and proportions can be inconsistent. Material textures on walls and floors may shift. Manageable with careful reference image input and short clip duration.",
+      "recommended_for": ["process-reveal", "dramatic-unveil"]
+    },
+    {
+      "framing": "Wide shot (full room with windows)",
+      "hallucination_risk": "medium-high",
+      "examples": ["Open-plan living/kitchen", "Room with garden view through windows"],
+      "notes": "Window views introduce exterior context that AI must hallucinate. The boundary between interior (controllable) and exterior (hallucinated) is a common failure point.",
+      "recommended_for": ["Use with caution. Blur or overexpose window areas."]
+    },
+    {
+      "framing": "Wide shot (full exterior)",
+      "hallucination_risk": "high",
+      "examples": ["Front facade with street", "Garden view with house", "Aerial/drone perspective"],
+      "notes": "Neighborhood context, sky, landscaping, adjacent buildings, and street infrastructure are all prone to artifacts. Use real footage for exterior establishing shots.",
+      "recommended_for": ["Avoid for AI generation. Use real photos/video."]
+    },
+    {
+      "framing": "Aerial / drone simulation",
+      "hallucination_risk": "very-high",
+      "examples": ["Overhead property view", "Neighborhood fly-over", "Approach shot from above"],
+      "notes": "Maximum context surface area. Every element (rooftops, streets, vegetation, cars, water) must be generated consistently. Current AI video models fail at this scale. Use real drone footage.",
+      "recommended_for": ["Never use AI generation. Always use real drone footage."]
+    }
+  ],
+  "overall_guidance": {
+    "safe_zone": "AI video generation is most reliable for: close-up detail shots, text-overlay driven content, single-room medium shots with controlled lighting, and transition effects between real photos.",
+    "danger_zone": "AI video generation is least reliable for: wide exterior shots, neighborhood context, continuous multi-room walkthroughs, human figures, and any frame containing readable text.",
+    "recommended_workflow": "Use real listing photos and video as the base. Apply AI for: (1) enhancing transitions between real photos, (2) adding cinematic camera movement to static images, (3) virtual staging of empty rooms, (4) atmospheric effects (lighting, time-of-day shifts). Always add text, branding, and pricing as post-production overlays.",
+    "quality_control": "Every AI-generated clip must be reviewed frame-by-frame before inclusion in a published video. Flag any frame with visible architectural inconsistency, text corruption, or human figure distortion. A single obviously AI-generated frame can undermine the credibility of an entire video."
+  }
+}

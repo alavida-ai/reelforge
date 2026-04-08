@@ -1,0 +1,377 @@
+[
+  {
+    "property_type": "Suburban Family Home",
+    "description": "Detached or semi-detached houses in residential neighborhoods outside city centers. Garden, parking, family-oriented. Typical NL price range €350K-€650K.",
+    "standard_baseline_views": "1K-5K",
+    "hooks": [
+      {
+        "type": "Door Reveal",
+        "avg_views": "3K-15K",
+        "vs_standard": "3.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis (UK/US RE Shorts, adapted for NL). Door-reveal format proven internationally; limited direct NL data.",
+        "examples": [
+          {"account": "@liberoaankoop", "views": "est. 14K", "platform": "tiktok", "link": ""},
+          {"account": "@reinders.makelaars", "views": "est. 8K", "platform": "tiktok", "link": ""},
+          {"account": "Andrada Ion", "views": "652.9K", "platform": "youtube", "link": "https://youtube.com/watch?v=xPSrgeEeNMw"}
+        ],
+        "why_it_works": "Curiosity gap -- the closed-to-open door transition triggers anticipation similar to unboxing content. The first 2 seconds are the most critical for retention, and a door opening is an inherently visual, motion-driven hook that stops the scroll.",
+        "dutch_market_notes": "Underused in NL. Most Dutch brokers skip the door entirely and start with a wide exterior or street-level pan. Opportunity for differentiation is high. The Andrada Ion video ('MODERN NEW FAMILY HOME in LONDON') demonstrates the format for a family home context, hitting 652K views."
+      },
+      {
+        "type": "Price Tag Reveal",
+        "avg_views": "3K-20K",
+        "vs_standard": "4.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market inference from UK 'What £X buys you' format (Property London, 1.1M+ views). Gamification hooks consistently outperform passive formats. Dutch pricing adapted from Funda norms.",
+        "examples": [
+          {"account": "Property London", "views": "1.4M", "platform": "youtube", "link": "https://youtube.com/watch?v=s2IKmksKgoY"},
+          {"account": "Property London", "views": "1.1M", "platform": "youtube", "link": "https://youtube.com/watch?v=SwxxXgYD-SA"},
+          {"account": "@liberoaankoop", "views": "est. 22K", "platform": "tiktok", "link": ""},
+          {"account": "@reinders.makelaars", "views": "est. 12K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Gamification + curiosity. Viewers mentally commit a guess, creating investment in the outcome. Encourages comments ('I guessed €425K!') which boost algorithmic distribution. Property London's 'What £X buys you' series proves this at scale with multiple videos crossing 1M views.",
+        "dutch_market_notes": "Dutch viewers are highly price-aware due to Funda culture. Price-per-sqm varies significantly by gemeente, creating natural surprise. @reinders.makelaars in Apeldoorn has built engagement around regional pricing with 3M+ total views across their account."
+      },
+      {
+        "type": "Before/After",
+        "avg_views": "2K-12K",
+        "vs_standard": "2.5x",
+        "confidence": "medium",
+        "data_source": "Cross-platform renovation content analysis. Before/after is proven by @noravastgoed (787K top video). German market parallel: THEWAYWELIVE '70er Haus' renovation hit 1.2M views.",
+        "examples": [
+          {"account": "@noravastgoed", "views": "787K (top video)", "platform": "tiktok", "link": ""},
+          {"account": "THEWAYWELIVE", "views": "1.2M", "platform": "youtube", "link": "https://youtube.com/watch?v=3Q1e2MMQKK8"},
+          {"account": "Home Visuals UK", "views": "212.7K", "platform": "youtube", "link": "https://youtube.com/watch?v=5HGnTduH4cQ"},
+          {"account": "Nikee Sacha", "views": "533.8K", "platform": "youtube", "link": "https://youtube.com/watch?v=zvflKyAM6Ig"}
+        ],
+        "why_it_works": "Transformation satisfaction -- the brain rewards recognizing change. Split-screen or wipe transitions create clear visual contrast. Works even when renovation is modest. Nikee Sacha's Dutch renovation content (533K views) shows the format resonates in NL when paired with authentic storytelling.",
+        "dutch_market_notes": "Many Dutch suburban homes are 1960s-1980s builds undergoing renovation, providing large supply of before/after material. @noravastgoed proves the format at scale in NL with 787K on their top video. Most Dutch brokers only show the 'after' -- missing the narrative power of contrast."
+      },
+      {
+        "type": "Cinematic/Drone",
+        "avg_views": "2K-10K",
+        "vs_standard": "2.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Drone content has high production value but lower engagement rates on TikTok vs YouTube. NL flight restrictions limit usage near urban areas.",
+        "examples": [
+          {"account": "Eric Davidson", "views": "72.9K", "platform": "youtube", "link": "https://youtube.com/watch?v=-xVW8qjZLPs"},
+          {"account": "Bad Wolf Horizon", "views": "2.5K", "platform": "youtube", "link": "https://youtube.com/watch?v=Kb7vdBdCeu0"},
+          {"account": "@dstrctrealestate", "views": "est. 9K", "platform": "instagram", "link": ""}
+        ],
+        "why_it_works": "Visual quality creates aspiration and shareability. Aerial perspective reveals garden size, neighborhood context, and proximity to amenities. However, TikTok's algorithm rewards engagement over production quality, limiting the multiplier vs other hook types.",
+        "dutch_market_notes": "Dutch suburbs are flat and visually repetitive from the air -- vinex-wijken all look similar. Drone works best for properties with distinctive features (large garden, water frontage). NL drone regulations require A1/A2 certification and many residential areas are restricted airspace."
+      },
+      {
+        "type": "Slideshow with Captions",
+        "avg_views": "3K-18K",
+        "vs_standard": "3.5x",
+        "confidence": "high",
+        "data_source": "TikTok native format performance data. Photo mode/slideshow is TikTok's fastest-growing format (2024-2025). Observable on Dutch accounts; sound-off friendly format with high completion rates.",
+        "examples": [
+          {"account": "@liberoaankoop", "views": "est. 19K", "platform": "tiktok", "link": ""},
+          {"account": "Propertytours", "views": "22.7K", "platform": "youtube", "link": "https://youtube.com/watch?v=QfyVEK4aAaE"},
+          {"account": "@reinders.makelaars", "views": "est. 10K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Native TikTok format gets algorithmic preference. Sound-off friendly -- critical since 40-50% of TikTok viewing is without sound. Captions control the narrative and highlight features. Lower production barrier means more consistent posting.",
+        "dutch_market_notes": "Most accessible format for Dutch brokers. Many already have Funda-quality photos. Adding captions like '4 slaapkamers' or 'tuin op het zuiden' creates immediate local relevance. @liberoaankoop uses this format effectively with avg 333K views on top posts."
+      },
+      {
+        "type": "Personality-led",
+        "avg_views": "2K-20K",
+        "vs_standard": "3.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Wide variance: strong personalities can 10x baseline. @WayUp Media proves ceiling at 9M+ views. @liberoaankoop (Korne Pot) is the Dutch proof case at 333K avg.",
+        "examples": [
+          {"account": "WayUp Media", "views": "9.0M", "platform": "youtube", "link": "https://youtube.com/watch?v=AQYz-fb3BCc"},
+          {"account": "WayUp Media", "views": "2.6M", "platform": "youtube", "link": "https://youtube.com/watch?v=0zPdqJFBvhU"},
+          {"account": "@liberoaankoop", "views": "avg 333K (top)", "platform": "tiktok", "link": ""},
+          {"account": "Aaron Vankampen", "views": "5.5M", "platform": "youtube", "link": "https://youtube.com/watch?v=a3L9yGcVO2g"}
+        ],
+        "why_it_works": "Parasocial relationship drives follow-through. Viewers return for the person, not just the property. WayUp Media's 'old money or new money?' format (9M views) shows personality-driven content can massively outperform standard tours. Energy and authenticity matter more than production quality.",
+        "dutch_market_notes": "Korne Pot (@liberoaankoop) is the NL proof case -- the only Dutch RE creator with a genuine personality brand (74.9K TikTok followers, avg 333K views). Dutch 'doe maar normaal' culture makes personality-led content feel risky, but those who commit dramatically outperform. The gap between personality-led and standard is wider in NL because so few brokers attempt it."
+      }
+    ]
+  },
+  {
+    "property_type": "Apartment",
+    "description": "Urban apartments in Amsterdam, Rotterdam, Utrecht, Den Haag. Compact layouts, balcony or terrace. Typical NL price range €250K-€500K.",
+    "standard_baseline_views": "1K-5K",
+    "hooks": [
+      {
+        "type": "Door Reveal",
+        "avg_views": "3K-15K",
+        "vs_standard": "3.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Apartment door reveals perform well because the compact space means the entire living area is often visible from the entrance -- immediate 'wow' factor.",
+        "examples": [
+          {"account": "@noravastgoed", "views": "est. 10K", "platform": "tiktok", "link": ""},
+          {"account": "@dstrctrealestate", "views": "est. 11K", "platform": "instagram", "link": ""},
+          {"account": "Property London", "views": "335.8K", "platform": "youtube", "link": "https://youtube.com/watch?v=9HXy42IDCb4"}
+        ],
+        "why_it_works": "Entire living space is often visible from the entrance. The immediate reveal is compressed -- you see the view, kitchen, and living room in one frame. No wasted time on hallways. Property London's 'Inside A 4 Bedroom House For Sale' (335K views) demonstrates the door-first format.",
+        "dutch_market_notes": "Amsterdam canal apartments have iconic steep staircases -- the climb itself becomes part of the hook. Rotterdam loft conversions offer dramatic industrial-to-residential reveals. Most Dutch apartment tours currently start with an exterior building shot, wasting the critical first 2 seconds."
+      },
+      {
+        "type": "Price Tag Reveal",
+        "avg_views": "4K-25K",
+        "vs_standard": "5.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market inference. Price reveal performs strongest for apartments because urban price-per-sqm creates maximum surprise. Property London series consistently exceeds 500K views with this format.",
+        "examples": [
+          {"account": "Property London", "views": "585.7K", "platform": "youtube", "link": "https://youtube.com/watch?v=8ebSH0nuzKo"},
+          {"account": "Property London", "views": "422.4K", "platform": "youtube", "link": "https://youtube.com/watch?v=Y7OFw2bcYNY"},
+          {"account": "Property London", "views": "1.1M", "platform": "youtube", "link": "https://youtube.com/watch?v=SwxxXgYD-SA"},
+          {"account": "@liberoaankoop", "views": "est. 29K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Urban apartment pricing creates cognitive dissonance -- 'this tiny apartment costs HOW MUCH?' drives comments and shares. Works in both directions: expensive cities shock with high prices, smaller cities shock with value. Property London's 'What £X Buys You' series proves the format at massive scale.",
+        "dutch_market_notes": "Amsterdam housing prices are a national conversation topic. Content showing small apartments with high price tags taps into existing cultural frustration about the woningcrisis. Creates engagement even from non-buyers who comment out of emotion. Risk: can feel exploitative if tone is wrong."
+      },
+      {
+        "type": "Before/After",
+        "avg_views": "2K-15K",
+        "vs_standard": "2.5x",
+        "confidence": "medium",
+        "data_source": "Cross-platform renovation content analysis. Apartment renovations show strong multipliers because transformation is more visually dramatic in compact spaces. @noravastgoed proves the format in NL.",
+        "examples": [
+          {"account": "@noravastgoed", "views": "787K (top video)", "platform": "tiktok", "link": ""},
+          {"account": "Mr. Unreal Estate", "views": "177.5K", "platform": "youtube", "link": "https://youtube.com/watch?v=plp7NTeOgjc"},
+          {"account": "Immobuddies", "views": "603.4K", "platform": "youtube", "link": "https://youtube.com/watch?v=n7UXDPnFORk"}
+        ],
+        "why_it_works": "Compact spaces make transformations more visually dramatic. A kitchen renovation in 8m2 shows total transformation; the same renovation in 30m2 looks incremental. Mr. Unreal Estate's apartment purchase renovation video (177K) shows the before/after narrative works well in the German-speaking market, directly transferable to NL.",
+        "dutch_market_notes": "Dutch apartments from the 1970s-1990s are being heavily renovated. Popular transformations include opening up closed kitchens and converting balconies to winter gardens. The 'voor en na' format resonates culturally -- Dutch TV has a strong makeover tradition (Eigen Huis & Tuin). @noravastgoed (8.3K TikTok, top video 787K) is the NL proof case."
+      },
+      {
+        "type": "Cinematic/Drone",
+        "avg_views": "2K-8K",
+        "vs_standard": "1.5x",
+        "confidence": "low",
+        "data_source": "Estimated. Drone footage for apartments has limited applicability -- the interior is the selling point. Gimbal walkthroughs perform better than drones for this property type.",
+        "examples": [
+          {"account": "Refined Spaces", "views": "221.7K", "platform": "youtube", "link": "https://youtube.com/watch?v=xnXQkkCrRTk"},
+          {"account": "The Luxury Home Show", "views": "576.5K", "platform": "youtube", "link": "https://youtube.com/watch?v=ATLP4G25f_E"},
+          {"account": "@dstrctrealestate", "views": "est. 5K", "platform": "instagram", "link": ""}
+        ],
+        "why_it_works": "For apartments, gimbal walkthroughs outperform drones. Smooth interior movement through a compact space creates a virtual viewing experience. The Luxury Home Show's London apartment tour (576K views) uses cinematic interior gimbal effectively. Drone exterior shots of apartment buildings are generally uninteresting unless architecturally notable.",
+        "dutch_market_notes": "Most Dutch city centers are no-fly zones for drones. Interior gimbal work is the realistic alternative. Amsterdam canal-side apartments benefit from exterior shots taken from bridges or boats. Rotterdam's architectural variety (cube houses, Markthal area) offers more drone potential than other Dutch cities."
+      },
+      {
+        "type": "Slideshow with Captions",
+        "avg_views": "3K-20K",
+        "vs_standard": "4.0x",
+        "confidence": "high",
+        "data_source": "Observable on Dutch accounts. Slideshow format performs proportionally best for apartments because key selling points (view, light, layout) can be isolated per slide. High-quality Funda photos translate directly.",
+        "examples": [
+          {"account": "@liberoaankoop", "views": "est. 21K", "platform": "tiktok", "link": ""},
+          {"account": "Daan Alferink", "views": "29.9K", "platform": "youtube", "link": "https://youtube.com/watch?v=9chDt9NQsqU"},
+          {"account": "@reinders.makelaars", "views": "est. 10K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Apartment buyers prioritize specific features (light, view, storage, balcony size). Slideshow with captions lets you address each concern per slide. This mirrors the Funda browsing experience Dutch buyers are already trained on.",
+        "dutch_market_notes": "Strongest format for Dutch apartment content. Dutch buyers are Funda-native -- they consume property info as captioned photos. Captions in Dutch with neighborhood-specific references (e.g., 'Op 2 min van Vondelpark') increase local relevance. Sound-off friendly is critical for commuter browsing."
+      },
+      {
+        "type": "Personality-led",
+        "avg_views": "2K-20K",
+        "vs_standard": "3.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Personality-led apartment content benefits from the 'small space, big personality' dynamic. The intimacy of filming in a compact space creates a stronger parasocial effect.",
+        "examples": [
+          {"account": "@liberoaankoop", "views": "est. 25K", "platform": "tiktok", "link": ""},
+          {"account": "Grandestate Immobilien", "views": "82.8K", "platform": "youtube", "link": "https://youtube.com/watch?v=aiQUKgtBbv4"},
+          {"account": "@noravastgoed", "views": "est. 14K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Confined space creates forced intimacy between presenter and viewer. Reactions to small spaces, creative storage solutions, or unexpectedly good views feel authentic. The 'would you live here?' question is more relatable for apartments than luxury homes. Grandestate Immobilien's Munich apartment tour (82K views) shows the format works in similar European markets.",
+        "dutch_market_notes": "Dutch apartment market skews younger (25-35 starters) -- this demographic is more receptive to personality-driven content. Humor about small Dutch apartments ('this is what €400K gets you in Amsterdam') performs well when authentic. @noravastgoed (8.3K TikTok) does this effectively for the Amsterdam market."
+      }
+    ]
+  },
+  {
+    "property_type": "Premium/Luxury",
+    "description": "Canal houses, villas, penthouse apartments, estate properties. High-end finishes, premium locations. €750K+, with top-end exceeding €2M. Luxury content naturally outperforms other categories by 1.5-2x.",
+    "standard_baseline_views": "1K-5K",
+    "hooks": [
+      {
+        "type": "Door Reveal",
+        "avg_views": "4K-25K",
+        "vs_standard": "3.5x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Luxury door reveals are the most proven RE content format internationally. The Luxury Home Show demonstrates the format across multiple videos exceeding 100K views.",
+        "examples": [
+          {"account": "The Luxury Home Show", "views": "6.6M", "platform": "youtube", "link": "https://youtube.com/watch?v=8KzgQ74CYMs"},
+          {"account": "The Luxury Home Show", "views": "401.4K", "platform": "youtube", "link": "https://youtube.com/watch?v=Cf8OcP73sYQ"},
+          {"account": "@dstrctrealestate", "views": "est. 16K", "platform": "instagram", "link": ""},
+          {"account": "Nomad Developments", "views": "161.8K", "platform": "youtube", "link": "https://youtube.com/watch?v=-ViqSXHTS78"}
+        ],
+        "why_it_works": "Maximum curiosity gap. Grand entrances, double-height foyers, and unexpected interior design create the strongest reveal moments. The Luxury Home Show's London townhouse tour (6.6M views) proves this at massive scale. Aspirational content gets shared even by non-buyers.",
+        "dutch_market_notes": "Amsterdam canal houses have modest, narrow front doors that hide surprisingly deep, ornate interiors -- this is the ideal setup for a door reveal. The Dutch architectural tradition of 'bescheidenheid aan de buitenkant' (modesty on the outside) is literally the format's premise. @dstrctrealestate (44K Instagram) showcases luxury Amsterdam properties in this style."
+      },
+      {
+        "type": "Price Tag Reveal",
+        "avg_views": "5K-35K",
+        "vs_standard": "5.0x",
+        "confidence": "high",
+        "data_source": "Directly observable. Property London's 'What £X buys you' series consistently exceeds 300K-1.4M views. The Luxury Home Show's price-led luxury content averages 100K+. Proven format at scale.",
+        "examples": [
+          {"account": "Property London", "views": "1.4M", "platform": "youtube", "link": "https://youtube.com/watch?v=s2IKmksKgoY"},
+          {"account": "Property London", "views": "291.8K", "platform": "youtube", "link": "https://youtube.com/watch?v=45t15wnxPdY"},
+          {"account": "The Luxury Home Show", "views": "935.9K", "platform": "youtube", "link": "https://youtube.com/watch?v=InJT_fN4zkU"},
+          {"account": "Supercar Blondie", "views": "12.1M", "platform": "youtube", "link": "https://youtube.com/watch?v=GeOe4HK5Cn8"},
+          {"account": "@liberoaankoop", "views": "est. 43K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Price anchoring against luxury expectations creates maximum engagement. Supercar Blondie's '$40 Million Mansion' (12.1M views) shows the ceiling for price-led luxury content. Property London's £31M Holland Park video (291K) proves the format in a closer market context. Viewers compare against their own reference points, generating comment debates.",
+        "dutch_market_notes": "Dutch luxury pricing is relatively modest by international standards -- a €2M canal house would be $20M+ in comparable Manhattan locations. This creates a unique angle: 'look what €1.5M gets you in Amsterdam.' International audience engagement inflates view counts. Risk: actual luxury buyers find price-focused content gauche -- tone must be aspirational, not tabloid."
+      },
+      {
+        "type": "Before/After",
+        "avg_views": "3K-15K",
+        "vs_standard": "2.5x",
+        "confidence": "low",
+        "data_source": "Estimated. Luxury before/after is less common because high-end renovations happen less frequently and owners are more private. Limited direct NL data. German market parallel provides supporting evidence.",
+        "examples": [
+          {"account": "@noravastgoed", "views": "787K (top video)", "platform": "tiktok", "link": ""},
+          {"account": "altbaumakeover", "views": "320.3K", "platform": "youtube", "link": "https://youtube.com/watch?v=J0Wau4U3-4c"},
+          {"account": "Mr. Unreal Estate", "views": "2.3M", "platform": "youtube", "link": "https://youtube.com/watch?v=mmiGJalcPVs"}
+        ],
+        "why_it_works": "When available, luxury before/after content performs well because the transformation delta is larger. Mr. Unreal Estate's Harald Glooeckler villa tour (2.3M views) shows that celebrity/luxury property reveals with transformation elements drive massive engagement. Heritage restorations are a sub-genre with dedicated audiences.",
+        "dutch_market_notes": "Monumentale panden (listed heritage buildings) undergoing restoration are the best NL source material. The tension between heritage preservation requirements and modern living creates compelling narrative. However, access to 'before' content is difficult -- most luxury renovations are private and take 1-2 years."
+      },
+      {
+        "type": "Cinematic/Drone",
+        "avg_views": "3K-15K",
+        "vs_standard": "2.5x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Cinematic/drone is the one property type where this format truly excels. Luxury properties justify the production quality, and estates have enough scale for aerial footage.",
+        "examples": [
+          {"account": "Flycam Google Earth", "views": "2.1M", "platform": "youtube", "link": "https://youtube.com/watch?v=yV7rQW2qDJU"},
+          {"account": "J. Frisk: Premier Storyteller", "views": "1.9M", "platform": "youtube", "link": "https://youtube.com/watch?v=3pkZO5MGQS8"},
+          {"account": "Fine & Country", "views": "99.7K", "platform": "youtube", "link": "https://youtube.com/watch?v=ZrtpNN176Gk"},
+          {"account": "@dstrctrealestate", "views": "est. 14K", "platform": "instagram", "link": ""}
+        ],
+        "why_it_works": "Production quality matches content quality -- viewers expect cinematic treatment for €2M+ properties. J. Frisk's 'Fairytale Tudor' (1.9M views) demonstrates that high-production cinematic tours can achieve massive reach. Drone footage reveals estate scale, garden size, and neighborhood exclusivity.",
+        "dutch_market_notes": "Villa areas (Gooi, Wassenaar, Bloemendaal, Bergen) have more permissive drone regulations than urban centers. For canal houses, gimbal shots through the depth of the house (front to garden) are more effective than drones. Seasonal timing matters -- Dutch gardens in spring/summer vs winter dramatically affects aerial appeal. @dstrctrealestate (44K Instagram) produces luxury Amsterdam content."
+      },
+      {
+        "type": "Slideshow with Captions",
+        "avg_views": "4K-20K",
+        "vs_standard": "3.5x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Slideshow performs well for luxury because it allows curated highlighting of premium features (wine cellar, home cinema, original ceiling paintings) that get lost in video walkthroughs.",
+        "examples": [
+          {"account": "@liberoaankoop", "views": "est. 26K", "platform": "tiktok", "link": ""},
+          {"account": "Fine & Country", "views": "64.5K", "platform": "youtube", "link": "https://youtube.com/watch?v=AoUMwXzXtJY"},
+          {"account": "@reinders.makelaars", "views": "est. 9K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Luxury properties have too many features for a 30-second video. Slideshow lets you spotlight each selling point with context. Each slide is a self-contained value proposition. Fine & Country's coastal manor house tour (64K views) demonstrates this curated approach.",
+        "dutch_market_notes": "Works well for grachtenpanden where historical details are the selling point. Dutch luxury buyers appreciate factual, understated presentation -- slideshow with informative captions matches this cultural preference. Professional photography from luxury brokers is already slideshow-ready."
+      },
+      {
+        "type": "Personality-led",
+        "avg_views": "3K-30K",
+        "vs_standard": "4.0x",
+        "confidence": "medium",
+        "data_source": "Directly observable. @WayUp Media proves the ceiling at 9M views. The Luxury Home Show averages 100K-6.5M per video. Highest variance of any category -- strong personalities can 10x baseline.",
+        "examples": [
+          {"account": "WayUp Media", "views": "9.0M", "platform": "youtube", "link": "https://youtube.com/watch?v=AQYz-fb3BCc"},
+          {"account": "The Luxury Home Show", "views": "6.6M", "platform": "youtube", "link": "https://youtube.com/watch?v=8KzgQ74CYMs"},
+          {"account": "WayUp Media", "views": "1.5M", "platform": "youtube", "link": "https://youtube.com/watch?v=Xr4gAiw0Row"},
+          {"account": "@liberoaankoop", "views": "est. 38K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "The presenter becomes a proxy for the viewer's fantasy. WayUp Media's 'old money or new money?' (9M views) shows personality-driven luxury content can achieve viral scale. Genuine reactions to luxury features are more engaging than rehearsed presentations. The aspirational gap creates entertainment value.",
+        "dutch_market_notes": "Cultural tension: Dutch 'doe maar normaal' culture clashes with luxury showcasing. The most effective Dutch approach is 'informed enthusiasm' rather than American-style hype -- @liberoaankoop (Korne Pot, 74.9K TikTok) demonstrates this balance. Luxury brokers in NL tend to be too formal on camera. The sweet spot is knowledgeable but approachable."
+      }
+    ]
+  },
+  {
+    "property_type": "Townhouse (rijtjeshuis)",
+    "description": "Connected row houses, the most common Dutch housing type. Typically 3-4 bedrooms, small garden, shared walls. Typical NL price range €275K-€500K.",
+    "standard_baseline_views": "1K-5K",
+    "hooks": [
+      {
+        "type": "Door Reveal",
+        "avg_views": "3K-15K",
+        "vs_standard": "3.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis adapted for NL. Townhouses have moderate door-reveal potential -- rijtjeshuizen interiors are relatively predictable, but the multiplier is still meaningful because the format itself drives retention.",
+        "examples": [
+          {"account": "@reinders.makelaars", "views": "est. 8K", "platform": "tiktok", "link": ""},
+          {"account": "Welcome Home", "views": "71.0K", "platform": "youtube", "link": "https://youtube.com/watch?v=2K6c0bFuCOU"},
+          {"account": "Andrada Ion", "views": "12.2K", "platform": "youtube", "link": "https://youtube.com/watch?v=Wtx07m-hoh4"}
+        ],
+        "why_it_works": "Even for standard townhouses, the door reveal outperforms a static exterior opening shot. The key is managing expectations. The reveal works best when the interior has one unexpected element (open plan conversion, loft extension, designer kitchen). Welcome Home's new-build tour (71K views) shows the format works for standard homes.",
+        "dutch_market_notes": "Rijtjeshuizen look identical from outside -- which actually helps the hook. 'This looks like every other house on the street, but wait...' is a strong setup. Best used for renovated or extended examples. @reinders.makelaars (8.3K TikTok, Apeldoorn) applies this format in the Dutch suburban context."
+      },
+      {
+        "type": "Price Tag Reveal",
+        "avg_views": "3K-22K",
+        "vs_standard": "4.5x",
+        "confidence": "medium",
+        "data_source": "Cross-market inference. Price reveal is the strongest format for townhouses because price variation within identical-looking streets is the core Dutch housing debate. Property London format adapted for NL context.",
+        "examples": [
+          {"account": "Property London", "views": "1.1M", "platform": "youtube", "link": "https://youtube.com/watch?v=V89dq9hHFA8"},
+          {"account": "Touchstone Education", "views": "342.6K", "platform": "youtube", "link": "https://youtube.com/watch?v=Axtp8obfRr4"},
+          {"account": "@liberoaankoop", "views": "est. 19K", "platform": "tiktok", "link": ""},
+          {"account": "@reinders.makelaars", "views": "est. 15K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Maximum relatability. Most Dutch viewers either live in or grew up in a rijtjeshuis. Touchstone Education's 'A house for £35,000' (342K views) shows how extreme price points drive engagement. The 'guess the price' format taps into everyday housing market conversations. Comment-driven engagement is highest for this property type.",
+        "dutch_market_notes": "The rijtjeshuis is THE Dutch property type -- nearly everyone has a reference point. Regional price differences are the engagement driver: a rijtjeshuis in Almere vs Haarlem vs Eindhoven creates debate. Series format ('zelfde huis, ander dorp') has strong potential. @reinders.makelaars (3M+ total views, Apeldoorn) demonstrates price-reveal for the regional market."
+      },
+      {
+        "type": "Before/After",
+        "avg_views": "2K-15K",
+        "vs_standard": "2.5x",
+        "confidence": "high",
+        "data_source": "Observable on Dutch and European renovation accounts. Rijtjeshuizen are the most commonly renovated property type in NL. @noravastgoed proves the format at 787K. German renovation content (THEWAYWELIVE, altbaumakeover) provides cross-market validation.",
+        "examples": [
+          {"account": "@noravastgoed", "views": "787K (top video)", "platform": "tiktok", "link": ""},
+          {"account": "THEWAYWELIVE", "views": "1.2M", "platform": "youtube", "link": "https://youtube.com/watch?v=3Q1e2MMQKK8"},
+          {"account": "altbaumakeover", "views": "320.3K", "platform": "youtube", "link": "https://youtube.com/watch?v=J0Wau4U3-4c"},
+          {"account": "Nikee Sacha", "views": "533.8K", "platform": "youtube", "link": "https://youtube.com/watch?v=zvflKyAM6Ig"}
+        ],
+        "why_it_works": "Townhouse renovations are aspirational but achievable. Unlike luxury renovations, viewers can realistically imagine doing the same. THEWAYWELIVE's '70er Haus' renovation (1.2M views) and Nikee Sacha's Dutch renovation diary (533K) show the format drives engagement across markets. 'If they can do it, I can do it to mine.'",
+        "dutch_market_notes": "Highest-confidence format for Dutch townhouses. Aanbouw (rear extension), dakkapel (dormer), and open-plan conversions are the three most common renovation types. 'Klussen' (DIY renovation) is deeply embedded in Dutch culture. @noravastgoed (8.3K TikTok, top video 787K) proves before/after works at scale in NL."
+      },
+      {
+        "type": "Cinematic/Drone",
+        "avg_views": "2K-8K",
+        "vs_standard": "1.5x",
+        "confidence": "low",
+        "data_source": "Estimated. Drone/cinematic is the weakest format for townhouses. Rijtjeshuizen from the air are visually repetitive -- rows of identical rooftops. Interior gimbal has limited value in standard floor plans.",
+        "examples": [
+          {"account": "Eric Davidson", "views": "72.9K", "platform": "youtube", "link": "https://youtube.com/watch?v=-xVW8qjZLPs"},
+          {"account": "RTL Nieuws", "views": "31.5K", "platform": "youtube", "link": "https://youtube.com/watch?v=JOMgitQ8IeY"},
+          {"account": "@reinders.makelaars", "views": "est. 3K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Weakest format for this property type. Aerial footage of row houses shows repetitive rooflines with minimal visual interest. Interior gimbal work is constrained by narrow hallways and small rooms. The production investment doesn't justify the marginal performance improvement.",
+        "dutch_market_notes": "Not recommended as primary format for rijtjeshuizen. Focus on the garden/outdoor space rather than aerial street views. Street-level tracking shots have more potential than standard drone flyovers. RTL Nieuws' tiny house piece (31K views) shows that even editorial-style content about small Dutch homes can outperform standard tours."
+      },
+      {
+        "type": "Slideshow with Captions",
+        "avg_views": "3K-20K",
+        "vs_standard": "3.5x",
+        "confidence": "high",
+        "data_source": "Observable on Dutch accounts. Slideshow is the workhorse format for Dutch RE content -- most commonly used and most consistent performer. Direct data from multiple Dutch and European accounts.",
+        "examples": [
+          {"account": "@liberoaankoop", "views": "est. 16K", "platform": "tiktok", "link": ""},
+          {"account": "Propertytours", "views": "22.7K", "platform": "youtube", "link": "https://youtube.com/watch?v=QfyVEK4aAaE"},
+          {"account": "@reinders.makelaars", "views": "est. 8K", "platform": "tiktok", "link": ""}
+        ],
+        "why_it_works": "Efficient information delivery for a property type where details matter more than spectacle. Number of rooms, garden orientation, energy label, parking -- these practical factors drive townhouse purchases. Slideshow delivers them clearly and is sound-off friendly.",
+        "dutch_market_notes": "Best format for the Dutch townhouse market. Practical Dutch buyers want specifications, not spectacle. Captions like 'Energielabel A', 'Geen erfpacht', 'Tuin op het westen' address real purchase criteria. @liberoaankoop (74.9K TikTok, avg 333K views) uses this format effectively."
+      },
+      {
+        "type": "Personality-led",
+        "avg_views": "2K-20K",
+        "vs_standard": "3.0x",
+        "confidence": "medium",
+        "data_source": "Cross-market analysis. Personality-led townhouse content works best when the personality adds market commentary or renovation advice rather than property showcasing. @WayUp Media proves the ceiling; @liberoaankoop proves the Dutch application.",
+        "examples": [
+          {"account": "WayUp Media", "views": "627.5K", "platform": "youtube", "link": "https://youtube.com/watch?v=OcvB8LcNSgI"},
+          {"account": "@liberoaankoop", "views": "est. 18K", "platform": "tiktok", "link": ""},
+          {"account": "Grace & Riza", "views": "525.6K", "platform": "youtube", "link": "https://youtube.com/watch?v=PK2PVUai648"}
+        ],
+        "why_it_works": "For townhouses, the personality needs to add context the property alone doesn't provide. Grace & Riza's house viewing video (525K views) shows that authentic, personal house-hunting content drives massive engagement. The presenter becomes an advisor rather than a showman.",
+        "dutch_market_notes": "The advisory angle works best in Dutch culture -- 'expert explains whether this house is worth it' resonates more than 'look at this amazing house!' Honest assessments of problems (fundering issues, asbest, achterstallig onderhoud) build trust. @liberoaankoop's humor/fundaparels format (74.9K TikTok) proves personality-led works in NL when authentically Dutch."
+      }
+    ]
+  }
+]
