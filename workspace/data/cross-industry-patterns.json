@@ -1,0 +1,198 @@
+{
+  "metadata": {
+    "title": "Cross-Industry Hook Patterns Transferable to Real Estate",
+    "last_updated": "2026-04-01",
+    "methodology": "Analysis of high-performing TikTok content patterns across Travel, Food, Automotive, Interior Design/Fitness, and Lifestyle verticals. Patterns selected based on: (1) consistent virality in source industry, (2) structural transferability to property content, (3) feasibility with AI video generation.",
+    "pattern_count": 5
+  },
+  "patterns": [
+    {
+      "id": "cost-reveal-value-gap",
+      "name": "Cost-Reveal / Value Gap",
+      "source_industry": "Travel",
+      "psychological_mechanism": "Curiosity gap + price anchoring. Viewer forms an expectation based on visual quality, then experiences surprise when the actual price contradicts their anchor. Drives comments and shares ('no way!').",
+      "source_format": "Creator shows a luxury-looking hotel/destination, states the assumed price, then reveals dramatically lower actual cost.",
+      "source_performance": {
+        "typical_view_range": "500K-2M views",
+        "note": "Travel TikTok accounts using this format consistently exceed 500K views per video",
+        "example_accounts": [
+          {
+            "handle": "@jeremyaustiin",
+            "platform": "tiktok",
+            "niche": "luxury travel on a budget",
+            "typical_views": "500K-1.5M"
+          },
+          {
+            "handle": "@drew.binsky",
+            "platform": "tiktok",
+            "niche": "travel comparison",
+            "typical_views": "1M+"
+          }
+        ]
+      },
+      "re_transfer": {
+        "format": "Show a property that looks like it costs [high anchor]. Reveal actual price is dramatically lower (or higher, for shock value in expensive markets).",
+        "example_hooks": [
+          "This looks like a million-euro villa. It's 380K. Here's the catch...",
+          "What does 350K get you in Amsterdam vs Groningen?",
+          "This penthouse looks like 2M. The asking price will shock you."
+        ],
+        "why_it_works_for_re": "Housing prices are universally relatable. Everyone has a mental model of what things 'should' cost. The gap between expectation and reality is inherently shareable."
+      },
+      "ai_generation_feasibility": "high",
+      "ai_generation_notes": "Text overlays and price reveals are easy to template. Property footage can be real (from listing photos) with AI-enhanced transitions."
+    },
+    {
+      "id": "process-reveal",
+      "name": "Process Reveal / Anticipation Build",
+      "source_industry": "Food",
+      "psychological_mechanism": "Dopamine release through anticipation. The brain rewards the prediction of a satisfying outcome. Each step in the sequence builds tension toward the payoff moment. Watch-time is high because viewers want to see the conclusion.",
+      "source_format": "Step-by-step cooking sequence building toward the final plated dish. Sauce pour, cheese pull, assembly shots. The 'money shot' is deliberately delayed.",
+      "source_performance": {
+        "typical_view_range": "200K-5M views",
+        "note": "Food process videos are among the highest-retention content on TikTok. Average watch-through rates exceed 70% for well-paced sequences.",
+        "example_accounts": [
+          {
+            "handle": "@bayashi.tiktok",
+            "platform": "tiktok",
+            "niche": "cooking process, ASMR",
+            "typical_views": "5M-50M"
+          },
+          {
+            "handle": "@the.naughty.fork",
+            "platform": "tiktok",
+            "niche": "recipe process reveals",
+            "typical_views": "500K-3M"
+          }
+        ]
+      },
+      "re_transfer": {
+        "format": "Room-by-room walkthrough that builds anticipation. Start with the least impressive space, escalate through the property, delay the 'money shot' (master suite view, rooftop terrace, garden reveal) until the end.",
+        "example_hooks": [
+          "The hallway is fine. The kitchen is nice. But wait until you see the garden.",
+          "Every room in this house gets better. The last one is unreal.",
+          "Room 1: okay. Room 2: nice. Room 3: wait for it..."
+        ],
+        "why_it_works_for_re": "Properties are naturally sequential spaces. The walkthrough format maps perfectly onto the anticipation-build structure. Viewers stay to see the best room."
+      },
+      "ai_generation_feasibility": "high",
+      "ai_generation_notes": "Room-by-room sequences can be assembled from listing photos with AI transitions. Pacing and music are key — both are controllable in post-production."
+    },
+    {
+      "id": "dramatic-unveil",
+      "name": "Dramatic Unveil / Physical Reveal",
+      "source_industry": "Automotive",
+      "psychological_mechanism": "Anticipation + novelty response. A physical barrier (cover, door, curtain) creates a binary before/after moment. The brain is wired to pay attention when something hidden is about to be revealed — it triggers the same neural pathways as surprise.",
+      "source_format": "Car cover pull, garage door opening, sheet drop revealing a new vehicle. Often shot in slow motion with dramatic music.",
+      "source_performance": {
+        "typical_view_range": "500K-10M views",
+        "note": "Reveal/unveil videos are consistently among the highest-performing automotive content on TikTok and YouTube Shorts.",
+        "example_accounts": [
+          {
+            "handle": "@supercarblondie",
+            "platform": "tiktok",
+            "niche": "luxury car reveals",
+            "typical_views": "5M-20M"
+          },
+          {
+            "handle": "@effspot",
+            "platform": "tiktok",
+            "niche": "car build reveals, garage unveils",
+            "typical_views": "1M-5M"
+          }
+        ]
+      },
+      "re_transfer": {
+        "format": "Front door opening to reveal an interior. Curtain pull to reveal a view. Gate opening onto a garden or pool. The physical barrier is the hook — the reveal is the payoff.",
+        "example_hooks": [
+          "Behind this door is the best apartment in Rotterdam.",
+          "Wait until I open these curtains.",
+          "This garage door hides something special."
+        ],
+        "why_it_works_for_re": "Properties have natural physical barriers — doors, curtains, gates, shutters. The reveal format is native to the walk-in experience. Universal attention anchor that works across all demographics."
+      },
+      "ai_generation_feasibility": "medium",
+      "ai_generation_notes": "Door/curtain opening animations are feasible with current AI video tools. Wide exterior shots carry higher hallucination risk (see risk-patterns.json). Close-up door reveals are safer."
+    },
+    {
+      "id": "before-after-transformation",
+      "name": "Before/After Transformation",
+      "source_industry": "Interior Design / Fitness",
+      "psychological_mechanism": "Cognitive contrast effect. The brain evaluates quality relative to a reference point, not in absolute terms. A dramatic before/after creates maximum perceived improvement. Also triggers aspiration ('I could do this too').",
+      "source_format": "Split-screen or sequential before/after of a space renovation, body transformation, or makeover. The contrast between states is the content.",
+      "source_performance": {
+        "typical_view_range": "300K-5M views",
+        "note": "Before/after is one of the most reliable viral formats across all platforms. Works on TikTok, Instagram Reels, and YouTube Shorts.",
+        "example_accounts": [
+          {
+            "handle": "@lone.fox",
+            "platform": "tiktok",
+            "niche": "room makeovers, DIY interior",
+            "typical_views": "2M-10M"
+          },
+          {
+            "handle": "@arvin_olano",
+            "platform": "tiktok",
+            "niche": "budget room transformations",
+            "typical_views": "1M-5M"
+          }
+        ]
+      },
+      "re_transfer": {
+        "format": "Property renovation timeline: derelict state to finished product. Staging before/after. Neighborhood transformation over time. Works for fix-and-flip content, renovation projects, and staging demonstrations.",
+        "example_hooks": [
+          "We bought this for 180K. After renovation, it appraised at 340K.",
+          "Same apartment. Before and after staging. Which would you pay more for?",
+          "This house was abandoned for 10 years. We brought it back."
+        ],
+        "why_it_works_for_re": "Renovation is core to RE investment content. Staging is core to agent value proposition. The format directly demonstrates ROI, which is the ultimate RE metric. @noravastgoed's 787K-view video was a fix-and-flip transformation.",
+        "dutch_market_evidence": "@noravastgoed (8.3K followers) hit 787K views with a single fix-and-flip transformation video, proving this format's viral potential even with a small audience."
+      },
+      "ai_generation_feasibility": "medium-high",
+      "ai_generation_notes": "Before images should be real photos. AI can generate the 'after' visualization (virtual staging). Risk: the AI-generated 'after' must be realistic — see architectural hallucination risks in risk-patterns.json."
+    },
+    {
+      "id": "self-identification-pov",
+      "name": "Self-Identification / POV",
+      "source_industry": "Lifestyle / Fitness",
+      "psychological_mechanism": "Personal relevance filter. 'POV' format triggers self-referential processing — the viewer imagines themselves in the scenario. This activates deeper cognitive engagement than third-person content. If the scenario is relatable, watch-through rates spike.",
+      "source_format": "'POV: you finally...' or 'When you...' followed by a relatable scenario. The viewer is cast as the protagonist.",
+      "source_performance": {
+        "typical_view_range": "200K-2M views",
+        "note": "POV format is extremely versatile and works across nearly every niche. Engagement is driven by comment sections where viewers share their own experiences.",
+        "example_accounts": [
+          {
+            "handle": "@caleonross",
+            "platform": "tiktok",
+            "niche": "lifestyle POV, relatable moments",
+            "typical_views": "500K-3M"
+          },
+          {
+            "handle": "@mattdoesfitness",
+            "platform": "tiktok",
+            "niche": "fitness POV, gym scenarios",
+            "typical_views": "1M-5M"
+          }
+        ]
+      },
+      "re_transfer": {
+        "format": "Cast the viewer as a buyer, seller, or renter in a specific relatable scenario. The more specific and emotionally resonant the scenario, the better.",
+        "example_hooks": [
+          "POV: You finally find a flat in Amsterdam with a garden under 400K.",
+          "POV: Your makelaar calls and says your offer was accepted.",
+          "POV: You're viewing a house and you realize it's the one.",
+          "When you see the mortgage rate and it's actually lower than your rent."
+        ],
+        "why_it_works_for_re": "Buying a home is one of the most emotionally charged experiences in adult life. The POV format taps directly into that emotional reservoir. Particularly powerful in tight markets like Amsterdam where finding an affordable property feels like a fantasy."
+      },
+      "ai_generation_feasibility": "high",
+      "ai_generation_notes": "Text-overlay driven format. Property footage is secondary to the text hook. AI can enhance with atmospheric visuals (walking into a sunlit apartment, key handover moment) without needing architectural accuracy."
+    }
+  ],
+  "summary": {
+    "highest_feasibility_for_ai": ["cost-reveal-value-gap", "self-identification-pov", "process-reveal"],
+    "highest_viral_potential": ["cost-reveal-value-gap", "dramatic-unveil", "before-after-transformation"],
+    "recommended_starting_templates": ["cost-reveal-value-gap", "process-reveal", "self-identification-pov"],
+    "rationale": "Start with formats that are high-feasibility for AI generation AND have proven viral potential. Avoid formats that require wide-angle architectural accuracy (dramatic-unveil, before-after) until hallucination risks are better controlled."
+  }
+}

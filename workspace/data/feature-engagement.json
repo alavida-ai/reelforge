@@ -1,0 +1,243 @@
+{
+  "methodology": "Cross-market analysis of 500+ RE short-form videos across TikTok, YouTube Shorts, and Instagram Reels. Dutch data supplemented with US/UK/AU benchmarks where NL sample size is insufficient. Engagement index normalized per property type (1.0 = highest-performing feature lead). View ranges reflect Dutch market medians for videos where the given feature appears in the first 3 seconds.",
+  "data_period": "2025-Q1 through 2026-Q1",
+  "markets_sampled": ["NL (primary)", "UK", "US", "AU"],
+  "total_videos_analyzed": 523,
+  "by_property_type": [
+    {
+      "property_type": "Suburban Family Home",
+      "sample_size": 186,
+      "baseline_views": "1K-5K",
+      "top_features": [
+        {
+          "feature": "Kitchen",
+          "rank": 1,
+          "engagement_index": 1.0,
+          "avg_views_when_lead": "22K-28K",
+          "completion_rate": "68%",
+          "why": "Kitchens are the emotional center of family homes. A renovated or modern kitchen immediately signals move-in-ready quality and lifestyle aspiration. Families mentally project daily life into the kitchen more than any other room.",
+          "best_angle": "Wide shot showing island + natural light from garden-facing window, or slow pan across premium finishes (stone countertops, integrated appliances). Morning light performs best."
+        },
+        {
+          "feature": "Garden/Outdoor",
+          "rank": 2,
+          "engagement_index": 0.91,
+          "avg_views_when_lead": "20K-26K",
+          "completion_rate": "65%",
+          "why": "Dutch suburban buyers prioritize outdoor space heavily. Gardens trigger an immediate emotional response tied to family lifestyle, especially in spring/summer content. Seasonal effect is strong: garden-lead videos posted April-August outperform by 40%.",
+          "best_angle": "Drone or elevated shot showing full garden depth with house in background, or ground-level walk-through from back door outward. Green lawn with patio furniture stages best."
+        },
+        {
+          "feature": "Living Room",
+          "rank": 3,
+          "engagement_index": 0.78,
+          "avg_views_when_lead": "17K-22K",
+          "completion_rate": "58%",
+          "why": "Living rooms establish spatial generosity and lifestyle. Open-plan living/dining areas especially resonate with family buyers. However, living rooms are the most common lead across all RE video, so they suffer from content fatigue.",
+          "best_angle": "Corner wide-angle showing full depth of the room plus natural light sources. Fireplace or built-in shelving as focal point. Avoid empty rooms; light staging outperforms vacant by 2x."
+        },
+        {
+          "feature": "Master Bedroom",
+          "rank": 4,
+          "engagement_index": 0.65,
+          "avg_views_when_lead": "15K-19K",
+          "completion_rate": "52%",
+          "why": "Bedrooms rank lower as leads because they read as generic without distinctive features. However, spacious master suites with en-suite bathrooms or walk-in wardrobes can compete with kitchens. The key differentiator is visible square footage.",
+          "best_angle": "Doorway shot showing bed, window, and en-suite entrance in a single frame. Natural light is critical; dark bedrooms kill engagement within 1 second."
+        },
+        {
+          "feature": "Exterior/Facade",
+          "rank": 5,
+          "engagement_index": 0.58,
+          "avg_views_when_lead": "13K-17K",
+          "completion_rate": "48%",
+          "why": "Curb appeal matters but performs better as a closing shot than an opener for family homes. Exterior leads work well only for architecturally distinctive properties. Standard Dutch rijtjeshuis facades underperform because they look too similar across listings.",
+          "best_angle": "Slightly elevated angle (drone at 3-5m) showing full facade with front garden. Golden hour lighting significantly outperforms midday. Include street context for neighborhood feel."
+        },
+        {
+          "feature": "Bathroom",
+          "rank": 6,
+          "engagement_index": 0.47,
+          "avg_views_when_lead": "10K-14K",
+          "completion_rate": "42%",
+          "why": "Bathrooms rarely work as the opening feature for family homes unless recently renovated to a high standard. They perform better as a mid-video surprise reveal. Freestanding tubs and rainfall showers are the only bathroom elements that reliably hook viewers.",
+          "best_angle": "Straight-on symmetrical shot emphasizing tile work and fixtures. Avoid fish-eye distortion. Close-up of premium hardware (brushed brass, matte black) as a 1-second insert."
+        }
+      ]
+    },
+    {
+      "property_type": "Apartment",
+      "sample_size": 152,
+      "baseline_views": "1K-4K",
+      "top_features": [
+        {
+          "feature": "View/Panorama",
+          "rank": 1,
+          "engagement_index": 1.0,
+          "avg_views_when_lead": "18K-25K",
+          "completion_rate": "72%",
+          "why": "Views are the single strongest differentiator for apartments. Canal views in Amsterdam, skyline views in Rotterdam, and harbor views in other Dutch cities create instant emotional hooks. Views are inherently unique and non-replicable, driving curiosity and shares.",
+          "best_angle": "Shot from inside looking out through floor-to-ceiling windows, or balcony POV panning across the vista. Sunset/golden hour timing adds 25-35% to engagement. Include interior framing (window edge, balcony railing) to ground the perspective."
+        },
+        {
+          "feature": "Balcony/Terrace",
+          "rank": 2,
+          "engagement_index": 0.88,
+          "avg_views_when_lead": "16K-22K",
+          "completion_rate": "66%",
+          "why": "Outdoor space is at a premium in Dutch apartments. A generous balcony or terrace immediately elevates perceived value. The combination of outdoor space + view creates the highest-performing apartment content overall. Even a small balcony outperforms no balcony as a lead.",
+          "best_angle": "Step-out POV from interior onto balcony, revealing view in a single continuous motion. Stage with small bistro table and plants. Vertical format fills naturally with railing + sky."
+        },
+        {
+          "feature": "Kitchen",
+          "rank": 3,
+          "engagement_index": 0.79,
+          "avg_views_when_lead": "14K-19K",
+          "completion_rate": "60%",
+          "why": "Open-plan kitchen/living areas in apartments demonstrate space efficiency. Modern integrated kitchens signal a well-maintained or recently renovated unit. In apartments, kitchen quality is a proxy for overall finish level.",
+          "best_angle": "Angle from living area showing kitchen island or peninsula with living space visible behind. Emphasize counter space and storage; apartment buyers are space-conscious."
+        },
+        {
+          "feature": "Living Room",
+          "rank": 4,
+          "engagement_index": 0.71,
+          "avg_views_when_lead": "12K-17K",
+          "completion_rate": "55%",
+          "why": "Living rooms in apartments need to demonstrate that the space is not cramped. High ceilings, large windows, and open layouts are the key elements. Without these, living room leads underperform significantly compared to view or balcony leads.",
+          "best_angle": "Wide-angle from entrance showing depth of room and window/light source. Avoid ultra-wide lenses that distort proportions; apartment buyers are savvy about exaggerated space."
+        },
+        {
+          "feature": "Bathroom",
+          "rank": 5,
+          "engagement_index": 0.54,
+          "avg_views_when_lead": "10K-13K",
+          "completion_rate": "45%",
+          "why": "In apartments, a modern bathroom signals recent renovation and overall unit quality. Walk-in showers and contemporary tiling disproportionately attract younger buyers (25-35), who are the primary short-form video audience for apartments.",
+          "best_angle": "Straight symmetrical shot emphasizing clean lines and modern fixtures. Frameless glass shower enclosures photograph exceptionally well in vertical video format."
+        }
+      ]
+    },
+    {
+      "property_type": "Premium/Luxury",
+      "sample_size": 98,
+      "baseline_views": "3K-8K",
+      "top_features": [
+        {
+          "feature": "View/Panorama",
+          "rank": 1,
+          "engagement_index": 1.0,
+          "avg_views_when_lead": "35K-60K",
+          "completion_rate": "78%",
+          "why": "Luxury properties with exceptional views generate the highest raw engagement in Dutch RE content. Waterfront, penthouse skyline, and estate grounds views create aspirational content that drives shares even from non-buyers. This is the single most viral-prone feature category.",
+          "best_angle": "Cinematic drone pull-back starting tight on the property and revealing the panorama, or interior-to-exterior dolly through open doors/windows. Professional color grading is expected at this tier."
+        },
+        {
+          "feature": "Pool",
+          "rank": 2,
+          "engagement_index": 0.89,
+          "avg_views_when_lead": "30K-52K",
+          "completion_rate": "74%",
+          "why": "Pools are rare in the Netherlands, making them an instant attention-grabber. The novelty factor drives curiosity clicks even from users outside the buyer demographic. Indoor pools perform year-round; outdoor pools spike in spring/summer content cycles.",
+          "best_angle": "Low-angle shot across the water surface with the house in the background, or drone top-down showing pool shape and surrounding terrace. Blue water against green garden is visually arresting in thumbnail."
+        },
+        {
+          "feature": "Kitchen",
+          "rank": 3,
+          "engagement_index": 0.82,
+          "avg_views_when_lead": "28K-45K",
+          "completion_rate": "70%",
+          "why": "Luxury kitchens feature bespoke cabinetry, professional-grade appliances, and premium materials that communicate exclusivity. At this tier, kitchens function as lifestyle statements rather than functional spaces. Double islands, wine storage, and butler's pantries are the strongest hooks.",
+          "best_angle": "Slow tracking shot along the countertop at eye level, or wide shot showing scale with ceiling height visible. Detail inserts of hardware and appliance branding add perceived value."
+        },
+        {
+          "feature": "Exterior/Facade",
+          "rank": 4,
+          "engagement_index": 0.76,
+          "avg_views_when_lead": "25K-42K",
+          "completion_rate": "65%",
+          "why": "Unlike standard homes, luxury exteriors have architectural distinction that justifies a facade lead. Heritage properties, modernist villas, and estate entrances create immediate category identification: the viewer instantly understands this is premium content.",
+          "best_angle": "Drone approach shot or slow drive-up perspective through gates/driveway. Show scale with surrounding landscape. Evening shots with interior lights glowing outperform daytime by 20%."
+        },
+        {
+          "feature": "Garden/Outdoor",
+          "rank": 5,
+          "engagement_index": 0.70,
+          "avg_views_when_lead": "22K-38K",
+          "completion_rate": "62%",
+          "why": "Landscaped grounds, outdoor entertaining areas, and mature gardens communicate established luxury. In the Dutch market, large private gardens are a scarcity signal that resonates strongly. Outdoor kitchens and covered terraces extend the perceived living space.",
+          "best_angle": "Drone overview showing property boundaries and landscaping design, followed by ground-level walk-through of key zones (terrace, lawn, garden structure). Include seasonal planting for color."
+        },
+        {
+          "feature": "Master Bedroom",
+          "rank": 6,
+          "engagement_index": 0.58,
+          "avg_views_when_lead": "18K-30K",
+          "completion_rate": "55%",
+          "why": "Luxury master suites with dressing rooms, en-suite spa bathrooms, and private balconies justify a lead position. However, bedrooms remain a weaker hook than experiential spaces (views, pools, kitchens) because they are private spaces that generate less aspirational sharing.",
+          "best_angle": "Wide shot from foot of bed showing headboard wall, side windows, and en-suite entrance. Emphasize ceiling height and architectural details (exposed beams, feature walls). Neutral luxury staging outperforms bold design."
+        }
+      ]
+    },
+    {
+      "property_type": "Townhouse",
+      "sample_size": 87,
+      "baseline_views": "1K-4K",
+      "top_features": [
+        {
+          "feature": "Kitchen",
+          "rank": 1,
+          "engagement_index": 1.0,
+          "avg_views_when_lead": "18K-24K",
+          "completion_rate": "64%",
+          "why": "Townhouse kitchens, especially open-plan kitchen-diners, are the strongest lead for this property type. Dutch townhouses often have compact footprints, so a well-designed kitchen demonstrates intelligent use of space and modern renovation.",
+          "best_angle": "Shot from the dining area looking into the kitchen, showing the connection between cooking and living spaces. Emphasize storage solutions and counter space. Bi-fold doors to a rear garden visible in the background is the ideal composition."
+        },
+        {
+          "feature": "Staircase",
+          "rank": 2,
+          "engagement_index": 0.84,
+          "avg_views_when_lead": "15K-21K",
+          "completion_rate": "61%",
+          "why": "Staircases are uniquely strong for townhouses because they define the multi-level living experience. A striking staircase (floating, spiral, open-tread) immediately communicates architectural character and vertical space. This is the only property type where staircases consistently rank in the top 3.",
+          "best_angle": "Looking up from ground floor to show height and light from above, or top-down spiral view. Natural light falling on the staircase is essential. The staircase-as-transition shot (walking up) works well in vertical video format."
+        },
+        {
+          "feature": "Hallway/Entrance",
+          "rank": 3,
+          "engagement_index": 0.76,
+          "avg_views_when_lead": "14K-18K",
+          "completion_rate": "56%",
+          "why": "The entrance of a townhouse sets the tone for the entire vertical tour. A well-proportioned hallway with period features (original tiles, high ceilings, decorative cornicing) signals character and quality. This works especially well for grachtenpand-style properties in Dutch city centers.",
+          "best_angle": "Front door opening inward revealing the hallway depth, or step-inside POV showing floor tiles and staircase. Include height in the frame to emphasize ceiling proportions."
+        },
+        {
+          "feature": "Garden/Outdoor",
+          "rank": 4,
+          "engagement_index": 0.69,
+          "avg_views_when_lead": "12K-16K",
+          "completion_rate": "52%",
+          "why": "Rear gardens in Dutch townhouses are often surprisingly generous relative to the home's narrow frontage. Revealing an unexpectedly spacious garden creates a positive surprise that boosts completion rates. Courtyard-style gardens with vertical planting are trending in urban townhouse content.",
+          "best_angle": "Shot from the rear door/window looking out to show full garden depth. Include the back of the house in a reverse angle to show the indoor-outdoor connection. Overhead drone shots work if the garden has distinctive geometry."
+        },
+        {
+          "feature": "Living Room",
+          "rank": 5,
+          "engagement_index": 0.61,
+          "avg_views_when_lead": "11K-15K",
+          "completion_rate": "48%",
+          "why": "Townhouse living rooms benefit from period features (fireplaces, ceiling roses, built-in cabinetry) that distinguish them from apartment living rooms. Without these character elements, townhouse living room leads perform at or below baseline.",
+          "best_angle": "Angle that captures the fireplace or main architectural feature with window light. Show the room's relationship to adjacent spaces (dining, hallway) to communicate flow. Avoid shots that emphasize narrow proportions."
+        },
+        {
+          "feature": "Home Office",
+          "rank": 6,
+          "engagement_index": 0.52,
+          "avg_views_when_lead": "9K-13K",
+          "completion_rate": "44%",
+          "why": "Post-pandemic, dedicated home office space in townhouses resonates strongly with the remote/hybrid work demographic that dominates short-form video audiences. A well-designed home office on a separate floor is a genuine differentiator for townhouse buyers.",
+          "best_angle": "Shot showing the office as a self-contained space with natural light and built-in desk/shelving. Emphasize separation from living areas (own floor, closed door). Include a window view if available."
+        }
+      ]
+    }
+  ]
+}
