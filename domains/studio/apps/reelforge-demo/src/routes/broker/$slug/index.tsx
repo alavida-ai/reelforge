@@ -1,11 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Plus, ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { Nav } from "@/components/nav";
-import { Button } from "@/components/ui/button";
 import { VisualIdentityCard } from "@/components/visual-identity-card";
 import { BrandIntelligence } from "@/components/brand-intelligence";
 import { HookHistory } from "@/components/hook-history";
 import { getBroker } from "@/data/get-data";
-import { Plus } from "lucide-react";
 
 export const Route = createFileRoute("/broker/$slug/")({
   component: BrokerPresetPage,
@@ -29,78 +28,91 @@ function BrokerPresetPage() {
   return (
     <>
       <Nav brokerSlug={broker.slug} brokerName={broker.name} />
-      <div className="pt-14 max-w-6xl mx-auto px-6 py-6">
+      <div className="pt-[5.5rem] pb-8 px-6 max-w-[1600px] mx-auto w-full flex flex-col gap-6">
         {/* Header bar */}
-        <div className="flex items-center justify-between mb-8">
+        <header className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-border">
+          {/* Identity */}
           <div className="flex items-center gap-4">
-            {/* Logo + Name */}
             <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-lg font-bold text-white shrink-0"
+              className="w-14 h-14 rounded-lg flex items-center justify-center text-white text-2xl font-semibold shadow-inner"
               style={{ backgroundColor: broker.colors.primary }}
             >
               {broker.logoLetter}
             </div>
-            <div>
-              <h1 className="text-2xl font-bold leading-tight">
+            <div className="flex flex-col">
+              <h1 className="text-2xl font-semibold tracking-tight text-foreground leading-tight">
                 {broker.name}
               </h1>
-              <p className="text-sm text-muted-foreground">{broker.tagline}</p>
-            </div>
-
-            {/* Key stats — inline text pairs */}
-            <div className="hidden md:flex items-center gap-1 ml-4 text-sm text-muted-foreground">
-              <span className="text-foreground font-medium">
-                Return Rate{" "}
-                <span className="text-[var(--color-green)]">
-                  {broker.productionSla.returnRate} ↓
-                </span>
-              </span>
-              <span className="mx-1.5">·</span>
-              <span>
-                Turnaround{" "}
-                <span className="text-foreground font-medium">
-                  {broker.productionSla.turnaround}
-                </span>
-              </span>
-              <span className="mx-1.5">·</span>
-              <span>
-                Hooks{" "}
-                <span className="text-foreground font-medium">
-                  {broker.productionSla.hooksDelivered}
-                </span>
-              </span>
-              <span className="mx-1.5">·</span>
-              <span>
-                Views{" "}
-                <span className="text-foreground font-medium">
-                  {broker.contentPerformance.avgViews}{" "}
-                  <span className="text-[var(--color-green)]">
-                    {broker.contentPerformance.avgViewsTrend}
-                  </span>
-                </span>
-              </span>
+              <span className="text-muted-foreground">{broker.tagline}</span>
             </div>
           </div>
 
-          {/* New Hook button */}
-          <Link to="/broker/$slug/produce" params={{ slug: broker.slug }}>
-            <Button size="sm">
-              <Plus className="w-4 h-4 mr-1.5" />
-              New Hook
-            </Button>
-          </Link>
-        </div>
+          {/* KPIs & Actions */}
+          <div className="flex flex-wrap items-center gap-6 md:gap-8">
+            <div className="flex items-center gap-6">
+              <div className="flex flex-col gap-1 pr-6 border-r border-border">
+                <div className="flex items-end gap-2">
+                  <span className="font-mono text-xl text-foreground leading-none font-medium">
+                    {broker.productionSla.returnRate}
+                  </span>
+                  <span className="text-[var(--color-green)] font-mono text-xs flex items-center">
+                    <ArrowDownRight className="h-3 w-3" />
+                  </span>
+                </div>
+                <span className="font-mono text-[0.65rem] text-muted-foreground uppercase tracking-wider">
+                  Return Rate
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1 pr-6 border-r border-border">
+                <span className="font-mono text-xl text-foreground leading-none font-medium">
+                  {broker.productionSla.turnaround}
+                </span>
+                <span className="font-mono text-[0.65rem] text-muted-foreground uppercase tracking-wider">
+                  Turnaround
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1 pr-6 border-r border-border">
+                <span className="font-mono text-xl text-foreground leading-none font-medium">
+                  {broker.productionSla.hooksDelivered}
+                </span>
+                <span className="font-mono text-[0.65rem] text-muted-foreground uppercase tracking-wider">
+                  Hooks Delivered
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <div className="flex items-end gap-2">
+                  <span className="font-mono text-xl text-foreground leading-none font-medium">
+                    {broker.contentPerformance.avgViews}
+                  </span>
+                  <span className="text-[var(--color-green)] font-mono text-xs flex items-center">
+                    <ArrowUpRight className="h-3 w-3" /> {broker.contentPerformance.avgViewsTrend.replace("\u2191 ", "")}
+                  </span>
+                </div>
+                <span className="font-mono text-[0.65rem] text-muted-foreground uppercase tracking-wider">
+                  Avg Views
+                </span>
+              </div>
+            </div>
+
+            <Link to="/broker/$slug/produce" params={{ slug: broker.slug }}>
+              <button className="bg-foreground text-background font-medium px-4 py-2 rounded-md hover:bg-white transition-colors flex items-center gap-2 shadow-sm">
+                <Plus className="h-4 w-4" />
+                New Hook
+              </button>
+            </Link>
+          </div>
+        </header>
 
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
-          {/* Left column: Visual Identity + Brand Intelligence */}
-          <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div className="lg:col-span-7 flex flex-col gap-6">
             <VisualIdentityCard broker={broker} />
             <BrandIntelligence broker={broker} />
           </div>
-
-          {/* Right column: Hook History */}
-          <div>
+          <div className="lg:col-span-5 relative">
             <HookHistory broker={broker} />
           </div>
         </div>

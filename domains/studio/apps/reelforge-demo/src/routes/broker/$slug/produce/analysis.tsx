@@ -13,10 +13,10 @@ export const Route = createFileRoute("/broker/$slug/produce/analysis")({
   component: AnalysisPage,
 });
 
-const fadeSlide = {
-  initial: { opacity: 0, y: 12 },
+const fade = {
+  initial: { opacity: 0, y: 8 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.4, ease: "easeOut" },
+  transition: { duration: 0.3, ease: "easeOut" },
 };
 
 function AnalysisPage() {
@@ -63,100 +63,107 @@ function AnalysisPage() {
 
   return (
     <div>
+      {/* Agent status — compact */}
       <AgentStatus
         steps={agentSteps}
         onComplete={handleComplete}
         onStepComplete={handleStepComplete}
       />
 
-      {showAssets && (
-        <motion.div {...fadeSlide} className="mb-5">
-          <div className="flex items-center gap-2 mb-2">
-            <Scan className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-[11px] text-muted-foreground">
-              {property.assets.length} assets scanned
-            </span>
-          </div>
-          <div className="grid grid-cols-6 gap-1.5">
-            {property.assets.map((asset, i) => (
-              <motion.div
-                key={asset.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.08 }}
-                className="aspect-square rounded-md border border-border bg-muted/50 flex flex-col items-center justify-center gap-0.5"
-              >
-                <Image className="h-3 w-3 text-muted-foreground" />
-                <span className="text-[8px] text-muted-foreground">{asset.label}</span>
-                <span className="text-[7px] text-muted-foreground/60">{asset.role}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+      {/* Assets + Classification side by side */}
+      {(showAssets || showClassification) && (
+        <div className="grid grid-cols-[1fr_1fr] gap-3 mb-4">
+          {/* Scanned assets */}
+          {showAssets && (
+            <motion.div {...fade}>
+              <Card className="h-full">
+                <CardContent className="p-3">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Scan className="h-3 w-3 text-muted-foreground" />
+                    <span className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
+                      {property.assets.length} Assets Scanned
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1">
+                    {property.assets.map((asset, i) => (
+                      <motion.div
+                        key={asset.label}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: i * 0.06 }}
+                        className="aspect-[4/3] rounded border border-border bg-muted/50 flex flex-col items-center justify-center gap-0.5"
+                      >
+                        <Image className="h-2.5 w-2.5 text-muted-foreground" />
+                        <span className="text-[7px] text-muted-foreground">{asset.label}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Property classification */}
+          {showClassification && (
+            <motion.div {...fade}>
+              <Card className="h-full">
+                <CardContent className="p-3">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Tag className="h-3 w-3 text-muted-foreground" />
+                    <span className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
+                      Property Classification
+                    </span>
+                  </div>
+                  <div className="text-[15px] font-bold">{property.type}</div>
+                  <div className="text-[11px] text-muted-foreground">{property.subtype}</div>
+                  <div className="text-[10px] text-muted-foreground mt-1">{property.address}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </div>
       )}
 
-      {showClassification && (
-        <motion.div {...fadeSlide} className="mb-5">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Tag className="h-3.5 w-3.5 text-muted-foreground" />
-                <span className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
-                  Property Classification
-                </span>
-              </div>
-              <div className="text-[18px] font-bold">{property.type}</div>
-              <div className="text-[12px] text-muted-foreground">{property.subtype}</div>
-              <div className="text-[11px] text-muted-foreground mt-1">{property.address}</div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      )}
-
+      {/* Detected features — compact rows */}
       {visibleFeatures > 0 && (
-        <motion.div {...fadeSlide} className="mb-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="h-3.5 w-3.5 text-muted-foreground" />
+        <motion.div {...fade} className="mb-4">
+          <div className="flex items-center gap-1.5 mb-2">
+            <Sparkles className="h-3 w-3 text-muted-foreground" />
             <span className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
               Detected Features
             </span>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {property.features.slice(0, visibleFeatures).map((feature, i) => (
               <motion.div
                 key={feature.name}
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.08 }}
+                className="rounded-md border border-border p-2.5"
               >
-                <Card>
-                  <CardContent className="p-3">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="font-semibold text-[12px]">{feature.name}</span>
-                      <span className="font-mono text-[var(--color-green)] text-[11px] font-semibold">
-                        {Math.round(feature.confidence * 100)}%
-                      </span>
-                    </div>
-                    <ThinProgress
-                      percent={feature.confidence * 100}
-                      className="mb-2"
-                    />
-                    <div className="space-y-0.5">
-                      {feature.insights.map((insight, j) => (
-                        <InsightLine key={j} insight={insight} />
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-semibold text-[11px]">{feature.name}</span>
+                  <span className="font-mono text-[var(--color-green)] text-[10px] font-semibold">
+                    {Math.round(feature.confidence * 100)}%
+                  </span>
+                </div>
+                <ThinProgress percent={feature.confidence * 100} className="mb-1.5" />
+                <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                  {feature.insights.map((insight, j) => (
+                    <InsightLine key={j} insight={insight} />
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
         </motion.div>
       )}
 
+      {/* KPI callout + human gate */}
       {analysisComplete && (
-        <motion.div {...fadeSlide}>
-          <div className="rounded-lg border border-border bg-muted/30 p-3 mb-4 text-[11px] text-muted-foreground">
+        <motion.div {...fade}>
+          <div className="rounded-md border border-border bg-muted/30 p-2.5 mb-3 text-[10px] text-muted-foreground">
             Feature detection accuracy directly impacts return rate. Higher
             confidence scores mean fewer hallucination-driven returns.
           </div>

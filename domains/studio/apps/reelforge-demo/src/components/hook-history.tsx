@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ChevronDown, ChevronRight, CheckCircle2, Quote } from "lucide-react";
+import { cn } from "@/lib";
+import { Card } from "@/components/ui/card";
+import { ChevronDown, ChevronRight, CheckCircle2, MessageCircle, Cpu, History, Filter } from "lucide-react";
 import type { Broker, RejectionEntry } from "@/data/types";
-
-interface HookHistoryProps {
-  broker: Broker;
-}
 
 interface HistoryEntry {
   hookNumber: number;
@@ -17,56 +13,45 @@ interface HistoryEntry {
 }
 
 const HOOK_TYPES = [
-  "Door Reveal",
-  "Price Tag Reveal",
-  "Before/After",
-  "Door Reveal",
-  "Price Tag Reveal",
-  "Door Reveal",
-  "Before/After",
-  "Door Reveal",
-  "Price Tag Reveal",
-  "Door Reveal",
+  "Door Reveal", "Price Tag Reveal", "Before/After", "Door Reveal",
+  "Price Tag Reveal", "Door Reveal", "Before/After", "Door Reveal",
+  "Price Tag Reveal", "Door Reveal",
 ];
 
-/** Map hook type to a thumbnail image path */
 function getThumbnailForType(hookType: string): string {
   if (hookType.includes("Door")) return "/property/exterior.jpg";
   if (hookType.includes("Price")) return "/property/kitchen.jpg";
-  if (hookType.includes("Before") || hookType.includes("After"))
-    return "/property/living.jpg";
-  return "/property/exterior.jpg";
+  return "/property/living.jpg";
 }
 
-/** Map hook type to a video source path */
 function getVideoForType(hookType: string): string {
   if (hookType.includes("Door")) return "/hooks/walk-through-door.mp4";
   return "/hooks/homi-gift-reveal.mp4";
 }
 
 function generateDate(daysAgo: number): string {
-  const d = new Date(2026, 3, 2); // 2026-04-02
+  const d = new Date(2026, 3, 2);
   d.setDate(d.getDate() - daysAgo);
   return d.toISOString().split("T")[0];
 }
 
+function formatDisplayDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${months[d.getMonth()]} ${d.getDate()}`;
+}
+
 function buildHistory(broker: Broker): HistoryEntry[] {
-  const rejectedNumbers = new Set(
-    broker.rejectionLog.entries.map((e) => e.hookNumber),
-  );
+  const rejectedNumbers = new Set(broker.rejectionLog.entries.map((e) => e.hookNumber));
   const totalHooks = broker.rejectionLog.totalHooks;
   const history: HistoryEntry[] = [];
 
-  for (let i = totalHooks; i > Math.max(0, totalHooks - 10); i--) {
-    const rejection = broker.rejectionLog.entries.find(
-      (e) => e.hookNumber === i,
-    );
+  for (let i = totalHooks; i > Math.max(0, totalHooks - 8); i--) {
+    const rejection = broker.rejectionLog.entries.find((e) => e.hookNumber === i);
     const idx = totalHooks - i;
     history.push({
       hookNumber: i,
-      hookType: rejection
-        ? "Door Reveal"
-        : HOOK_TYPES[idx % HOOK_TYPES.length],
+      hookType: rejection ? "AI Influencer" : HOOK_TYPES[idx % HOOK_TYPES.length],
       date: rejection ? rejection.date : generateDate(idx * 2),
       status: rejectedNumbers.has(i) ? "returned" : "accepted",
       rejection: rejection ?? undefined,
@@ -76,210 +61,174 @@ function buildHistory(broker: Broker): HistoryEntry[] {
   return history;
 }
 
-function formatRejectionSource(date: string): string {
-  const d = new Date(date);
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  return `Rejection via email — broker@homey.nl \u00b7 ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
-function HookThumbnail({ hookType }: { hookType: string }) {
-  const thumbnail = getThumbnailForType(hookType);
-  return (
-    <div className="w-[80px] h-[45px] rounded-md overflow-hidden bg-muted shrink-0 relative">
-      <img
-        src={thumbnail}
-        alt={hookType}
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-        <span className="text-white text-xs">&#9654;</span>
-      </div>
-    </div>
-  );
-}
-
-function HookVideoPreview({ hookType }: { hookType: string }) {
-  const videoSrc = getVideoForType(hookType);
-  return (
-    <div className="mb-3">
-      <video
-        className="w-[300px] aspect-video rounded-md bg-muted"
-        controls
-        preload="metadata"
-      >
-        <source src={videoSrc} type="video/mp4" />
-      </video>
-    </div>
-  );
-}
-
-function RejectedHookDetail({ rejection, hookType }: { rejection: RejectionEntry; hookType: string }) {
-  return (
-    <div className="space-y-3">
-      {/* Video preview */}
-      <HookVideoPreview hookType={hookType} />
-
-      {/* Broker Feedback */}
-      <div>
-        <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
-          Broker Feedback
-        </div>
-        <div className="border-l-2 border-muted-foreground/30 pl-3 py-1 bg-muted/20 rounded-r-md">
-          <div className="flex items-start gap-2">
-            <Quote className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
-            <p className="text-sm italic text-foreground leading-relaxed">
-              {rejection.reason}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Source */}
-      <div className="text-xs text-muted-foreground">
-        {formatRejectionSource(rejection.date)}
-      </div>
-
-      {/* System Analysis */}
-      <div>
-        <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
-          System Analysis
-        </div>
-        <div className="rounded-md border border-border bg-muted/20 px-3 py-2">
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {rejection.systemAnalysis}
-          </p>
-        </div>
-      </div>
-
-      {/* Brand Update */}
-      <div>
-        <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
-          Brand Update
-        </div>
-        <div className="flex items-start gap-2 rounded-md border border-[var(--color-green)]/20 bg-[var(--color-green)]/5 px-3 py-2">
-          <CheckCircle2 className="w-4 h-4 text-[var(--color-green)] shrink-0 mt-0.5" />
-          <div className="text-sm">
-            <span className="font-medium">Guardrail added</span>
-            <span className="text-muted-foreground mx-1">&rarr;</span>
-            <span>{rejection.guardrailAdded}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Status */}
-      <div className="text-xs text-muted-foreground pt-1 border-t border-border">
-        Resolved — guardrail applied to all future hooks
-      </div>
-    </div>
-  );
-}
-
-export function HookHistory({ broker }: HookHistoryProps) {
+export function HookHistory({ broker }: { broker: Broker }) {
   const history = buildHistory(broker);
   const [expandedHook, setExpandedHook] = useState<number | null>(null);
 
-  const totalCount = broker.rejectionLog.totalHooks;
-
   return (
-    <Card className="h-fit">
-      <CardContent className="p-5">
-        {/* Header */}
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold">Hook History</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            {totalCount} hooks · {broker.rejectionLog.totalReturned} returned
-          </p>
+    <Card className="sticky top-20">
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-border flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <History className="h-4 w-4 text-muted-foreground" />
+          <h2 className="font-medium text-foreground uppercase tracking-wide text-xs">
+            Correction History
+          </h2>
         </div>
+        <button className="flex items-center gap-1 text-xs font-mono text-muted-foreground hover:text-foreground border border-border px-2 py-1 rounded bg-background">
+          <Filter className="h-3 w-3" /> Filter
+        </button>
+      </div>
 
-        {/* Hook list */}
-        <div className="flex flex-col">
-          {history.map((entry) => {
-            const isExpanded = expandedHook === entry.hookNumber;
-            return (
-              <div
-                key={entry.hookNumber}
-                className="border-b border-border last:border-b-0"
+      {/* Summary Stats */}
+      <div className="p-4 border-b border-border grid grid-cols-4 gap-4 bg-background/30">
+        <div className="flex flex-col gap-1">
+          <span className="font-mono text-[0.65rem] text-muted-foreground uppercase">Total</span>
+          <span className="font-mono text-sm text-foreground">{broker.rejectionLog.totalHooks}</span>
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="font-mono text-[0.65rem] text-muted-foreground uppercase">Returns</span>
+          <span className="font-mono text-sm text-[var(--color-red)]">{broker.rejectionLog.totalReturned}</span>
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="font-mono text-[0.65rem] text-muted-foreground uppercase">Consecutive</span>
+          <span className="font-mono text-sm text-[var(--color-green)]">
+            {broker.rejectionLog.consecutiveAccepted} <span className="text-[0.6rem] text-muted-foreground">streak</span>
+          </span>
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="font-mono text-[0.65rem] text-muted-foreground uppercase">Trend</span>
+          <span className="font-mono text-sm text-foreground">
+            {broker.rejectionLog.returnRateTrend.month1} <span className="text-muted-foreground">{"\u2192"}</span> {broker.rejectionLog.returnRateTrend.month3}
+          </span>
+        </div>
+      </div>
+
+      {/* History List */}
+      <div className="flex flex-col">
+        {history.map((entry) => {
+          const isExpanded = expandedHook === entry.hookNumber;
+          const isReturned = entry.status === "returned";
+
+          return (
+            <div key={entry.hookNumber} className={cn(isExpanded && isReturned && "bg-accent/20")}>
+              {/* Row */}
+              <button
+                type="button"
+                onClick={() => setExpandedHook(isExpanded ? null : entry.hookNumber)}
+                className="w-full p-3 border-b border-border flex items-center gap-3 hover:bg-accent/50 group cursor-pointer transition-colors"
               >
-                <button
-                  type="button"
-                  onClick={() =>
-                    setExpandedHook(isExpanded ? null : entry.hookNumber)
-                  }
-                  className="w-full flex items-center gap-3 py-3 px-1 text-left hover:bg-muted/30 transition-colors rounded-sm"
-                >
-                  {/* Chevron */}
-                  {isExpanded ? (
-                    <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                  ) : (
-                    <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                  )}
-
-                  {/* Thumbnail */}
-                  <HookThumbnail hookType={entry.hookType} />
-
-                  {/* Hook number */}
-                  <span className="text-xs font-mono text-muted-foreground w-8 shrink-0">
-                    #{entry.hookNumber}
-                  </span>
-
-                  {/* Hook type */}
-                  <span className="text-sm font-medium flex-1 truncate">
-                    {entry.hookType}
-                  </span>
-
-                  {/* Date */}
-                  <span className="text-xs text-muted-foreground shrink-0 mr-2">
-                    {entry.date}
-                  </span>
-
-                  {/* Status badge */}
-                  {entry.status === "accepted" ? (
-                    <Badge
-                      variant="outline"
-                      className="text-[var(--color-green)] border-[var(--color-green)]/30 shrink-0"
-                    >
-                      Accepted
-                    </Badge>
-                  ) : (
-                    <Badge variant="destructive" className="shrink-0">
-                      Returned
-                    </Badge>
-                  )}
-                </button>
-
-                {/* Expanded content */}
-                {isExpanded && (
-                  <div className="pl-9 pr-2 pb-3">
-                    {entry.rejection ? (
-                      <RejectedHookDetail rejection={entry.rejection} hookType={entry.hookType} />
-                    ) : (
-                      <div className="space-y-3">
-                        <HookVideoPreview hookType={entry.hookType} />
-                        <div className="text-sm text-muted-foreground py-1">
-                          Delivered successfully &middot; No issues reported
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                {isExpanded ? (
+                  <ChevronDown className="h-3.5 w-3.5 text-foreground shrink-0" />
+                ) : (
+                  <ChevronRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground shrink-0" />
                 )}
-              </div>
-            );
-          })}
+
+                {/* Thumbnail */}
+                <div className={cn(
+                  "w-12 h-7 rounded border shrink-0 overflow-hidden",
+                  isReturned ? "border-[var(--color-red)]/50" : "border-border"
+                )}>
+                  <img
+                    src={getThumbnailForType(entry.hookType)}
+                    alt={entry.hookType}
+                    className="w-full h-full object-cover opacity-80 grayscale"
+                  />
+                </div>
+
+                {/* Info */}
+                <div className="flex-1 flex items-center justify-between min-w-0">
+                  <div className="flex flex-col gap-0.5 truncate pr-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs text-muted-foreground">#{entry.hookNumber}</span>
+                      <span className="text-sm text-foreground font-medium truncate">{entry.hookType}</span>
+                    </div>
+                    <span className="font-mono text-[0.65rem] text-muted-foreground">
+                      {formatDisplayDate(entry.date)}
+                    </span>
+                  </div>
+
+                  {isReturned ? (
+                    <span className="px-2 py-0.5 rounded text-[0.65rem] font-mono bg-[var(--color-red)]/10 text-[var(--color-red)] border border-[var(--color-red)]/20 uppercase tracking-wider shrink-0">
+                      Returned
+                    </span>
+                  ) : (
+                    <span className="w-2 h-2 rounded-full bg-[var(--color-green)] shadow-[0_0_8px_rgba(122,186,122,0.4)] shrink-0" />
+                  )}
+                </div>
+              </button>
+
+              {/* Expanded content */}
+              {isExpanded && entry.rejection && (
+                <div className="pl-[3.25rem] pr-4 pb-4 pt-3 flex flex-col gap-4">
+                  {/* Video */}
+                  <div className="aspect-video w-full max-w-[240px] rounded border border-border bg-background relative overflow-hidden group">
+                    <video className="w-full h-full object-cover opacity-50" preload="metadata">
+                      <source src={getVideoForType(entry.hookType)} type="video/mp4" />
+                    </video>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-2xl text-foreground opacity-80 group-hover:opacity-100 transition-opacity cursor-pointer">&#9654;</span>
+                    </div>
+                  </div>
+
+                  {/* Feedback */}
+                  <div className="flex flex-col gap-1">
+                    <span className="font-mono text-[0.65rem] text-muted-foreground uppercase flex items-center gap-1">
+                      <MessageCircle className="h-3 w-3" /> Broker Feedback
+                    </span>
+                    <blockquote className="pl-2 border-l-2 border-[var(--color-red)] text-sm text-foreground bg-[var(--color-red)]/5 py-1 pr-2 rounded-r">
+                      &ldquo;{entry.rejection.reason}&rdquo;
+                    </blockquote>
+                  </div>
+
+                  {/* Analysis */}
+                  <div className="flex flex-col gap-1">
+                    <span className="font-mono text-[0.65rem] text-[var(--color-market)] uppercase flex items-center gap-1">
+                      <Cpu className="h-3 w-3" /> System Analysis
+                    </span>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {entry.rejection.systemAnalysis}
+                    </p>
+                  </div>
+
+                  {/* Brand Update */}
+                  <div className="border border-[var(--color-green)]/30 bg-[var(--color-green)]/5 rounded p-2.5 flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-[var(--color-green)] mt-0.5" />
+                    <div className="flex flex-col">
+                      <span className="font-mono text-[0.65rem] text-[var(--color-green)] uppercase font-medium">
+                        Brand Model Updated
+                      </span>
+                      <span className="text-xs text-[var(--color-green)]/90">
+                        Guardrail added: {entry.rejection.guardrailAdded}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {isExpanded && !entry.rejection && (
+                <div className="pl-[3.25rem] pr-4 pb-4 pt-3">
+                  <div className="aspect-video w-full max-w-[240px] rounded border border-border bg-background relative overflow-hidden mb-2">
+                    <video className="w-full h-full object-cover opacity-50" preload="metadata">
+                      <source src={getVideoForType(entry.hookType)} type="video/mp4" />
+                    </video>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Delivered successfully &middot; No issues reported
+                  </p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Load more */}
+        <div className="p-3 flex justify-center">
+          <button className="text-xs text-muted-foreground hover:text-foreground font-medium transition-colors">
+            Load older history...
+          </button>
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }

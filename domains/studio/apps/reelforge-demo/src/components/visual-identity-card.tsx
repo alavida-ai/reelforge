@@ -1,117 +1,131 @@
+import { MoreHorizontal, Play, Film, AppWindow, Clapperboard } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import type { Broker } from "@/data/types";
 
-interface VisualIdentityCardProps {
-  broker: Broker;
-}
-
 const BRAND_ASSET_TEMPLATES = [
-  "Opening Frame",
-  "Transition",
-  "Lower Third",
-  "End Card",
-  "Outro Sequence",
+  { name: "Opening Frame", icon: Play },
+  { name: "Transition", icon: Clapperboard },
+  { name: "Lower Third", icon: null },
+  { name: "End Card", icon: AppWindow },
+  { name: "Outro Seq.", icon: Film },
 ] as const;
 
-export function VisualIdentityCard({ broker }: VisualIdentityCardProps) {
+export function VisualIdentityCard({ broker }: { broker: Broker }) {
   const colorSwatches = [
     { color: broker.colors.primary, label: "Primary" },
     { color: broker.colors.secondary, label: "Secondary" },
     { color: broker.colors.accent, label: "Accent" },
-    { color: broker.colors.background, label: "Background" },
+    { color: broker.colors.background, label: "Base" },
   ];
-
-  const hasLogoFile = broker.slug === "homey";
 
   return (
     <Card>
-      <CardContent className="p-5 space-y-5">
-        {/* Top section: Logo + name + website */}
-        <div className="flex items-center gap-4">
-          {hasLogoFile ? (
-            <img
-              src="/brand/homi-logo.png"
-              alt={broker.name}
-              className="w-[120px] h-auto shrink-0"
-            />
-          ) : (
-            <div
-              className="w-12 h-12 rounded-lg flex items-center justify-center text-xl font-bold text-white shrink-0"
-              style={{ backgroundColor: broker.colors.primary }}
-            >
-              {broker.logoLetter}
-            </div>
-          )}
-          <div>
-            <h2 className="font-semibold text-base">{broker.name}</h2>
-            <p className="text-xs text-muted-foreground">
-              {broker.websiteUrl}
-            </p>
-          </div>
-        </div>
+      <div className="px-4 py-3 border-b border-border flex items-center justify-between">
+        <h2 className="font-medium text-foreground uppercase tracking-wide text-xs">
+          Visual Identity
+        </h2>
+        <button className="text-muted-foreground hover:text-foreground">
+          <MoreHorizontal className="h-4 w-4" />
+        </button>
+      </div>
 
-        {/* Color palette — horizontal strip */}
-        <div>
-          <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
-            Color Palette
-          </div>
-          <div className="flex items-center gap-3">
-            {colorSwatches.map(({ color, label }) => (
-              <div key={label} className="flex flex-col items-center gap-1.5">
-                <div
-                  className="w-10 h-10 rounded-md"
-                  style={{
-                    backgroundColor: color,
-                    border:
-                      color === "#FFFFFF" || color === "#ffffff"
-                        ? "1px solid var(--border)"
-                        : undefined,
-                  }}
-                />
-                <span className="text-[10px] font-mono text-muted-foreground">
-                  {color}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Brand Assets section */}
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-              Brand Assets
+      <CardContent className="p-5 flex flex-col gap-8">
+        {/* Top Row: Logo & Colors */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Logo / URL */}
+          <div className="flex flex-col gap-3">
+            <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
+              Brand Details
             </span>
-            <Badge
-              variant="secondary"
-              className="text-[10px] px-1.5 py-0 h-4"
-            >
-              {BRAND_ASSET_TEMPLATES.length} templates
-            </Badge>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {BRAND_ASSET_TEMPLATES.map((template) => (
+            <div className="flex items-center gap-3">
               <div
-                key={template}
-                className="w-[120px] aspect-video rounded-md border border-dashed border-border bg-muted flex items-center justify-center"
+                className="w-10 h-10 rounded-md flex items-center justify-center text-white font-medium border border-border shrink-0"
+                style={{ backgroundColor: broker.colors.primary }}
               >
-                <span className="text-[10px] text-muted-foreground text-center px-1 leading-tight">
-                  {template === "End Card"
-                    ? `Visit ${broker.websiteUrl}`
-                    : template}
+                {broker.logoLetter}
+              </div>
+              <div className="flex flex-col">
+                <span className="font-medium text-foreground">{broker.name}</span>
+                <span className="font-mono text-xs text-[var(--color-market)]">
+                  {broker.websiteUrl}
                 </span>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Colors */}
+          <div className="flex flex-col gap-3">
+            <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
+              Color Palette
+            </span>
+            <div className="flex items-start gap-4">
+              {colorSwatches.map(({ color, label }) => (
+                <div key={label} className="flex flex-col gap-1.5 items-center">
+                  <div
+                    className="w-8 h-8 rounded-md border border-border shadow-sm"
+                    style={{
+                      backgroundColor: color,
+                      borderColor: color === "#FFFFFF" || color === "#ffffff" || color === "#F5F5F5"
+                        ? "var(--border)"
+                        : undefined,
+                    }}
+                  />
+                  <div className="text-center">
+                    <div className="font-mono text-[0.65rem] text-foreground">{color}</div>
+                    <div className="text-[0.6rem] text-muted-foreground uppercase">{label}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="h-px w-full bg-border" />
+
+        {/* Brand Assets Grid */}
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
+              Motion Templates
+            </span>
+            <span className="bg-accent border border-border px-2 py-0.5 rounded text-xs text-foreground">
+              5 Active
+            </span>
+          </div>
+          <div className="grid grid-cols-5 gap-3">
+            {BRAND_ASSET_TEMPLATES.map((template) => {
+              const Icon = template.icon;
+              return (
+                <div key={template.name} className="flex flex-col gap-2">
+                  <div className="aspect-video w-full rounded border border-dashed border-muted-foreground/50 bg-muted/30 flex items-center justify-center">
+                    {Icon ? (
+                      <Icon className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <div className="w-2/3 h-1/3 bg-border/80 rounded-sm" />
+                    )}
+                  </div>
+                  <span className="text-xs text-muted-foreground truncate">{template.name}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {/* Fonts */}
-        <div>
-          <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
-            Fonts
+        <div className="flex items-center gap-4 pt-2">
+          <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider w-24">
+            Typography
+          </span>
+          <div className="flex items-center gap-2">
+            {broker.fonts.split(" \u00b7 ").map((font, i) => (
+              <span key={font}>
+                {i > 0 && <span className="text-muted-foreground mr-2">\u00b7</span>}
+                <span className="px-2 py-1 bg-accent border border-border rounded text-foreground">
+                  {font}
+                </span>
+              </span>
+            ))}
           </div>
-          <div className="text-sm text-muted-foreground">{broker.fonts}</div>
         </div>
       </CardContent>
     </Card>
